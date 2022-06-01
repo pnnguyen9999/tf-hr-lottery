@@ -1,0 +1,64 @@
+.herobutton {
+    cursor: pointer;
+    position: relative;
+    width: fit-content;
+    height: fit-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &--text {
+        position: absolute;
+        font-size: 10pt;
+        top: 14px;
+        font-family: fontbold;
+        margin: 0 auto;
+        color: #fff;
+        transition: 0.25s;
+        &:hover {
+            color: #fff !important;
+        }
+    }
+}
+.connectbutton {
+    cursor: pointer;
+    position: relative;
+    // background-color: red;
+    width: fit-content;
+    height: fit-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &--text-yellow {
+        position: absolute;
+        font-size: 10pt;
+        top: 12px;
+        font-weight: bold;
+        margin: 0 auto;
+        color: #6f3c12;
+        transition: 0.25s;
+        &:hover {
+            color: #fff !important;
+        }
+    }
+    &--text-green {
+        position: absolute;
+        font-size: 15px;
+        top: 12px;
+        margin: 0 auto;
+        color: #6f3c12;
+        transition: 0.25s;
+        color: #fff !important;
+    }
+    &--text-gray {
+        position: absolute;
+        font-size: 10pt;
+        top: 12px;
+        font-weight: bold;
+        margin: 0 auto;
+        color: #3e3834;
+    }
+    img {
+        width: 140px;
+    }
+}

@@ -1,14 +1,16 @@
+import Banner from "@components/HomePage/Banner";
+import BannerWinner from "@components/HomePage/BannerWinner";
+import GetTicket from "@components/HomePage/GetTicket";
+import Nav from "@components/HomePage/Nav";
 import React from "react";
-
-import { Header, Main, Footer, Cards } from "@components";
 
 const Home: React.FC = () => {
   return (
-    <div className="d-flex flex-column min-vh-100">
-      <Header />
-      <Main />
-      <Cards />
-      <Footer />
+    <div className="container">
+      <Nav />
+      <Banner />
+      <GetTicket />
+      <BannerWinner />
     </div>
   );
 };

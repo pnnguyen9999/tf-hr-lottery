@@ -25,8 +25,10 @@
 .ant-modal-content,
 .ant-modal-header {
     background-color: #ece4ca !important;
-    border-bottom: 2px dashed #d0b07c !important;
     border-radius: 8px !important;
+}
+.ant-modal-header {
+    border-bottom: 2px dashed #d0b07c !important;
 }
 .ant-input {
     background: #fffbef !important;

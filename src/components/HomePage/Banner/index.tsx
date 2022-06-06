@@ -22,7 +22,6 @@ export default function Banner({}: Props) {
   return (
     <div className="mt-5">
       <h4 className="fnt-b cl-w ">LOTTERY</h4>
-      <ApproveButton />
       <div className="banner-desktop">
         <div className="d-flex flex-column align-items-center justify-content-center h-100">
           <div className="cl-br fnt-s5 fnt-b">The Hero Arena Lottery</div>

@@ -2,40 +2,42 @@ import { HeroButton } from "@components/common/HeroButton";
 import React from "react";
 import { HeraValue } from "../Banner";
 import useCollapse from "react-collapsed";
+import { BuyTicketButton } from "@components/common/BuyTicketButton";
 
 type Props = {};
 interface PrizePot extends HeraValue {
   coinValue: string;
 }
 
+export const PrizePotValue = ({ name, value, coinValue }: PrizePot) => {
+  return (
+    <div className="d-flex flex-column align-items-start mr-5">
+      <div>
+        <div className="fnt-b fnt-s6 cl-yl d-flex align-items-center">
+          {value}&nbsp;
+          <img src={`/img/coins/${name}.png`} className="coin-lg" />
+        </div>
+        <div className="fnt-s1 cl-w">
+          {coinValue}
+          <span className="fnt-b cl-w ml-2">HERA</span>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export const CoinValue = ({ name, value }: HeraValue) => {
+  return (
+    <div className="d-flex my-1">
+      <div className="fnt-b fnt-s1 mr-2 cl-w">{value}</div>
+      <img src={`/img/coins/${name}.png`} className="coin-sm" />
+    </div>
+  );
+};
+
 export default function GetTicket({}: Props) {
   const { getCollapseProps, getToggleProps, isExpanded } = useCollapse();
 
-  const PrizePotValue = ({ name, value, coinValue }: PrizePot) => {
-    return (
-      <div className="d-flex flex-column align-items-start mr-5">
-        <div>
-          <div className="fnt-b fnt-s6 cl-yl d-flex align-items-center">
-            {value}&nbsp;
-            <img src={`/img/coins/${name}.png`} className="coin-lg" />
-          </div>
-          <div className="fnt-s1">
-            {coinValue}
-            <span className="fnt-b cl-w ml-2">HERA</span>
-          </div>
-        </div>
-      </div>
-    );
-  };
-
-  const CoinValue = ({ name, value }: HeraValue) => {
-    return (
-      <div className="d-flex my-1">
-        <div className="fnt-b fnt-s1 mr-2">{value}</div>
-        <img src={`/img/coins/${name}.png`} className="coin-sm" />
-      </div>
-    );
-  };
   return (
     <div className="get-ticket mb-5">
       <div className="text-center my-5">
@@ -79,7 +81,7 @@ export default function GetTicket({}: Props) {
                     </div>
                     <div className="fnt-s1 cl-br">View your tickets</div>
                   </div>
-                  <HeroButton text="Buy Ticket" />
+                  <BuyTicketButton />
                 </div>
               </div>
             </div>
@@ -94,34 +96,17 @@ export default function GetTicket({}: Props) {
               </div>
               <div className="col-12">
                 <div className="row">
-                  <div className="col-md-3 col-6">
-                    <div className="d-flex flex-column align-items-start">
-                      <div className="fnt-s2 cl-grey">MATCH FIRST 1</div>
-                      <CoinValue name="hera" value={789} />
-                      <CoinValue name="hegem" value={90809} />
+                  {[1, 2, 3, 4].map((number: number) => (
+                    <div className="col-md-3 col-6">
+                      <div className="d-flex flex-column align-items-start">
+                        <div className="fnt-s2 cl-grey">
+                          MATCH FIRST {number}
+                        </div>
+                        <CoinValue name="hera" value={789} />
+                        <CoinValue name="hegem" value={90809} />
+                      </div>
                     </div>
-                  </div>
-                  <div className="col-md-3 col-6">
-                    <div className="d-flex flex-column align-items-start">
-                      <div className="fnt-s2 cl-grey">MATCH FIRST 2</div>
-                      <CoinValue name="hera" value={789} />
-                      <CoinValue name="hegem" value={90809} />
-                    </div>
-                  </div>
-                  <div className="col-md-3 col-6">
-                    <div className="d-flex flex-column align-items-start">
-                      <div className="fnt-s2 cl-grey">MATCH FIRST 3</div>
-                      <CoinValue name="hera" value={789} />
-                      <CoinValue name="hegem" value={90809} />
-                    </div>
-                  </div>
-                  <div className="col-md-3 col-6">
-                    <div className="d-flex flex-column align-items-start">
-                      <div className="fnt-s2 cl-grey">MATCH FIRST 4</div>
-                      <CoinValue name="hera" value={789} />
-                      <CoinValue name="hegem" value={90809} />
-                    </div>
-                  </div>
+                  ))}
                 </div>
               </div>
             </div>

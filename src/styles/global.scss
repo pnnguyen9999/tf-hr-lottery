@@ -9,23 +9,32 @@
 
 html,
 body {
-  color: #fff;
+  color: #fff !important;
   margin: 0;
   padding: 0;
-  font-family: fontreg;
+  font-family: fontreg !important;
+  // background-color: #fff;
 }
 
 body {
   background: url(/img/bg.png);
   background: {
     repeat: no-repeat;
-    size: cover;
   }
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
 }
 .hrz-b {
   border-bottom: 1px solid #383735;
 }
+.cursor-pointer {
+  cursor: pointer;
+}
 .cl {
+  &-r {
+    color: #ef466f;
+  }
   &-w {
     color: #fff;
   }
@@ -114,10 +123,20 @@ body {
     height: 20px;
   }
 }
+.all-history,
+.your-history,
 .get-ticket {
   &-cont {
+    width: 100%;
     background-color: rgba(31, 28, 30, 0.5);
     border-radius: 8px;
     border: 2px solid #383735;
   }
+}
+li {
+  font-size: 12.5pt;
+  color: #fff;
+}
+.how-to-play {
+  line-height: 25pt;
 }

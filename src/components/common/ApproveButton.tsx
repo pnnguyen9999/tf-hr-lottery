@@ -1,0 +1,24 @@
+import { setAllowance } from "@redux/web3";
+import { useDispatch, useSelector } from "react-redux";
+import Web3 from "web3";
+import { HeroButton } from "./HeroButton";
+
+export function ApproveButton() {
+  const dispatch = useDispatch();
+  const web3data = useSelector((state) => state.web3.utilsWallet) as any;
+  const approveContract = async () => {
+    await web3data.approveLotteryContract(async (data: any) => {
+      if (data.status === "EXECUTE_APPROVE_SUCCESS") {
+        console.log("approved");
+        dispatch(
+          setAllowance(
+            Web3.utils.fromWei(await web3data.getAllowance(), "ether")
+          )
+        );
+      } else if (data.status === "EXECUTE_APPROVE_FAIL") {
+        console.log("execute fail");
+      }
+    });
+  };
+  return <HeroButton text="Approve" action={() => approveContract()} />;
+}

@@ -1,0 +1,35 @@
+// override ant tab style
+.ant-tabs-ink-bar {
+    display: none;
+}
+.ant-tabs-nav::before {
+    border: 0px !important;
+}
+.ant-tabs-tab {
+    &-btn {
+        padding: 5px 15px;
+        border-radius: 5px;
+        color: white !important;
+        &:focus {
+            color: white !important;
+        }
+    }
+}
+.ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+    color: white !important;
+    background-color: #67350e;
+}
+.ant-tabs-nav-operations {
+    display: none !important;
+}
+.ant-modal-content,
+.ant-modal-header {
+    background-color: #ece4ca !important;
+    border-bottom: 2px dashed #d0b07c !important;
+    border-radius: 8px !important;
+}
+.ant-input {
+    background: #fffbef !important;
+    border-radius: 8px !important;
+    border: 1px solid #e1caa2 !important;
+}

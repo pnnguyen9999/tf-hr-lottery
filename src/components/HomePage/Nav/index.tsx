@@ -1,9 +1,11 @@
-import { ConnectButton } from "@components/common/HeroButton";
+import { ConnectButton } from "@components/common/ConnectButton";
 import React from "react";
+import { useSelector } from "react-redux";
 
 type Props = {};
 
 export default function Nav({}: Props) {
+  const address = useSelector((state) => state.web3.address);
   return (
     <div className="nav d-flex justify-content-between align-items-center">
       <div>
@@ -16,7 +18,7 @@ export default function Nav({}: Props) {
         <div className="nav-item">Farm</div>
         <div className="nav-item">INO</div>
         <div className="nav-item">Whitepaper</div>
-        <ConnectButton text="Connect" type="green" />
+        {address || <ConnectButton text="Connect" type="green" />}
       </div>
     </div>
   );

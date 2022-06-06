@@ -62,3 +62,62 @@
         width: 140px;
     }
 }
+
+.order-badge {
+    background: #be6d02;
+    font-family: fontbold;
+    font-size: 10pt;
+    border-radius: 50px;
+    padding: 3px 10px;
+}
+
+.lottery-number {
+    padding: 10px;
+    border-radius: 50%;
+    width: 55px;
+    height: 55px;
+    text-align: center;
+    font-family: fontbold;
+    font-size: 18pt;
+    color: #fff;
+    &[class-type="1"] {
+        background-image: linear-gradient(110deg, #ff4b00, #ff9b00);
+        border: 4px solid #ff9500;
+    }
+    &[class-type="2"] {
+        background-image: linear-gradient(110deg, #01b367, #12ff96);
+        border: 4px solid #11f792;
+    }
+    &[class-type="3"] {
+        background-image: linear-gradient(110deg, #9121ff, #c57bfe);
+        border: 4px solid #bf71fe;
+    }
+    &[class-type="4"] {
+        background-image: linear-gradient(110deg, #840201, #e00a0e);
+        border: 4px solid #d1080c;
+    }
+    &[class-type="5"] {
+        background-image: linear-gradient(110deg, #ff9c00, #ffcd00);
+        border: 4px solid #fec403;
+    }
+    &[class-type="6"] {
+        background-image: linear-gradient(110deg, #00c3ea, #36eaff);
+        border: 4px solid #32e8fe;
+    }
+    &[class-type="7"] {
+        background-image: linear-gradient(110deg, #fe0371, #fe589e);
+        border: 4px solid #ff4b98;
+    }
+    &[class-type="8"] {
+        background-image: linear-gradient(110deg, #0281ff, #5dbfff);
+        border: 4px solid #56baff;
+    }
+    &[class-type="9"] {
+        background-image: linear-gradient(110deg, #ff75b5, #fcb0d9);
+        border: 4px solid #fdacd7;
+    }
+    &[class-type="0"] {
+        background-image: linear-gradient(110deg, #1c0289, #0b20ff);
+        border: 4px solid #0a1df1;
+    }
+}

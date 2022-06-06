@@ -1,3 +1,5 @@
+import { ApproveButton } from "@components/common/ApproveButton";
+import { BuyTicketButton } from "@components/common/BuyTicketButton";
 import { HeroButton } from "@components/common/HeroButton";
 import React from "react";
 
@@ -19,7 +21,8 @@ export default function Banner({}: Props) {
   };
   return (
     <div className="mt-5">
-      <h4 className="fnt-b">LOTTERY</h4>
+      <h4 className="fnt-b cl-w ">LOTTERY</h4>
+      <ApproveButton />
       <div className="banner-desktop">
         <div className="d-flex flex-column align-items-center justify-content-center h-100">
           <div className="cl-br fnt-s5 fnt-b">The Hero Arena Lottery</div>
@@ -29,7 +32,7 @@ export default function Banner({}: Props) {
           </div>
           <div className="cl-br fnt-s2 fnt-b my-2">In Prizes</div>
           <div className="bagde">
-            <HeroButton text="Buy Ticket" />
+            <BuyTicketButton />
           </div>
           <div />
         </div>

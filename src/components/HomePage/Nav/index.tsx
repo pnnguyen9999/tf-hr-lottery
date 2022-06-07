@@ -1,8 +1,11 @@
 import { ConnectButton } from "@components/common/ConnectButton";
 import {
   setCurrentLotteryId,
-  setLoadingSelectedLotteryData,
-  setSelectedLotteryData,
+  setLoadingHistoryLotteryData,
+  setHistoryLotteryData,
+  setLastestLotteryData,
+  setLoadingLastestLotteryData,
+  setLastestLotteryId,
 } from "@redux/globalState";
 import { message } from "antd";
 import React, { useState, useEffect } from "react";
@@ -16,11 +19,14 @@ type Props = {};
 export default function Nav({}: Props) {
   const dispatch = useDispatch();
   const address = useSelector((state) => state.web3.address);
+  const lastestLotteryId = useSelector(
+    (state) => state.globalState.lastestLotteryId
+  );
   const currentLotteryId = useSelector(
     (state) => state.globalState.currentLotteryId
   );
   const selectedLotteryData = useSelector(
-    (state) => state.globalState.selectedLotteryData
+    (state) => state.globalState.historyLotteryData
   );
 
   useEffect(() => {
@@ -29,6 +35,7 @@ export default function Nav({}: Props) {
       let contract = new web3.eth.Contract(lotteryABI, LOTTERY_CONTRACT);
       const id = await contract.methods.currentLotteryId().call();
       dispatch(setCurrentLotteryId(id));
+      dispatch(setLastestLotteryId(id));
     };
     if (window) {
       getCurrentRound();
@@ -36,13 +43,32 @@ export default function Nav({}: Props) {
   }, []);
 
   useEffect(() => {
+    /**
+     * -> load lastest data
+     */
+    async function getInfo() {
+      if (lastestLotteryId) {
+        console.log(lastestLotteryId);
+        dispatch(setLoadingLastestLotteryData(true));
+        const data = await useFetchContractInfo(lastestLotteryId);
+        dispatch(setLoadingLastestLotteryData(false));
+        dispatch(setLastestLotteryData(data));
+      }
+    }
+    getInfo();
+  }, [lastestLotteryId]);
+
+  useEffect(() => {
+    /**
+     * -> load paginate history data
+     */
     async function getInfo() {
       if (currentLotteryId) {
         console.log(currentLotteryId);
-        dispatch(setLoadingSelectedLotteryData(true));
-        const data = await useFetchContractInfo(currentLotteryId);
-        dispatch(setLoadingSelectedLotteryData(false));
-        dispatch(setSelectedLotteryData(data));
+        dispatch(setLoadingHistoryLotteryData(true));
+        const data = await useFetchContractInfo(parseInt(currentLotteryId) - 1);
+        dispatch(setLoadingHistoryLotteryData(false));
+        dispatch(setHistoryLotteryData(data));
       }
     }
     getInfo();
@@ -73,7 +99,7 @@ export default function Nav({}: Props) {
         >
           Marketplace
         </div>
-        <div className="nav-item">Battle</div>
+        <div className="nav-item">Battle {lastestLotteryId}</div>
         <div className="nav-item">Farm</div>
         <div className="nav-item">INO</div>
         <div className="nav-item">Whitepaper</div>

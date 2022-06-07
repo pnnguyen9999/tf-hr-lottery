@@ -3,6 +3,7 @@ import React from "react";
 import { HeraValue } from "../Banner";
 import useCollapse from "react-collapsed";
 import { BuyTicketButton } from "@components/common/BuyTicketButton";
+import { useSelector } from "react-redux";
 
 type Props = {};
 
@@ -30,7 +31,12 @@ export const CoinValue = ({ name, value }: HeraValue) => {
 
 export default function GetTicket({}: Props) {
   const { getCollapseProps, getToggleProps, isExpanded } = useCollapse();
-
+  const lastestLotteryData = useSelector(
+    (state) => state.globalState.lastestLotteryData
+  );
+  const lastestLotteryId = useSelector(
+    (state) => state.globalState.lastestLotteryId
+  );
   return (
     <div className="get-ticket mb-5">
       <div className="text-center my-5">
@@ -42,7 +48,9 @@ export default function GetTicket({}: Props) {
       <div className="get-ticket-cont">
         <div className="p-3 hrz-b d-flex justify-content-between align-items-center flex-wrap">
           <div className="fnt-b fnt-s3 cl-w">Next Draw</div>
-          <div className="fnt-s1 cl-w">#498|Draw: Apr9, 2022, 7:00 PM</div>
+          <div className="fnt-s1 cl-w">
+            #{lastestLotteryId}|Draw: {lastestLotteryData?.drawnTime}
+          </div>
         </div>
         <div className="p-3 hrz-b">
           <div className="d-flex justify-content-between align-items-center flex-wrap">
@@ -50,8 +58,14 @@ export default function GetTicket({}: Props) {
               <div className="row">
                 <div className="col-3 fnt-s3 fnt-b cl-w ">Prize Pot</div>
                 <div className="col-7 d-flex justify-content-between align-items-center flex-wrap">
-                  <PrizePotValue value={200909} name="hera" />
-                  <PrizePotValue value={200909} name="hegem" />
+                  <PrizePotValue
+                    value={lastestLotteryData?.amountCollectedInHera}
+                    name="hera"
+                  />
+                  <PrizePotValue
+                    value={lastestLotteryData?.amountCollectedInHegem}
+                    name="hegem"
+                  />
                 </div>
               </div>
             </div>
@@ -81,14 +95,14 @@ export default function GetTicket({}: Props) {
               </div>
               <div className="col-12">
                 <div className="row">
-                  {[1, 2, 3, 4].map((number: number) => (
+                  {lastestLotteryData?.coinPerBracket.map((obj: any) => (
                     <div className="col-md-3 col-6">
                       <div className="d-flex flex-column align-items-start">
                         <div className="fnt-s2 cl-grey">
-                          MATCH FIRST {number}
+                          MATCH FIRST {parseInt(obj.index) + 1}
                         </div>
-                        <CoinValue name="hera" value={789} />
-                        <CoinValue name="hegem" value={90809} />
+                        <CoinValue name="hera" value={obj.hera} />
+                        <CoinValue name="hegem" value={obj.hegem} />
                       </div>
                     </div>
                   ))}

@@ -2,8 +2,11 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   currentLotteryId: null as any,
-  selectedLotteryData: null as any,
-  loadingSelectedLotteryData: false,
+  historyLotteryData: null as any,
+  loadinghistoryLotteryData: false,
+  lastestLotteryId: null as any,
+  lastestLotteryData: null as any,
+  loadinglastestLotteryData: false,
 };
 
 const globalState = createSlice({
@@ -13,19 +16,31 @@ const globalState = createSlice({
     setCurrentLotteryId: (state, { payload }) => {
       state.currentLotteryId = payload;
     },
-    setSelectedLotteryData: (state, { payload }) => {
-      state.selectedLotteryData = payload;
+    setLastestLotteryId: (state, { payload }) => {
+      state.lastestLotteryId = payload;
     },
-    setLoadingSelectedLotteryData: (state, { payload }) => {
-      state.loadingSelectedLotteryData = payload;
+    setHistoryLotteryData: (state, { payload }) => {
+      state.historyLotteryData = payload;
+    },
+    setLastestLotteryData: (state, { payload }) => {
+      state.lastestLotteryData = payload;
+    },
+    setLoadingHistoryLotteryData: (state, { payload }) => {
+      state.loadinghistoryLotteryData = payload;
+    },
+    setLoadingLastestLotteryData: (state, { payload }) => {
+      state.loadinghistoryLotteryData = payload;
     },
   },
 });
 
 export const {
   setCurrentLotteryId,
-  setSelectedLotteryData,
-  setLoadingSelectedLotteryData,
+  setHistoryLotteryData,
+  setLoadingHistoryLotteryData,
+  setLastestLotteryData,
+  setLoadingLastestLotteryData,
+  setLastestLotteryId,
 } = globalState.actions;
 
 export default globalState.reducer;

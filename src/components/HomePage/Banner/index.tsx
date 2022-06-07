@@ -2,6 +2,7 @@ import { ApproveButton } from "@components/common/ApproveButton";
 import { BuyTicketButton } from "@components/common/BuyTicketButton";
 import { HeroButton } from "@components/common/HeroButton";
 import React from "react";
+import { useSelector } from "react-redux";
 
 type Props = {};
 export interface HeraValue {
@@ -9,6 +10,9 @@ export interface HeraValue {
   value: number;
 }
 export default function Banner({}: Props) {
+  const lastestLotteryData = useSelector(
+    (state) => state.globalState.lastestLotteryData
+  );
   const HeraValue = ({ name, value }: HeraValue) => {
     return (
       <div className="hera-value">
@@ -26,8 +30,14 @@ export default function Banner({}: Props) {
         <div className="d-flex flex-column align-items-center justify-content-center h-100">
           <div className="cl-br fnt-s5 fnt-b">The Hero Arena Lottery</div>
           <div className="d-flex align-items-center my-2">
-            <HeraValue name="hera" value={200909} />
-            <HeraValue name="hegem" value={200909} />
+            <HeraValue
+              name="hera"
+              value={lastestLotteryData?.amountCollectedInHera}
+            />
+            <HeraValue
+              name="hegem"
+              value={lastestLotteryData?.amountCollectedInHegem}
+            />
           </div>
           <div className="cl-br fnt-s2 fnt-b my-2">In Prizes</div>
           <div className="bagde">

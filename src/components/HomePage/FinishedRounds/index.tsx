@@ -16,14 +16,18 @@ export default function FinishedRounds(): ReactElement {
   const dispatch = useDispatch();
   const { getCollapseProps, getToggleProps, isExpanded } = useCollapse();
   const selectedLotteryData = useSelector(
-    (state) => state.globalState.selectedLotteryData
+    (state) => state.globalState.historyLotteryData
   );
   const currentLotteryId = useSelector(
     (state) => state.globalState.currentLotteryId
   );
   const loadingSelectedLotteryData = useSelector(
-    (state) => state.globalState.loadingSelectedLotteryData
+    (state) => state.globalState.loadinghistoryLotteryData
   );
+
+  const canPaginate = () => {
+    return true;
+  };
 
   return (
     <div className="finished-rounds my-5 d-flex flex-column align-items-center justify-content-center">
@@ -43,29 +47,33 @@ export default function FinishedRounds(): ReactElement {
                   <div className="cl-w fnt-b fnt-s3 d-flex align-items-center">
                     Rounds
                     <span className="order-badge ml-2">
-                      #{currentLotteryId}
+                      #{parseInt(currentLotteryId) - 1}
                     </span>
                   </div>
                   <div className="cl-grey fnt-s1 my-1">
-                    Drawn Apr9, 2022, 7:00 PM
+                    Drawn {selectedLotteryData?.drawnTime}
                   </div>
                 </div>
                 <div className="d-flex align-items-center justity-content-end cl-grey">
                   <Space direction="horizontal" size={15}>
                     <ArrowLeftOutlined
                       style={{ color: "#FFB601" }}
-                      onClick={() =>
-                        dispatch(
-                          setCurrentLotteryId(parseInt(currentLotteryId) - 1)
-                        )
-                      }
+                      onClick={() => {
+                        if (canPaginate()) {
+                          dispatch(
+                            setCurrentLotteryId(parseInt(currentLotteryId) - 1)
+                          );
+                        }
+                      }}
                     />
                     <ArrowRightOutlined
-                      onClick={() =>
-                        dispatch(
-                          setCurrentLotteryId(parseInt(currentLotteryId) + 1)
-                        )
-                      }
+                      onClick={() => {
+                        if (canPaginate()) {
+                          dispatch(
+                            setCurrentLotteryId(parseInt(currentLotteryId) + 1)
+                          );
+                        }
+                      }}
                     />
                     <VerticalLeftOutlined />
                   </Space>
@@ -106,7 +114,7 @@ export default function FinishedRounds(): ReactElement {
               <div className="p-3">
                 <section {...getCollapseProps()}>
                   {!loadingSelectedLotteryData ? (
-                    <div>
+                    <div className="my-3">
                       <div className="col-12 align-items-center my-3">
                         <div className="row">
                           <div className="col-3 fnt-s3 fnt-b cl-w ">
@@ -143,15 +151,13 @@ export default function FinishedRounds(): ReactElement {
                                     <CoinValue name="hera" value={obj.hera} />
                                     <CoinValue name="hegem" value={obj.hegem} />
                                   </div>
+                                  <div className="fnt-s1 cl-grey">
+                                    {obj.countWinners} Winning Tickets
+                                  </div>
                                 </div>
                               )
                             )}
                           </div>
-                        </div>
-                      </div>
-                      <div>
-                        <div className="cl-grey fnt-s1 my-3 mb-4">
-                          Total players this round: 997
                         </div>
                       </div>
                     </div>

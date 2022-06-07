@@ -4,7 +4,18 @@ import _ from "lodash";
 import Web3 from "web3";
 import moment from "moment";
 
-const useFetchContractInfo = async (lotteryId: number) => {
+export interface LotteryData {
+  results: [];
+  finalNumber: number;
+  amountCollectedInHegem: number;
+  amountCollectedInHera: number;
+  coinPerBracket: [];
+  drawnTime: string;
+}
+
+const useFetchContractInfo = async (
+  lotteryId: number
+): Promise<LotteryData> => {
   const getLotteryData = async (id: number): Promise<any> => {
     const web3 = new Web3(RPC_BSC) as any;
     let contract = new web3.eth.Contract(lotteryABI, LOTTERY_CONTRACT);
@@ -23,14 +34,6 @@ const useFetchContractInfo = async (lotteryId: number) => {
   const amountCollectedInHera = parseFloat(
     Web3.utils.fromWei(results[13], "ether")
   );
-  // const coinPerBracket = results[7].map((number: any, index: number) => {
-  //   return {
-  //     index,
-  //     hegem: Web3.utils.fromWei(number, "ether"),
-  //     hera: Web3.utils.fromWei(results[8][index], "ether"),
-  //     countWinners: results[9][index],
-  //   };
-  // });
 
   const coinPerBracket = results[4].map((number: any, index: number) => {
     return {

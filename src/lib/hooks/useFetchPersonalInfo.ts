@@ -3,7 +3,17 @@ import lotteryABI from "src/lib/contract/lotteryABI.abi.json";
 import _ from "lodash";
 import Web3 from "web3";
 
-const useFetchPersonalInfo = async (lotteryId: number, address: string) => {
+export interface PersonalData {
+  results: {};
+  round: number;
+  numberOfTickets: number;
+  tickets: number[];
+}
+
+const useFetchPersonalInfo = async (
+  lotteryId: number,
+  address: string
+): Promise<PersonalData> => {
   const getLotteryData = async (
     _lotteryId: number,
     _address: string
@@ -17,7 +27,7 @@ const useFetchPersonalInfo = async (lotteryId: number, address: string) => {
   };
   const results = await getLotteryData(lotteryId, address);
   console.log(results);
-  const numberOfTickets = results[3];
+  const numberOfTickets = parseInt(results[3]);
   const round = lotteryId;
 
   const tickets = results[1].map((number: any) =>

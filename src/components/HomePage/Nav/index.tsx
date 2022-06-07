@@ -43,8 +43,8 @@ export default function Nav({}: Props) {
       const web3 = new Web3(RPC_BSC) as any;
       let contract = new web3.eth.Contract(lotteryABI, LOTTERY_CONTRACT);
       const id = await contract.methods.currentLotteryId().call();
-      dispatch(setCurrentLotteryId(id));
-      dispatch(setlatestLotteryId(id));
+      dispatch(setCurrentLotteryId(parseInt(id)));
+      dispatch(setlatestLotteryId(parseInt(id)));
     };
     if (window) {
       getCurrentRound();
@@ -75,7 +75,7 @@ export default function Nav({}: Props) {
       if (currentLotteryId) {
         console.log(currentLotteryId);
         dispatch(setLoadingHistoryLotteryData(true));
-        const data = await useFetchContractInfo(parseInt(currentLotteryId) - 1);
+        const data = await useFetchContractInfo(currentLotteryId - 1);
         dispatch(setLoadingHistoryLotteryData(false));
         dispatch(setHistoryLotteryData(data));
       }
@@ -106,10 +106,7 @@ export default function Nav({}: Props) {
      */
     async function getInfo() {
       if (address && currentLotteryId) {
-        const data = await useFetchPersonalInfo(
-          parseInt(currentLotteryId) - 1,
-          address
-        );
+        const data = await useFetchPersonalInfo(currentLotteryId - 1, address);
         dispatch(setHistoryPersonalData(data));
       }
     }
@@ -124,17 +121,13 @@ export default function Nav({}: Props) {
       <div className="d-flex">
         <div
           className="nav-item"
-          onClick={() =>
-            dispatch(setCurrentLotteryId(parseInt(currentLotteryId) - 1))
-          }
+          onClick={() => dispatch(setCurrentLotteryId(currentLotteryId - 1))}
         >
           Homepage {currentLotteryId}
         </div>
         <div
           className="nav-item"
-          onClick={() =>
-            dispatch(setCurrentLotteryId(parseInt(currentLotteryId) + 1))
-          }
+          onClick={() => dispatch(setCurrentLotteryId(currentLotteryId + 1))}
         >
           Marketplace
         </div>

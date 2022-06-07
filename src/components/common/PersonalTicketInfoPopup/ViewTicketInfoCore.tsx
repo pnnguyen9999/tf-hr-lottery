@@ -2,10 +2,11 @@ import { Modal, Space } from "antd";
 import React from "react";
 import OtpInput from "react-otp-input";
 import { useDispatch } from "react-redux";
+import { PersonalData } from "src/lib/hooks/useFetchPersonalInfo";
 import { BuyTicketButton } from "../BuyTicketButton";
 
 type Props = {
-  data: any;
+  data: PersonalData;
   setOpen: any;
   visibleState: boolean;
 };
@@ -21,7 +22,6 @@ export default function ViewTicketInfoCore({
       title={<div className="cl-br-drk fnt-s3 fnt-b">Round {data?.round}</div>}
       style={{ top: 20 }}
       visible={visibleState}
-      // centered
       footer={false}
       onOk={() => dispatch(setOpen(false))}
       onCancel={() => dispatch(setOpen(false))}

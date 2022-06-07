@@ -39,9 +39,7 @@ export default function AllHistory({}: Props) {
           <div className="d-flex flex-column">
             <div className="cl-w fnt-b fnt-s3 d-flex align-items-center">
               Rounds
-              <span className="order-badge ml-2">
-                #{parseInt(currentLotteryId) - 1}
-              </span>
+              <span className="order-badge ml-2">#{currentLotteryId - 1}</span>
             </div>
             <div className="cl-grey fnt-s1 my-1">
               Drawn {selectedLotteryData?.drawnTime}
@@ -53,18 +51,14 @@ export default function AllHistory({}: Props) {
                 style={{ color: "#FFB601" }}
                 onClick={() => {
                   if (canPaginate()) {
-                    dispatch(
-                      setCurrentLotteryId(parseInt(currentLotteryId) - 1)
-                    );
+                    dispatch(setCurrentLotteryId(currentLotteryId - 1));
                   }
                 }}
               />
               <ArrowRightOutlined
                 onClick={() => {
                   if (canPaginate()) {
-                    dispatch(
-                      setCurrentLotteryId(parseInt(currentLotteryId) + 1)
-                    );
+                    dispatch(setCurrentLotteryId(currentLotteryId + 1));
                   }
                 }}
               />
@@ -74,7 +68,7 @@ export default function AllHistory({}: Props) {
         </div>
         {!loadingSelectedLotteryData ? (
           <RibbonContainer className="p-4 hrz-b d-flex justify-content-between align-items-center">
-            {parseInt(currentLotteryId) === parseInt(latestLotteryId) && (
+            {currentLotteryId === latestLotteryId && (
               <RightCornerRibbon
                 backgroundColor="#D91C34"
                 color="#FFFFFF"
@@ -92,7 +86,7 @@ export default function AllHistory({}: Props) {
               {selectedLotteryData?.finalNumber
                 .toString()
                 .split("")
-                .map((number: number) => (
+                .map((number: string) => (
                   <div className="lottery-number" class-type={number}>
                     {number}
                   </div>

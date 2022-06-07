@@ -1,16 +1,37 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { LotteryData } from "src/lib/hooks/useFetchContractInfo";
+import { PersonalData } from "src/lib/hooks/useFetchPersonalInfo";
 
-const initialState = {
+type InitialState<
+  B = boolean,
+  N = number,
+  L = LotteryData,
+  P = PersonalData
+> = {
+  isOpenPersonalTicketInfo: B;
+  isOpenPersonalHistoryTicketInfo: B;
+  currentLotteryId: N;
+  historyLotteryData: L;
+  loadinghistoryLotteryData: B;
+  latestLotteryId: N;
+  latestLotteryData: L;
+  loadinglatestLotteryData: B;
+  latestPersonalData: P;
+  historyPersonalData: P;
+  loadinghistoryPersonalData: B;
+};
+
+const initialState: InitialState = {
   isOpenPersonalTicketInfo: false,
   isOpenPersonalHistoryTicketInfo: false,
-  currentLotteryId: null as any,
-  historyLotteryData: null as any,
+  currentLotteryId: null as unknown as number,
+  historyLotteryData: null as unknown as LotteryData,
   loadinghistoryLotteryData: false,
-  latestLotteryId: null as any,
-  latestLotteryData: null as any,
+  latestLotteryId: null as unknown as number,
+  latestLotteryData: null as unknown as LotteryData,
   loadinglatestLotteryData: false,
-  latestPersonalData: null as any,
-  historyPersonalData: null as any,
+  latestPersonalData: null as unknown as PersonalData,
+  historyPersonalData: null as unknown as PersonalData,
   loadinghistoryPersonalData: false,
 };
 

@@ -1,5 +1,5 @@
 import { ConnectButton } from "@components/common/ConnectButton";
-import PersonalTicketInfoPopup from "@components/common/PersonalTicketInfoPopup";
+import PersonalLatestPopup from "@components/common/PersonalTicketInfoPopup/PersonalLatestPopup";
 import PersonalHistoryPopup from "@components/common/PersonalTicketInfoPopup/PersonalHistoryPopup";
 import {
   setCurrentLotteryId,
@@ -144,7 +144,7 @@ export default function Nav({}: Props) {
         <div className="nav-item">Whitepaper</div>
         {address || <ConnectButton text="Connect" type="green" />}
       </div>
-      <PersonalTicketInfoPopup />
+      <PersonalLatestPopup />
       <PersonalHistoryPopup />
     </div>
   );

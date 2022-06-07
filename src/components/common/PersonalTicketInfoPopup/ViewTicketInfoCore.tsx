@@ -1,34 +1,30 @@
-import { setOpenPersonalTicketInfo } from "@redux/globalState";
 import { Modal, Space } from "antd";
 import React from "react";
 import OtpInput from "react-otp-input";
-import { useDispatch, useSelector } from "react-redux";
-import { ArrowLeftOutlined } from "@ant-design/icons";
+import { useDispatch } from "react-redux";
 import { BuyTicketButton } from "../BuyTicketButton";
 
-type Props = {};
+type Props = {
+  data: any;
+  setOpen: any;
+  visibleState: boolean;
+};
 
-export default function PersonalTicketInfoPopup({}: Props) {
+export default function ViewTicketInfoCore({
+  data,
+  setOpen,
+  visibleState,
+}: Props) {
   const dispatch = useDispatch();
-  const latestPersonalData = useSelector(
-    (state) => state.globalState.latestPersonalData
-  );
-  const isOpenPersonalTicketInfo = useSelector(
-    (state) => state.globalState.isOpenPersonalTicketInfo
-  );
   return (
     <Modal
-      title={
-        <div className="cl-br-drk fnt-s3 fnt-b">
-          Round {latestPersonalData?.round}
-        </div>
-      }
+      title={<div className="cl-br-drk fnt-s3 fnt-b">Round {data?.round}</div>}
       style={{ top: 20 }}
-      visible={isOpenPersonalTicketInfo}
+      visible={visibleState}
       // centered
       footer={false}
-      onOk={() => dispatch(setOpenPersonalTicketInfo(false))}
-      onCancel={() => dispatch(setOpenPersonalTicketInfo(false))}
+      onOk={() => dispatch(setOpen(false))}
+      onCancel={() => dispatch(setOpen(false))}
     >
       <div className="d-flex flex-column justify-content-center">
         <div className="d-flex flex-column justify-content-center">
@@ -40,7 +36,7 @@ export default function PersonalTicketInfoPopup({}: Props) {
             <div className="fnt-s2 fnt-bold cl-br-drk text-center">
               Your Tickets
             </div>
-            {latestPersonalData?.tickets.map((obj: any, index: number) => (
+            {data?.tickets.map((obj: any, index: number) => (
               <div
                 className="d-flex justify-content-center animate__animated animate__flipInX"
                 key={index}

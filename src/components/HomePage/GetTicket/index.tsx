@@ -5,21 +5,14 @@ import useCollapse from "react-collapsed";
 import { BuyTicketButton } from "@components/common/BuyTicketButton";
 
 type Props = {};
-interface PrizePot extends HeraValue {
-  coinValue: string;
-}
 
-export const PrizePotValue = ({ name, value, coinValue }: PrizePot) => {
+export const PrizePotValue = ({ name, value }: HeraValue) => {
   return (
     <div className="d-flex flex-column align-items-start mr-5">
       <div>
         <div className="fnt-b fnt-s6 cl-yl d-flex align-items-center">
           {value}&nbsp;
           <img src={`/img/coins/${name}.png`} className="coin-lg" />
-        </div>
-        <div className="fnt-s1 cl-w">
-          {coinValue}
-          <span className="fnt-b cl-w ml-2">HERA</span>
         </div>
       </div>
     </div>
@@ -57,16 +50,8 @@ export default function GetTicket({}: Props) {
               <div className="row">
                 <div className="col-3 fnt-s3 fnt-b cl-w ">Prize Pot</div>
                 <div className="col-7 d-flex justify-content-between align-items-center flex-wrap">
-                  <PrizePotValue
-                    value={200909}
-                    name="hera"
-                    coinValue="02.016"
-                  />
-                  <PrizePotValue
-                    value={200909}
-                    name="hegem"
-                    coinValue="02.016"
-                  />
+                  <PrizePotValue value={200909} name="hera" />
+                  <PrizePotValue value={200909} name="hegem" />
                 </div>
               </div>
             </div>

@@ -23,11 +23,21 @@ const useFetchContractInfo = async (lotteryId: number) => {
   const amountCollectedInHera = parseFloat(
     Web3.utils.fromWei(results[13], "ether")
   );
-  const coinPerBracket = results[7].map((number: any, index: number) => {
+  // const coinPerBracket = results[7].map((number: any, index: number) => {
+  //   return {
+  //     index,
+  //     hegem: Web3.utils.fromWei(number, "ether"),
+  //     hera: Web3.utils.fromWei(results[8][index], "ether"),
+  //     countWinners: results[9][index],
+  //   };
+  // });
+
+  const coinPerBracket = results[4].map((number: any, index: number) => {
     return {
       index,
-      hegem: Web3.utils.fromWei(number, "ether"),
-      hera: Web3.utils.fromWei(results[8][index], "ether"),
+      hegem: ((parseFloat(number) / 100) * amountCollectedInHegem) / 100,
+      hera:
+        ((parseFloat(results[5][index]) / 100) * amountCollectedInHera) / 100,
       countWinners: results[9][index],
     };
   });

@@ -74,7 +74,7 @@ export default function AllHistory({}: Props) {
         </div>
         {!loadingSelectedLotteryData ? (
           <RibbonContainer className="p-4 hrz-b d-flex justify-content-between align-items-center">
-            {parseInt(currentLotteryId) - 1 === parseInt(latestLotteryId) && (
+            {parseInt(currentLotteryId) === parseInt(latestLotteryId) && (
               <RightCornerRibbon
                 backgroundColor="#D91C34"
                 color="#FFFFFF"

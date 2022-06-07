@@ -127,7 +127,7 @@ body {
   }
 }
 .all-history,
-.your-history,
+.personal-history,
 .get-ticket {
   &-cont {
     width: 100%;
@@ -142,4 +142,7 @@ li {
 }
 .how-to-play {
   line-height: 25pt;
+}
+.bdr-bt-popup {
+  border-bottom: 2px dashed #d0b07c !important;
 }

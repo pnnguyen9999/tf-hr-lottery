@@ -10,8 +10,8 @@ export interface HeraValue {
   value: number;
 }
 export default function Banner({}: Props) {
-  const lastestLotteryData = useSelector(
-    (state) => state.globalState.lastestLotteryData
+  const latestLotteryData = useSelector(
+    (state) => state.globalState.latestLotteryData
   );
   const HeraValue = ({ name, value }: HeraValue) => {
     return (
@@ -32,11 +32,11 @@ export default function Banner({}: Props) {
           <div className="d-flex align-items-center my-2">
             <HeraValue
               name="hera"
-              value={lastestLotteryData?.amountCollectedInHera}
+              value={latestLotteryData?.amountCollectedInHera}
             />
             <HeraValue
               name="hegem"
-              value={lastestLotteryData?.amountCollectedInHegem}
+              value={latestLotteryData?.amountCollectedInHegem}
             />
           </div>
           <div className="cl-br fnt-s2 fnt-b my-2">In Prizes</div>

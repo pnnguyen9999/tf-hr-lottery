@@ -3,7 +3,9 @@ import React from "react";
 import { HeraValue } from "../Banner";
 import useCollapse from "react-collapsed";
 import { BuyTicketButton } from "@components/common/BuyTicketButton";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { Modal } from "antd";
+import { setOpenPersonalTicketInfo } from "@redux/globalState";
 
 type Props = {};
 
@@ -30,12 +32,16 @@ export const CoinValue = ({ name, value }: HeraValue) => {
 };
 
 export default function GetTicket({}: Props) {
+  const dispatch = useDispatch();
   const { getCollapseProps, getToggleProps, isExpanded } = useCollapse();
-  const lastestLotteryData = useSelector(
-    (state) => state.globalState.lastestLotteryData
+  const latestLotteryData = useSelector(
+    (state) => state.globalState.latestLotteryData
   );
-  const lastestLotteryId = useSelector(
-    (state) => state.globalState.lastestLotteryId
+  const latestLotteryId = useSelector(
+    (state) => state.globalState.latestLotteryId
+  );
+  const latestPersonalData = useSelector(
+    (state) => state.globalState.latestPersonalData
   );
   return (
     <div className="get-ticket mb-5">
@@ -49,7 +55,7 @@ export default function GetTicket({}: Props) {
         <div className="p-3 hrz-b d-flex justify-content-between align-items-center flex-wrap">
           <div className="fnt-b fnt-s3 cl-w">Next Draw</div>
           <div className="fnt-s1 cl-w">
-            #{lastestLotteryId}|Draw: {lastestLotteryData?.drawnTime}
+            #{latestLotteryId}|Draw: {latestLotteryData?.drawnTime}
           </div>
         </div>
         <div className="p-3 hrz-b">
@@ -59,11 +65,11 @@ export default function GetTicket({}: Props) {
                 <div className="col-3 fnt-s3 fnt-b cl-w ">Prize Pot</div>
                 <div className="col-7 d-flex justify-content-between align-items-center flex-wrap">
                   <PrizePotValue
-                    value={lastestLotteryData?.amountCollectedInHera}
+                    value={latestLotteryData?.amountCollectedInHera}
                     name="hera"
                   />
                   <PrizePotValue
-                    value={lastestLotteryData?.amountCollectedInHegem}
+                    value={latestLotteryData?.amountCollectedInHegem}
                     name="hegem"
                   />
                 </div>
@@ -75,10 +81,18 @@ export default function GetTicket({}: Props) {
                 <div className="col-7 d-flex justify-content-between align-items-center flex-wrap">
                   <div className="d-flex align-items-start flex-column">
                     <div className="fnt-s1 cl-w">
-                      You Have <span className="fnt-b cl-yl">4 Ticket</span>{" "}
+                      You Have{" "}
+                      <span className="fnt-b cl-yl">
+                        {latestPersonalData?.numberOfTickets} Ticket
+                      </span>{" "}
                       This Round
                     </div>
-                    <div className="fnt-s1 cl-br">View your tickets</div>
+                    <u
+                      className="fnt-s1 cl-br cursor-pointer"
+                      onClick={() => dispatch(setOpenPersonalTicketInfo(true))}
+                    >
+                      View your tickets
+                    </u>
                   </div>
                   <BuyTicketButton />
                 </div>
@@ -95,7 +109,7 @@ export default function GetTicket({}: Props) {
               </div>
               <div className="col-12">
                 <div className="row">
-                  {lastestLotteryData?.coinPerBracket.map((obj: any) => (
+                  {latestLotteryData?.coinPerBracket.map((obj: any) => (
                     <div className="col-md-3 col-6">
                       <div className="d-flex flex-column align-items-start">
                         <div className="fnt-s2 cl-grey">

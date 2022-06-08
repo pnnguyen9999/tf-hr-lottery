@@ -70,7 +70,7 @@
     border-radius: 50px;
     padding: 3px 10px;
 }
-
+$deg: 120deg;
 .lottery-number {
     padding: 10px;
     border-radius: 50%;
@@ -80,44 +80,45 @@
     font-family: fontbold;
     font-size: 18pt;
     color: #fff;
+    box-shadow: 0 0 10px #555;
     &[class-type="1"] {
-        background-image: linear-gradient(110deg, #ff4b00, #ff9b00);
+        background-image: linear-gradient($deg, #ff4b00, #ff9b00);
         border: 4px solid #ff9500;
     }
     &[class-type="2"] {
-        background-image: linear-gradient(110deg, #01b367, #12ff96);
+        background-image: linear-gradient($deg, #01b367, #12ff96);
         border: 4px solid #11f792;
     }
     &[class-type="3"] {
-        background-image: linear-gradient(110deg, #9121ff, #c57bfe);
+        background-image: linear-gradient($deg, #9121ff, #c57bfe);
         border: 4px solid #bf71fe;
     }
     &[class-type="4"] {
-        background-image: linear-gradient(110deg, #840201, #e00a0e);
+        background-image: linear-gradient($deg, #840201, #e00a0e);
         border: 4px solid #d1080c;
     }
     &[class-type="5"] {
-        background-image: linear-gradient(110deg, #ff9c00, #ffcd00);
+        background-image: linear-gradient($deg, #ff9c00, #ffcd00);
         border: 4px solid #fec403;
     }
     &[class-type="6"] {
-        background-image: linear-gradient(110deg, #00c3ea, #36eaff);
+        background-image: linear-gradient($deg, #00c3ea, #36eaff);
         border: 4px solid #32e8fe;
     }
     &[class-type="7"] {
-        background-image: linear-gradient(110deg, #fe0371, #fe589e);
+        background-image: linear-gradient($deg, #fe0371, #fe589e);
         border: 4px solid #ff4b98;
     }
     &[class-type="8"] {
-        background-image: linear-gradient(110deg, #0281ff, #5dbfff);
+        background-image: linear-gradient($deg, #0281ff, #5dbfff);
         border: 4px solid #56baff;
     }
     &[class-type="9"] {
-        background-image: linear-gradient(110deg, #ff75b5, #fcb0d9);
+        background-image: linear-gradient($deg, #ff75b5, #fcb0d9);
         border: 4px solid #fdacd7;
     }
     &[class-type="0"] {
-        background-image: linear-gradient(110deg, #1c0289, #0b20ff);
+        background-image: linear-gradient($deg, #1c0289, #0b20ff);
         border: 4px solid #0a1df1;
     }
 }
@@ -129,4 +130,20 @@
     width: 50px !important;
     border-radius: 5px;
     border: 3px solid #e1caa2;
+}
+.lottery-ticket {
+    background-color: #fffbef;
+    color: #67350f;
+    font-family: fontbold;
+    font-size: 14pt;
+    width: 20% !important;
+    border-radius: 5px;
+    border: 3px solid #e1caa2;
+    &.matched {
+        background-color: #bc7316;
+        color: #fff;
+    }
+}
+.icon-sm {
+    height: 30px;
 }

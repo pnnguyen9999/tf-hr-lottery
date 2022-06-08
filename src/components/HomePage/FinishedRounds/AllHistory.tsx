@@ -84,7 +84,6 @@ export default function AllHistory({}: Props) {
               className="d-flex align-items-center"
             >
               {selectedLotteryData?.finalNumber
-                .toString()
                 .split("")
                 .map((number: string) => (
                   <div className="lottery-number" class-type={number}>

@@ -19,6 +19,7 @@ type InitialState<
   latestPersonalData: P;
   historyPersonalData: P;
   loadinghistoryPersonalData: B;
+  numberOfWinningTickets: N;
 };
 
 const initialState: InitialState = {
@@ -33,6 +34,7 @@ const initialState: InitialState = {
   latestPersonalData: null as unknown as PersonalData,
   historyPersonalData: null as unknown as PersonalData,
   loadinghistoryPersonalData: false,
+  numberOfWinningTickets: 0,
 };
 
 const globalState = createSlice({
@@ -72,6 +74,9 @@ const globalState = createSlice({
     setOpenHistoryPersonalTicketInfo: (state, { payload }) => {
       state.isOpenPersonalHistoryTicketInfo = payload;
     },
+    setNumberOfWinningTicket: (state, { payload }) => {
+      state.numberOfWinningTickets = payload;
+    },
   },
 });
 
@@ -86,6 +91,7 @@ export const {
   setOpenPersonalTicketInfo,
   setHistoryPersonalData,
   setOpenHistoryPersonalTicketInfo,
+  setNumberOfWinningTicket,
 } = globalState.actions;
 
 export default globalState.reducer;

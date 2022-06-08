@@ -25,6 +25,8 @@ export default function Nav({}: Props) {
   /**
    * @RULE1 -> trừ 1 đơn vị paginate cho load history data
    * @RULE2 -> đơn vị paginate cho load latest giữ nguyeen
+   * @currentLotteryId -> lottery ID cho paginate
+   * @latestLotteryId -> lottery ID mới nhất get từ contract
    */
   const dispatch = useDispatch();
   const address = useSelector((state) => state.web3.address);

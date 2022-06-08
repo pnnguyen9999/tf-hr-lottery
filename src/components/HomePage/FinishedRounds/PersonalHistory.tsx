@@ -16,6 +16,9 @@ type Props = {};
 
 export default function PersonalHistory({}: Props) {
   const dispatch = useDispatch();
+  const latestLotteryId = useSelector(
+    (state) => state.globalState.latestLotteryId
+  );
   const selectedLotteryData = useSelector(
     (state) => state.globalState.historyLotteryData
   );
@@ -71,13 +74,16 @@ export default function PersonalHistory({}: Props) {
 
         {!loadingSelectedLotteryData ? (
           <RibbonContainer className="p-4 hrz-b d-flex justify-content-between align-items-center">
-            <RightCornerRibbon
-              backgroundColor="#D91C34"
-              color="#FFFFFF"
-              fontFamily="fontbold"
-            >
-              Latest
-            </RightCornerRibbon>
+            {currentLotteryId === latestLotteryId && (
+              <RightCornerRibbon
+                backgroundColor="#D91C34"
+                color="#FFFFFF"
+                fontFamily="fontbold"
+              >
+                Latest
+              </RightCornerRibbon>
+            )}
+
             <div className="cl-w fnt-b fnt-s3">Winning Number</div>
             <Space
               direction="horizontal"
@@ -85,7 +91,6 @@ export default function PersonalHistory({}: Props) {
               className="d-flex align-items-center"
             >
               {selectedLotteryData?.finalNumber
-                .toString()
                 .split("")
                 .map((number: string) => (
                   <div className="lottery-number" class-type={number}>

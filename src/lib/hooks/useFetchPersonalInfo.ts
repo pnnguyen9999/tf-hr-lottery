@@ -3,11 +3,16 @@ import lotteryABI from "src/lib/contract/lotteryABI.abi.json";
 import _ from "lodash";
 import Web3 from "web3";
 
+interface Ticket {
+  ticketId: string;
+  ticketNumber: string;
+}
 export interface PersonalData {
   results: {};
   round: number;
   numberOfTickets: number;
-  tickets: number[];
+  tickets: string[];
+  ticketsObj: Ticket[];
 }
 
 const useFetchPersonalInfo = async (
@@ -30,15 +35,26 @@ const useFetchPersonalInfo = async (
   const numberOfTickets = parseInt(results[3]);
   const round = lotteryId;
 
-  const tickets = results[1].map((number: any) =>
+  const tickets = results[1].map((number: number) =>
     _.reverse(number.toString().split("")).join("").slice(0, -1)
   );
+
+  const ticketsObj = results[1].map((number: number, index: number) => {
+    return {
+      ticketId: results[0][index],
+      ticketNumber: _.reverse(number.toString().split(""))
+        .join("")
+        .slice(0, -1),
+    };
+  });
+  console.log(ticketsObj);
 
   return {
     results,
     round,
     numberOfTickets,
     tickets,
+    ticketsObj,
   };
 };
 

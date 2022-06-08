@@ -6,7 +6,7 @@ import moment from "moment";
 
 export interface LotteryData {
   results: [];
-  finalNumber: number;
+  finalNumber: string;
   amountCollectedInHegem: number;
   amountCollectedInHera: number;
   coinPerBracket: [];
@@ -24,10 +24,13 @@ const useFetchContractInfo = async (
   };
   const results = await getLotteryData(lotteryId);
 
-  const finalNumber = parseInt(
-    _.reverse((results[14] - 10000).toString().split("")).join("")
-  );
+  // const finalNumber = parseInt(
+  //   _.reverse((results[14] - 10000).toString().split("")).join("")
+  // );
 
+  const finalNumber = _.reverse(
+    (results[14] - 10000).toString().split("")
+  ).join("");
   const amountCollectedInHegem = parseFloat(
     Web3.utils.fromWei(results[12], "ether")
   );

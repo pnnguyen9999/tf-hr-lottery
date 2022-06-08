@@ -18,10 +18,20 @@ import { useDispatch, useSelector } from "react-redux";
 import { LOTTERY_CONTRACT, RPC_BSC } from "src/config";
 import lotteryABI from "src/lib/contract/lotteryABI.abi.json";
 import useFetchContractInfo from "src/lib/hooks/useFetchContractInfo";
-import useFetchPersonalInfo from "src/lib/hooks/useFetchPersonalInfo";
+import useFetchPersonalInfo, {
+  Ticket,
+} from "src/lib/hooks/useFetchPersonalInfo";
 import Web3 from "web3";
+import useFetchRewardInfo, {
+  RewardInfo,
+} from "src/lib/hooks/useFetchRewardInfo";
 type Props = {};
-
+interface TicketWithBracket extends Ticket {
+  bracket: number;
+}
+interface TicketWithReward extends RewardInfo {
+  ticket: Ticket;
+}
 export default function Nav({}: Props) {
   /**
    * @RULE1 -> trừ 1 đơn vị paginate cho load history data
@@ -120,25 +130,86 @@ export default function Nav({}: Props) {
   }, [address, currentLotteryId]);
 
   useEffect(() => {
-    const finalNumberArr = selectedLotteryData?.finalNumber.split("");
-    console.log(historyPersonalData?.tickets);
-    console.log(selectedLotteryData?.finalNumber);
-    let allTicketsStatus = [] as any;
-    historyPersonalData?.tickets.map((objNumber: string, index) => {
-      const tempBracket = [false, false, false, false];
-      for (let i = 0; i < objNumber.split("").length; i++) {
-        if (finalNumberArr[i] === objNumber[i]) {
-          tempBracket[i] = true;
-        } else {
-          break;
+    /**
+     * -> Cái này để xử lý data so sánh vé user với số trúng các thứ
+     * -> Mỗi lần paginate history sẽ gọi cái này
+     */
+    async function processData() {
+      const finalNumberArr = selectedLotteryData?.finalNumber.split("");
+      let allTicketsStatus = [] as TicketWithBracket[];
+      let allTicketsReward = [] as TicketWithReward[];
+      let totalReward: RewardInfo = {
+        hegemReward: 0,
+        heraReward: 0,
+      };
+      historyPersonalData?.ticketsObj.map((ticketObj: Ticket, index) => {
+        const tempBracket = [false, false, false, false];
+        for (let i = 0; i < ticketObj.ticketNumber.split("").length; i++) {
+          if (finalNumberArr[i] === ticketObj.ticketNumber[i]) {
+            tempBracket[i] = true;
+          } else {
+            break;
+          }
         }
-      }
-      if (tempBracket.includes(true)) {
-        allTicketsStatus.push(tempBracket);
-      }
-    });
-    console.log(allTicketsStatus);
-    dispatch(setNumberOfWinningTicket(allTicketsStatus));
+        if (tempBracket.includes(true)) {
+          const bracket = tempBracket.filter((x: boolean) => x === true).length;
+          allTicketsStatus.push({ ...ticketObj, bracket: bracket - 1 });
+        }
+      });
+      dispatch(setNumberOfWinningTicket(allTicketsStatus));
+
+      const mapFunction = (arr: TicketWithBracket[]): any => {
+        const promises = arr.map(
+          async (ticketObject: TicketWithBracket, index) => {
+            const dataReward = await useFetchRewardInfo(
+              currentLotteryId - 1,
+              ticketObject.ticketId,
+              ticketObject.bracket
+            );
+            console.log(dataReward);
+            const dataTicketWithReward: TicketWithReward = {
+              ticket: {
+                ticketId: ticketObject.ticketId,
+                ticketNumber: ticketObject.ticketNumber,
+              },
+              hegemReward: dataReward.hegemReward,
+              heraReward: dataReward.heraReward,
+            };
+            return dataTicketWithReward;
+          }
+        );
+        return Promise.all(promises);
+      };
+      allTicketsReward = await mapFunction(allTicketsStatus);
+      // allTicketsStatus.map(
+      //   async (ticketObject: TicketWithBracket, index) => {
+      //     const dataReward = await useFetchRewardInfo(
+      //       currentLotteryId - 1,
+      //       ticketObject.ticketId,
+      //       ticketObject.bracket
+      //     );
+      //     console.log(dataReward);
+      //     const dataTicketWithReward: TicketWithReward = {
+      //       ticket: {
+      //         ticketId: ticketObject.ticketId,
+      //         ticketNumber: ticketObject.ticketNumber,
+      //       },
+      //       hegemReward: dataReward.hegemReward,
+      //       heraReward: dataReward.heraReward,
+      //     };
+      //     allTicketsReward.push(dataTicketWithReward);
+      //     // return dataTicketWithReward
+      //   }
+      // );
+
+      console.log(allTicketsReward);
+      allTicketsReward.map((twr: TicketWithReward, index) => {
+        totalReward.hegemReward = totalReward.hegemReward + twr.hegemReward;
+        totalReward.heraReward = totalReward.heraReward + twr.heraReward;
+      });
+      console.log(totalReward);
+    }
+    processData();
   }, [historyPersonalData, selectedLotteryData]);
 
   return (

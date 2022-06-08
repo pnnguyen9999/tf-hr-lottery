@@ -10,6 +10,7 @@ import {
   setlatestLotteryId,
   setlatestPersonalData,
   setHistoryPersonalData,
+  setNumberOfWinningTicket,
 } from "@redux/globalState";
 import { message } from "antd";
 import React, { useState, useEffect } from "react";
@@ -38,6 +39,9 @@ export default function Nav({}: Props) {
   );
   const selectedLotteryData = useSelector(
     (state) => state.globalState.historyLotteryData
+  );
+  const historyPersonalData = useSelector(
+    (state) => state.globalState.historyPersonalData
   );
 
   useEffect(() => {
@@ -114,6 +118,28 @@ export default function Nav({}: Props) {
     }
     getInfo();
   }, [address, currentLotteryId]);
+
+  useEffect(() => {
+    const finalNumberArr = selectedLotteryData?.finalNumber.split("");
+    console.log(historyPersonalData?.tickets);
+    console.log(selectedLotteryData?.finalNumber);
+    let allTicketsStatus = [] as any;
+    historyPersonalData?.tickets.map((objNumber: string, index) => {
+      const tempBracket = [false, false, false, false];
+      for (let i = 0; i < objNumber.split("").length; i++) {
+        if (finalNumberArr[i] === objNumber[i]) {
+          tempBracket[i] = true;
+        } else {
+          break;
+        }
+      }
+      if (tempBracket.includes(true)) {
+        allTicketsStatus.push(tempBracket);
+      }
+    });
+    console.log(allTicketsStatus);
+    dispatch(setNumberOfWinningTicket(allTicketsStatus));
+  }, [historyPersonalData, selectedLotteryData]);
 
   return (
     <div className="nav d-flex justify-content-between align-items-center">

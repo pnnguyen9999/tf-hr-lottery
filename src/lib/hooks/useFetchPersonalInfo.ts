@@ -39,6 +39,7 @@ const useFetchPersonalInfo = async (
     _.reverse(number.toString().split("")).join("").slice(0, -1)
   );
 
+  //   const tickets = ["0014", "0127", "0064", "1064"];
   const ticketsObj = results[1].map((number: number, index: number) => {
     return {
       ticketId: results[0][index],

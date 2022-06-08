@@ -152,7 +152,8 @@ export default function PersonalHistoryPopup({}: Props) {
                   <img className="icon-sm" src="/icons/gift-icon.png" />
                 </div>
                 <div className="cl-br-drk fnt-s1">
-                  Winning Tickets: <span className="fnt-b"></span>
+                  Winning Tickets:{" "}
+                  <span className="fnt-b">{numberOfWinningTickets.length}</span>
                 </div>
               </Space>
             </div>

@@ -6,7 +6,8 @@ type InitialState<
   B = boolean,
   N = number,
   L = LotteryData,
-  P = PersonalData
+  P = PersonalData,
+  A = []
 > = {
   isOpenPersonalTicketInfo: B;
   isOpenPersonalHistoryTicketInfo: B;
@@ -19,7 +20,7 @@ type InitialState<
   latestPersonalData: P;
   historyPersonalData: P;
   loadinghistoryPersonalData: B;
-  numberOfWinningTickets: N;
+  numberOfWinningTickets: A;
 };
 
 const initialState: InitialState = {
@@ -34,7 +35,7 @@ const initialState: InitialState = {
   latestPersonalData: null as unknown as PersonalData,
   historyPersonalData: null as unknown as PersonalData,
   loadinghistoryPersonalData: false,
-  numberOfWinningTickets: 0,
+  numberOfWinningTickets: [],
 };
 
 const globalState = createSlice({

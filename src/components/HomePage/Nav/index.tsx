@@ -25,12 +25,14 @@ import Web3 from "web3";
 import useFetchRewardInfo, {
   RewardInfo,
 } from "src/lib/hooks/useFetchRewardInfo";
+import RewardPopup from "@components/common/RewardPopup";
+import { setAllTicketsRewardRx, setTotalRewardRx } from "@redux/rewardState";
 type Props = {};
 interface TicketWithBracket extends Ticket {
   bracket: number;
 }
-interface TicketWithReward extends RewardInfo {
-  ticket: Ticket;
+export interface TicketWithReward extends RewardInfo {
+  ticket: TicketWithBracket;
 }
 export default function Nav({}: Props) {
   /**
@@ -158,8 +160,10 @@ export default function Nav({}: Props) {
       });
       dispatch(setNumberOfWinningTicket(allTicketsStatus));
 
-      const mapFunction = (arr: TicketWithBracket[]): any => {
-        const promises = arr.map(
+      const processGetAllRewardPromises = (
+        arr: TicketWithBracket[]
+      ): Promise<TicketWithReward[]> => {
+        const rewardPromises = arr.map(
           async (ticketObject: TicketWithBracket, index) => {
             const dataReward = await useFetchRewardInfo(
               currentLotteryId - 1,
@@ -168,46 +172,25 @@ export default function Nav({}: Props) {
             );
             console.log(dataReward);
             const dataTicketWithReward: TicketWithReward = {
-              ticket: {
-                ticketId: ticketObject.ticketId,
-                ticketNumber: ticketObject.ticketNumber,
-              },
+              ticket: ticketObject,
               hegemReward: dataReward.hegemReward,
               heraReward: dataReward.heraReward,
             };
             return dataTicketWithReward;
           }
         );
-        return Promise.all(promises);
+        return Promise.all(rewardPromises);
       };
-      allTicketsReward = await mapFunction(allTicketsStatus);
-      // allTicketsStatus.map(
-      //   async (ticketObject: TicketWithBracket, index) => {
-      //     const dataReward = await useFetchRewardInfo(
-      //       currentLotteryId - 1,
-      //       ticketObject.ticketId,
-      //       ticketObject.bracket
-      //     );
-      //     console.log(dataReward);
-      //     const dataTicketWithReward: TicketWithReward = {
-      //       ticket: {
-      //         ticketId: ticketObject.ticketId,
-      //         ticketNumber: ticketObject.ticketNumber,
-      //       },
-      //       hegemReward: dataReward.hegemReward,
-      //       heraReward: dataReward.heraReward,
-      //     };
-      //     allTicketsReward.push(dataTicketWithReward);
-      //     // return dataTicketWithReward
-      //   }
-      // );
+      allTicketsReward = await processGetAllRewardPromises(allTicketsStatus);
 
       console.log(allTicketsReward);
+      dispatch(setAllTicketsRewardRx(allTicketsReward));
       allTicketsReward.map((twr: TicketWithReward, index) => {
         totalReward.hegemReward = totalReward.hegemReward + twr.hegemReward;
         totalReward.heraReward = totalReward.heraReward + twr.heraReward;
       });
       console.log(totalReward);
+      dispatch(setTotalRewardRx(totalReward));
     }
     processData();
   }, [historyPersonalData, selectedLotteryData]);
@@ -238,6 +221,7 @@ export default function Nav({}: Props) {
       </div>
       <PersonalLatestPopup />
       <PersonalHistoryPopup />
+      <RewardPopup />
     </div>
   );
 }

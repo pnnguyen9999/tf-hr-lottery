@@ -2,10 +2,12 @@ import {
   setNumberOfWinningTicket,
   setOpenHistoryPersonalTicketInfo,
 } from "@redux/globalState";
+import { setOpenPopupReward } from "@redux/rewardState";
 import { Modal, Space } from "antd";
 import React, { useEffect, useState } from "react";
 import { DefaultRootState, useDispatch, useSelector } from "react-redux";
 import { BuyTicketButton } from "../BuyTicketButton";
+import { HeroButton } from "../HeroButton";
 
 type Props = {};
 
@@ -172,7 +174,20 @@ export default function PersonalHistoryPopup({}: Props) {
             ))}
           </Space>
           <div className="d-flex w-100 justify-content-center">
-            <BuyTicketButton />
+            {numberOfWinningTickets.length > 0 ? (
+              <HeroButton
+                text="Collect Prizes"
+                action={() => {
+                  dispatch(setOpenHistoryPersonalTicketInfo(false));
+                  dispatch(setOpenPopupReward(true));
+                }}
+              />
+            ) : (
+              <HeroButton
+                text="Close"
+                action={() => dispatch(setOpenHistoryPersonalTicketInfo(false))}
+              />
+            )}
           </div>
         </div>
       </div>

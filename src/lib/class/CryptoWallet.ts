@@ -168,4 +168,44 @@ export default class WalletUtils {
       });
     return executeBuyTicket;
   };
+
+  claimReward = async (
+    {
+      lotteryId,
+      ticketIds,
+      brackets,
+    }: { lotteryId: number; ticketIds: []; brackets: [] },
+    callback: any
+  ) => {
+    const contract = new this.web3.eth.Contract(lotteryABI, LOTTERY_CONTRACT);
+    const executeBuyTicket = await contract.methods
+      .claimTickets(lotteryId, ticketIds, brackets)
+      .send({ from: this.address })
+      .on("transactionHash", (hash: any) => {
+        callback({
+          status: "EXECUTE_CLAIM_TICKET_SUBMIT",
+          txID: hash,
+        });
+      })
+      .on("error", (error: any) => {
+        console.log(error);
+        callback({
+          status: "EXECUTE_CLAIM_TICKET_FAIL",
+          error: error.message,
+        });
+      })
+      .then(async (receipt: any) => {
+        if (receipt.status === true) {
+          callback({
+            status: "EXECUTE_CLAIM_TICKET_SUCCESS",
+            txID: receipt.transactionHash,
+          });
+        }
+      })
+      .catch((err: any) => {
+        console.log(err);
+        callback({ status: "EXECUTE_CLAIM_TICKET_FAIL", error: err.message });
+      });
+    return executeBuyTicket;
+  };
 }

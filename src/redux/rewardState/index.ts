@@ -1,4 +1,4 @@
-import { TicketWithReward } from "@components/HomePage/Nav";
+import { TicketWithReward } from "@components/HomePage/ProcessDataCpn";
 import { createSlice } from "@reduxjs/toolkit";
 import { RewardInfo } from "src/lib/hooks/useFetchRewardInfo";
 

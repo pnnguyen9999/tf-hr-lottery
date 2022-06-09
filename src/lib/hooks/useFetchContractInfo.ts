@@ -28,15 +28,15 @@ const useFetchContractInfo = async (
   //   _.reverse((results[14] - 10000).toString().split("")).join("")
   // );
 
-  const finalNumberData = _.reverse(
-    (results[14] - 10000).toString().split("")
-  ).join("");
-  let finalNumber = "";
-  if (finalNumberData.length !== 4) {
-    finalNumber = "";
-  } else {
-    finalNumber = finalNumberData;
-  }
+  const finalNumber = _.reverse(results[14].toString().split(""))
+    .join("")
+    .slice(0, -1);
+  // let finalNumber = "";
+  // if (finalNumberData.length !== 4) {
+  //   finalNumber = "";
+  // } else {
+  //   finalNumber = finalNumberData;
+  // }
 
   const amountCollectedInHegem = parseFloat(
     Web3.utils.fromWei(results[12], "ether")

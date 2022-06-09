@@ -11,9 +11,10 @@ import {
   setlatestPersonalData,
   setHistoryPersonalData,
   setNumberOfWinningTicket,
+  setOpenPopupStatus,
 } from "@redux/globalState";
-import { message } from "antd";
-import React, { useState, useEffect } from "react";
+import { Avatar } from "antd";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { LOTTERY_CONTRACT, RPC_BSC } from "src/config";
 import lotteryABI from "src/lib/contract/lotteryABI.abi.json";
@@ -27,6 +28,7 @@ import useFetchRewardInfo, {
 } from "src/lib/hooks/useFetchRewardInfo";
 import RewardPopup from "@components/common/RewardPopup";
 import { setAllTicketsRewardRx, setTotalRewardRx } from "@redux/rewardState";
+import PopupCore from "@components/common/StatusPopup/PopupCore";
 type Props = {};
 interface TicketWithBracket extends Ticket {
   bracket: number;
@@ -203,25 +205,50 @@ export default function Nav({}: Props) {
       <div className="d-flex">
         <div
           className="nav-item"
-          onClick={() => dispatch(setCurrentLotteryId(currentLotteryId - 1))}
+          onClick={() =>
+            dispatch(
+              setOpenPopupStatus({
+                isOpen: true,
+                type: "success",
+                message: "Successfully",
+              })
+            )
+          }
         >
-          Homepage {currentLotteryId}
+          Homepage
         </div>
         <div
           className="nav-item"
-          onClick={() => dispatch(setCurrentLotteryId(currentLotteryId + 1))}
+          onClick={() =>
+            dispatch(
+              setOpenPopupStatus({
+                isOpen: true,
+                type: "fail",
+                message: "abcdef",
+              })
+            )
+          }
         >
           Marketplace
         </div>
-        <div className="nav-item">Battle {latestLotteryId}</div>
+        <div className="nav-item">Battle</div>
         <div className="nav-item">Farm</div>
         <div className="nav-item">INO</div>
         <div className="nav-item">Whitepaper</div>
-        {address || <ConnectButton text="Connect" type="green" />}
+        {!address ? (
+          <ConnectButton text="Connect" type="green" />
+        ) : (
+          <Avatar
+            className="avatar"
+            src={`https://avatars.dicebear.com/v2/jdenticon/${address}.svg`}
+            size={42}
+          />
+        )}
       </div>
       <PersonalLatestPopup />
       <PersonalHistoryPopup />
       <RewardPopup />
+      <PopupCore />
     </div>
   );
 }

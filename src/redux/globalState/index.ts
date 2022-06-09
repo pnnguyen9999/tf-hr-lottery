@@ -2,6 +2,11 @@ import { createSlice } from "@reduxjs/toolkit";
 import { LotteryData } from "src/lib/hooks/useFetchContractInfo";
 import { PersonalData } from "src/lib/hooks/useFetchPersonalInfo";
 
+export type StatusPopup = {
+  isOpen: boolean;
+  type: "success" | "fail";
+  message: string;
+};
 type InitialState<
   B = boolean,
   N = number,
@@ -9,6 +14,7 @@ type InitialState<
   P = PersonalData,
   A = []
 > = {
+  isOpenPopupStatus: StatusPopup;
   isOpenPersonalTicketInfo: B;
   isOpenPersonalHistoryTicketInfo: B;
   currentLotteryId: N;
@@ -36,6 +42,11 @@ const initialState: InitialState = {
   historyPersonalData: null as unknown as PersonalData,
   loadinghistoryPersonalData: false,
   numberOfWinningTickets: [],
+  isOpenPopupStatus: {
+    isOpen: false,
+    type: "fail",
+    message: "",
+  },
 };
 
 const globalState = createSlice({
@@ -78,6 +89,13 @@ const globalState = createSlice({
     setNumberOfWinningTicket: (state, { payload }) => {
       state.numberOfWinningTickets = payload;
     },
+    setOpenPopupStatus: (state, { payload }: { payload: StatusPopup }) => {
+      state.isOpenPopupStatus = {
+        isOpen: payload.isOpen,
+        type: payload.type,
+        message: payload.message,
+      };
+    },
   },
 });
 
@@ -93,6 +111,7 @@ export const {
   setHistoryPersonalData,
   setOpenHistoryPersonalTicketInfo,
   setNumberOfWinningTicket,
+  setOpenPopupStatus,
 } = globalState.actions;
 
 export default globalState.reducer;

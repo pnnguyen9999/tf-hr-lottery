@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { HeroButton } from "./HeroButton";
 import { Modal, Space, Input } from "antd";
 import { useEffect, useState } from "react";
@@ -6,10 +6,12 @@ import { ApproveButton } from "./ApproveButton";
 import _ from "lodash";
 import OtpInput from "react-otp-input";
 import { ArrowLeftOutlined } from "@ant-design/icons";
+import { setOpenPopupStatus } from "@redux/globalState";
 /**
  * This is also include modal buy ticket
  */
 export function BuyTicketButton() {
+  const dispatch = useDispatch();
   const web3data = useSelector((state) => state.web3.utilsWallet) as any;
   const hegemBalance = useSelector((state) => state.web3.balance);
   const allowance = useSelector((state) => state.web3.allowance);
@@ -43,9 +45,23 @@ export function BuyTicketButton() {
         },
         async (data: any) => {
           if (data.status === "EXECUTE_BUY_TICKET_SUCCESS") {
-            console.log("execute success");
+            setOpenModal(false);
+            dispatch(
+              setOpenPopupStatus({
+                isOpen: true,
+                type: "success",
+                message: "Buy Ticket Successfully !",
+              })
+            );
           } else if (data.status === "EXECUTE_BUY_TICKET_FAIL") {
-            console.log("execute fail");
+            setOpenModal(false);
+            dispatch(
+              setOpenPopupStatus({
+                isOpen: true,
+                type: "fail",
+                message: "Buy Ticket Failed !",
+              })
+            );
           }
         }
       );

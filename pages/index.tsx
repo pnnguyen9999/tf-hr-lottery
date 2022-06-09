@@ -14,14 +14,16 @@ const FinishedRounds: any = dynamic(
 );
 const Home: React.FC = () => {
   return (
-    <div className="container">
-      <Nav />
-      <Banner />
-      <GetTicket />
-      <BannerWinner />
-      <FinishedRounds />
-      <HowToPlay />
-      <Charts />
+    <div className="home-lottery">
+      <div className="container">
+        <Nav />
+        <Banner />
+        <GetTicket />
+        {/* <BannerWinner /> */}
+        <FinishedRounds />
+        <HowToPlay />
+        <Charts />
+      </div>
     </div>
   );
 };

@@ -144,6 +144,15 @@ $deg: 120deg;
         color: #fff;
     }
 }
-.icon-sm {
-    height: 30px;
+.icon {
+    &-sm {
+        height: 30px;
+    }
+    &-lg {
+        height: 90px;
+    }
+}
+.avatar {
+    border: 3px solid #67350f;
+    padding: 5px;
 }

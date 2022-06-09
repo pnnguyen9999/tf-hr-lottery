@@ -1,4 +1,5 @@
 import { TicketWithReward } from "@components/HomePage/Nav";
+import { setOpenPopupStatus } from "@redux/globalState";
 import { setOpenPopupReward } from "@redux/rewardState";
 import { Modal, Space } from "antd";
 import React from "react";
@@ -40,9 +41,23 @@ export default function RewardPopup({}: Props) {
       },
       async (data: any) => {
         if (data.status === "EXECUTE_CLAIM_TICKET_SUCCESS") {
-          console.log("claim success");
+          dispatch(setOpenPopupReward(false));
+          dispatch(
+            setOpenPopupStatus({
+              isOpen: true,
+              type: "success",
+              message: "Claim Successfully !",
+            })
+          );
         } else if (data.status === "EXECUTE_CLAIM_TICKET_FAIL") {
-          console.log("claim fail");
+          dispatch(setOpenPopupReward(false));
+          dispatch(
+            setOpenPopupStatus({
+              isOpen: true,
+              type: "fail",
+              message: "Claim Failed !",
+            })
+          );
         }
       }
     );

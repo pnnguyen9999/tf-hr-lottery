@@ -62,7 +62,8 @@ export default function Nav({}: Props) {
     const getCurrentRound = async () => {
       const web3 = new Web3(RPC_BSC) as any;
       let contract = new web3.eth.Contract(lotteryABI, LOTTERY_CONTRACT);
-      const id = await contract.methods.currentLotteryId().call();
+      const id = await contract.methods.viewCurrentLotteryId().call();
+      console.log(id);
       dispatch(setCurrentLotteryId(parseInt(id)));
       dispatch(setlatestLotteryId(parseInt(id)));
     };
@@ -203,20 +204,7 @@ export default function Nav({}: Props) {
         <img className="logo" src="/img/logo.png" />
       </div>
       <div className="d-flex">
-        <div
-          className="nav-item"
-          onClick={() =>
-            dispatch(
-              setOpenPopupStatus({
-                isOpen: true,
-                type: "success",
-                message: "Successfully",
-              })
-            )
-          }
-        >
-          Homepage
-        </div>
+        <div className="nav-item">Homepage{currentLotteryId}</div>
         <div
           className="nav-item"
           onClick={() =>

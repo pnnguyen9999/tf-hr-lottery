@@ -1,11 +1,5 @@
-import {
-  setAddress,
-  setAllowance,
-  setBalance,
-  setUtilsWallet,
-} from "@redux/web3";
+import { setTriggerConnectWalletUseEff } from "@redux/triggerState";
 import { useDispatch } from "react-redux";
-import WalletUtils from "src/lib/class/CryptoWallet";
 
 export interface ConnectButton {
   /**
@@ -21,14 +15,7 @@ export interface ConnectButton {
 export function ConnectButton({ type, text }: ConnectButton) {
   const dispatch = useDispatch();
   const handleConnect = async () => {
-    if (window.ethereum) {
-      const walletMetamask = new WalletUtils();
-      await walletMetamask.connect();
-      dispatch(setUtilsWallet(walletMetamask));
-      dispatch(setBalance(await walletMetamask.getHegemBalance()));
-      dispatch(setAllowance(await walletMetamask.getAllowance()));
-      dispatch(setAddress(await walletMetamask.getCurrentAddress()));
-    }
+    dispatch(setTriggerConnectWalletUseEff());
   };
   const ReturnImgBg = () => {
     switch (type) {

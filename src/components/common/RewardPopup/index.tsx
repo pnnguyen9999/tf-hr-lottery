@@ -1,10 +1,11 @@
-import { TicketWithReward } from "@components/HomePage/Nav";
+import { TicketWithReward } from "@components/HomePage/ProcessDataCpn";
 import { setOpenPopupStatus } from "@redux/globalState";
 import { setOpenPopupReward } from "@redux/rewardState";
 import { Modal, Space } from "antd";
 import React from "react";
 import OtpInput from "react-otp-input";
 import { useDispatch, useSelector } from "react-redux";
+import { FIXED_DECIMAL } from "src/constant";
 import { PersonalData } from "src/lib/hooks/useFetchPersonalInfo";
 import { BuyTicketButton } from "../BuyTicketButton";
 import { HeroButton } from "../HeroButton";
@@ -82,10 +83,12 @@ export default function RewardPopup({}: Props) {
             <div className="d-flex w-100 align-items-center justify-content-between">
               <Space direction="vertical" size={5}>
                 <div className="fnt-s5 fnt-b cl-br">
-                  {totalReward.hegemReward} <span className="cl-yl">HEGEM</span>
+                  {totalReward.hegemReward.toFixed(FIXED_DECIMAL)}{" "}
+                  <span className="cl-yl">HEGEM</span>
                 </div>
                 <div className="fnt-s5 fnt-b cl-br">
-                  {totalReward.heraReward} <span className="cl-yl">HERA</span>
+                  {totalReward.heraReward.toFixed(FIXED_DECIMAL)}{" "}
+                  <span className="cl-yl">HERA</span>
                 </div>
               </Space>
               <img className="" src="/icons/giftbox.png" />

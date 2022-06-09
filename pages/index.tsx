@@ -3,6 +3,7 @@ import BannerWinner from "@components/HomePage/BannerWinner";
 import Charts from "@components/HomePage/Charts/index";
 import GetTicket from "@components/HomePage/GetTicket";
 import HowToPlay from "@components/HomePage/HowToPlay";
+import LoginMetamask from "@components/HomePage/LoginMetamask";
 import Nav from "@components/HomePage/Nav";
 import ProcessDataCpn from "@components/HomePage/ProcessDataCpn";
 import dynamic from "next/dynamic";
@@ -18,6 +19,7 @@ const Home: React.FC = () => {
     <div className="home-lottery">
       <div className="container">
         <ProcessDataCpn />
+        <LoginMetamask />
         <Nav />
         <Banner />
         <GetTicket />

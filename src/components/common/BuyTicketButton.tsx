@@ -1,19 +1,13 @@
 import { useDispatch, useSelector } from "react-redux";
 import { HeroButton } from "./HeroButton";
-import { Modal, Space, Input } from "antd";
+import { Modal, Space, Input, message } from "antd";
 import { useEffect, useState } from "react";
 import { ApproveButton } from "./ApproveButton";
 import _ from "lodash";
 import OtpInput from "react-otp-input";
 import { ArrowLeftOutlined } from "@ant-design/icons";
-import {
-  setlatestLotteryData,
-  setlatestPersonalData,
-  setLoadinglatestLotteryData,
-  setOpenPopupStatus,
-} from "@redux/globalState";
-import useFetchContractInfo from "src/lib/hooks/useFetchContractInfo";
-import useFetchPersonalInfo from "src/lib/hooks/useFetchPersonalInfo";
+import { setOpenPopupStatus } from "@redux/globalState";
+import { setTriggerLatestDataUseEff } from "@redux/triggerState";
 /**
  * This is also include modal buy ticket
  */
@@ -22,14 +16,14 @@ export function BuyTicketButton() {
   const web3data = useSelector((state) => state.web3.utilsWallet) as any;
   const hegemBalance = useSelector((state) => state.web3.balance);
   const allowance = useSelector((state) => state.web3.allowance);
+  const maxAmountCanBuy = useSelector(
+    (state) => state.globalState.maxAmountCanBuy
+  );
   const [isOpenModal, setOpenModal] = useState<boolean>(false);
-  const [ticketAmount, setTicketAmount] = useState<number>(0);
+  const [ticketAmount, setTicketAmount] = useState<number>(1);
   const [lotteryNumberArray, setLotteryNumberArray] = useState<any>();
   const [switchPopupContent, setPopupContent] = useState<number>(1);
-  const latestLotteryId = useSelector(
-    (state) => state.globalState.latestLotteryId
-  );
-  const address = useSelector((state) => state.web3.address);
+
   const ModalHeader = () => {
     return switchPopupContent === 1 ? (
       <div className="cl-br-drk fnt-s3 fnt-b">Buy Tickets</div>
@@ -46,46 +40,41 @@ export function BuyTicketButton() {
 
   const BuyInstantly = ({ text }: { text: string }) => {
     const buyInstantly = async () => {
-      await web3data.buyTicket(
-        {
-          ticketNumbers: lotteryNumberArray.map(
-            (number: any) =>
-              10000 + parseInt(_.reverse(number.toString().split("")).join(""))
-          ),
-        },
-        async (data: any) => {
-          if (data.status === "EXECUTE_BUY_TICKET_SUCCESS") {
-            setOpenModal(false);
-            if (latestLotteryId) {
-              console.log(latestLotteryId);
-              dispatch(setLoadinglatestLotteryData(true));
-              const data = await useFetchContractInfo(latestLotteryId);
-              dispatch(setLoadinglatestLotteryData(false));
-              dispatch(setlatestLotteryData(data));
+      if (!_.isEqual(lotteryNumberArray, [])) {
+        await web3data.buyTicket(
+          {
+            ticketNumbers: lotteryNumberArray.map(
+              (number: any) =>
+                10000 +
+                parseInt(_.reverse(number.toString().split("")).join(""))
+            ),
+          },
+          async (data: any) => {
+            if (data.status === "EXECUTE_BUY_TICKET_SUCCESS") {
+              setOpenModal(false);
+              dispatch(setTriggerLatestDataUseEff());
+              dispatch(
+                setOpenPopupStatus({
+                  isOpen: true,
+                  type: "success",
+                  message: "Buy Ticket Successfully !",
+                })
+              );
+            } else if (data.status === "EXECUTE_BUY_TICKET_FAIL") {
+              setOpenModal(false);
+              dispatch(
+                setOpenPopupStatus({
+                  isOpen: true,
+                  type: "fail",
+                  message: "Buy Ticket Failed !",
+                })
+              );
             }
-            if (address && latestLotteryId) {
-              const data = await useFetchPersonalInfo(latestLotteryId, address);
-              dispatch(setlatestPersonalData(data));
-            }
-            dispatch(
-              setOpenPopupStatus({
-                isOpen: true,
-                type: "success",
-                message: "Buy Ticket Successfully !",
-              })
-            );
-          } else if (data.status === "EXECUTE_BUY_TICKET_FAIL") {
-            setOpenModal(false);
-            dispatch(
-              setOpenPopupStatus({
-                isOpen: true,
-                type: "fail",
-                message: "Buy Ticket Failed !",
-              })
-            );
           }
-        }
-      );
+        );
+      } else {
+        message.warn("Please enter number of ticket(s)");
+      }
     };
     return <HeroButton text={text} action={() => buyInstantly()} />;
   };
@@ -108,6 +97,19 @@ export function BuyTicketButton() {
     }
   }, [ticketAmount]);
 
+  const inputValidator = (e: string) => {
+    const _ticketAmount = parseInt(e);
+    if (_ticketAmount <= 0) {
+      if (_ticketAmount === 0) {
+        message.warn("Ticket amount must be greater than zero");
+      }
+    } else {
+      if (!(_ticketAmount > maxAmountCanBuy)) {
+        setTicketAmount(parseInt(e));
+      }
+    }
+  };
+
   return (
     <>
       <HeroButton text="Buy Ticket" action={() => setOpenModal(true)} />
@@ -128,12 +130,18 @@ export function BuyTicketButton() {
                 placeholder="Enter number of ticket(s)"
                 type="number"
                 value={ticketAmount}
-                onChange={(e) => setTicketAmount(parseInt(e.target.value))}
+                onChange={(e) => inputValidator(e.target.value)}
               />
               <div className="w-100 d-flex align-items-center justify-content-end">
                 <div className="cl-br-drk fnt-s1 fnt-b">HEGEM</div>
                 <div className="cl-br-drk fnt-s1">
                   &nbsp;balance:&nbsp;{hegemBalance}
+                </div>
+              </div>
+              <div className="w-100 d-flex align-items-center justify-content-end">
+                <div className="cl-br-drk fnt-s1">
+                  You can buy up to
+                  <span className="fnt-b"> {maxAmountCanBuy}</span> tickets
                 </div>
               </div>
               <div className="w-100 d-flex justify-content-center">
@@ -147,7 +155,13 @@ export function BuyTicketButton() {
               <div className="w-100 d-flex justify-content-center">
                 <u
                   className="fnt-b cl-br-drk fnt-s1 cursor-pointer"
-                  onClick={() => setPopupContent(2)}
+                  onClick={() => {
+                    if (!_.isEqual(lotteryNumberArray, [])) {
+                      setPopupContent(2);
+                    } else {
+                      message.warn("Please enter number of ticket(s)");
+                    }
+                  }}
                 >
                   View/Edit Ticket Number -&gt;
                 </u>
@@ -199,7 +213,11 @@ export function BuyTicketButton() {
                   </div>
                 ))}
                 <div className="d-flex w-100 justify-content-center">
-                  <BuyInstantly text="Buy Instantly" />
+                  {allowance !== "0" ? (
+                    <BuyInstantly text="Buy Instantly" />
+                  ) : (
+                    <ApproveButton />
+                  )}
                 </div>
                 <div className="d-flex w-100 justify-content-center">
                   <div

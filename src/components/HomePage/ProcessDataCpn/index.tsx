@@ -10,8 +10,8 @@ import {
   setlatestPersonalData,
   setHistoryPersonalData,
   setNumberOfWinningTicket,
+  setMaxAmountCanBuy,
 } from "@redux/globalState";
-import { Avatar } from "antd";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { LOTTERY_CONTRACT, RPC_BSC } from "src/config";
@@ -55,15 +55,22 @@ export default function ProcessDataCpn({}: Props) {
   const historyPersonalData = useSelector(
     (state) => state.globalState.historyPersonalData
   );
+  const triggerLatestDataUseEff = useSelector(
+    (state) => state.triggerState.triggerLatestDataUseEff
+  );
 
   useEffect(() => {
     const getCurrentRound = async () => {
       const web3 = new Web3(RPC_BSC) as any;
       let contract = new web3.eth.Contract(lotteryABI, LOTTERY_CONTRACT);
       const id = await contract.methods.viewCurrentLotteryId().call();
+      const maxAmountCanBuy = await contract.methods
+        .maxNumberTicketsPerBuyOrClaim()
+        .call();
       console.log(id);
       dispatch(setCurrentLotteryId(parseInt(id)));
       dispatch(setlatestLotteryId(parseInt(id)));
+      dispatch(setMaxAmountCanBuy(maxAmountCanBuy));
     };
     if (window) {
       getCurrentRound();
@@ -84,7 +91,7 @@ export default function ProcessDataCpn({}: Props) {
       }
     }
     getInfo();
-  }, [latestLotteryId]);
+  }, [latestLotteryId, triggerLatestDataUseEff]);
 
   useEffect(() => {
     /**
@@ -117,7 +124,7 @@ export default function ProcessDataCpn({}: Props) {
       }
     }
     getInfo();
-  }, [address, latestLotteryId]);
+  }, [address, latestLotteryId, triggerLatestDataUseEff]);
 
   useEffect(() => {
     /**
@@ -145,7 +152,7 @@ export default function ProcessDataCpn({}: Props) {
         hegemReward: 0,
         heraReward: 0,
       };
-      historyPersonalData?.ticketsObj.map((ticketObj: Ticket, index) => {
+      historyPersonalData?.ticketsObj.map((ticketObj: Ticket) => {
         const tempBracket = [false, false, false, false];
         for (let i = 0; i < ticketObj.ticketNumber.split("").length; i++) {
           if (finalNumberArr[i] === ticketObj.ticketNumber[i]) {
@@ -165,7 +172,7 @@ export default function ProcessDataCpn({}: Props) {
         arr: TicketWithBracket[]
       ): Promise<TicketWithReward[]> => {
         const rewardPromises = arr.map(
-          async (ticketObject: TicketWithBracket, index) => {
+          async (ticketObject: TicketWithBracket) => {
             const dataReward = await useFetchRewardInfo(
               currentLotteryId - 1,
               ticketObject.ticketId,

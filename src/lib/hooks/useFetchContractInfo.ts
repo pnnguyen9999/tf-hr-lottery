@@ -11,6 +11,7 @@ export interface LotteryData {
   amountCollectedInHera: number;
   coinPerBracket: [];
   drawnTime: string;
+  drawnTimeMoment: moment.Moment;
 }
 
 const useFetchContractInfo = async (
@@ -23,20 +24,10 @@ const useFetchContractInfo = async (
     return data;
   };
   const results = await getLotteryData(lotteryId);
-
-  // const finalNumber = parseInt(
-  //   _.reverse((results[14] - 10000).toString().split("")).join("")
-  // );
-
+  console.log(results);
   const finalNumber = _.reverse(results[14].toString().split(""))
     .join("")
     .slice(0, -1);
-  // let finalNumber = "";
-  // if (finalNumberData.length !== 4) {
-  //   finalNumber = "";
-  // } else {
-  //   finalNumber = finalNumberData;
-  // }
 
   const amountCollectedInHegem = parseFloat(
     Web3.utils.fromWei(results[12], "ether")
@@ -56,7 +47,7 @@ const useFetchContractInfo = async (
   });
 
   const drawnTime = moment.unix(results[2]).format("ll HH:mm:ss");
-
+  const drawnTimeMoment = moment.unix(results[2]);
   return {
     results,
     finalNumber,
@@ -64,6 +55,7 @@ const useFetchContractInfo = async (
     amountCollectedInHera,
     coinPerBracket,
     drawnTime,
+    drawnTimeMoment,
   };
 };
 

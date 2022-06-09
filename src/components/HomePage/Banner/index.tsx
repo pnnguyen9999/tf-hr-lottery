@@ -3,11 +3,12 @@ import { BuyTicketButton } from "@components/common/BuyTicketButton";
 import { HeroButton } from "@components/common/HeroButton";
 import React from "react";
 import { useSelector } from "react-redux";
+import { FIXED_DECIMAL } from "src/constant";
 
 type Props = {};
 export interface HeraValue {
   name: "hera" | "hegem";
-  value: number;
+  value: number | string;
 }
 export default function Banner({}: Props) {
   const latestLotteryData = useSelector(
@@ -32,11 +33,15 @@ export default function Banner({}: Props) {
           <div className="d-flex align-items-center my-2">
             <HeraValue
               name="hera"
-              value={latestLotteryData?.amountCollectedInHera}
+              value={latestLotteryData?.amountCollectedInHera.toFixed(
+                FIXED_DECIMAL
+              )}
             />
             <HeraValue
               name="hegem"
-              value={latestLotteryData?.amountCollectedInHegem}
+              value={latestLotteryData?.amountCollectedInHegem.toFixed(
+                FIXED_DECIMAL
+              )}
             />
           </div>
           <div className="cl-br fnt-s2 fnt-b my-2">In Prizes</div>

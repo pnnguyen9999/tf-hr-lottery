@@ -27,6 +27,7 @@ type InitialState<
   historyPersonalData: P;
   loadinghistoryPersonalData: B;
   numberOfWinningTickets: A;
+  maxAmountCanBuy: N;
 };
 
 const initialState: InitialState = {
@@ -47,6 +48,7 @@ const initialState: InitialState = {
     type: "fail",
     message: "",
   },
+  maxAmountCanBuy: 0,
 };
 
 const globalState = createSlice({
@@ -96,6 +98,9 @@ const globalState = createSlice({
         message: payload.message,
       };
     },
+    setMaxAmountCanBuy: (state, { payload }) => {
+      state.maxAmountCanBuy = payload;
+    },
   },
 });
 
@@ -112,6 +117,7 @@ export const {
   setOpenHistoryPersonalTicketInfo,
   setNumberOfWinningTicket,
   setOpenPopupStatus,
+  setMaxAmountCanBuy,
 } = globalState.actions;
 
 export default globalState.reducer;

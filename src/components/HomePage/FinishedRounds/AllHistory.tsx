@@ -10,6 +10,7 @@ import useCollapse from "react-collapsed";
 import { CoinValue, PrizePotValue } from "../GetTicket";
 import { useDispatch, useSelector } from "react-redux";
 import { setCurrentLotteryId } from "@redux/globalState";
+import { FIXED_DECIMAL } from "src/constant";
 type Props = {};
 
 export default function AllHistory({}: Props) {
@@ -29,7 +30,11 @@ export default function AllHistory({}: Props) {
   );
 
   const canPaginate = () => {
-    return true;
+    if (currentLotteryId === latestLotteryId) {
+      return false;
+    } else {
+      return true;
+    }
   };
 
   return (
@@ -48,21 +53,32 @@ export default function AllHistory({}: Props) {
           <div className="d-flex align-items-center justity-content-end cl-grey">
             <Space direction="horizontal" size={15}>
               <ArrowLeftOutlined
-                style={{ color: "#FFB601" }}
+                style={{
+                  color: !(currentLotteryId - 1 === 1) ? "#FFB601" : "#605F60",
+                }}
                 onClick={() => {
-                  if (canPaginate()) {
+                  if (!(currentLotteryId - 1 === 1)) {
                     dispatch(setCurrentLotteryId(currentLotteryId - 1));
                   }
                 }}
               />
               <ArrowRightOutlined
+                style={{
+                  color: !(currentLotteryId === latestLotteryId)
+                    ? "#FFB601"
+                    : "#605F60",
+                }}
                 onClick={() => {
-                  if (canPaginate()) {
+                  if (!(currentLotteryId === latestLotteryId)) {
                     dispatch(setCurrentLotteryId(currentLotteryId + 1));
                   }
                 }}
               />
-              <VerticalLeftOutlined />
+              <VerticalLeftOutlined
+                onClick={() => {
+                  dispatch(setCurrentLotteryId(latestLotteryId));
+                }}
+              />
             </Space>
           </div>
         </div>
@@ -107,11 +123,15 @@ export default function AllHistory({}: Props) {
                     <div className="col-3 fnt-s3 fnt-b cl-w ">Prize Pot</div>
                     <div className="col-7 d-flex justify-content-between align-items-center flex-wrap">
                       <PrizePotValue
-                        value={selectedLotteryData?.amountCollectedInHera}
+                        value={selectedLotteryData?.amountCollectedInHera.toFixed(
+                          FIXED_DECIMAL
+                        )}
                         name="hera"
                       />
                       <PrizePotValue
-                        value={selectedLotteryData?.amountCollectedInHegem}
+                        value={selectedLotteryData?.amountCollectedInHegem.toFixed(
+                          FIXED_DECIMAL
+                        )}
                         name="hegem"
                       />
                     </div>
@@ -130,8 +150,14 @@ export default function AllHistory({}: Props) {
                             <div className="fnt-s2 cl-grey">
                               MATCH FIRST {parseInt(obj.index) + 1}
                             </div>
-                            <CoinValue name="hera" value={obj.hera} />
-                            <CoinValue name="hegem" value={obj.hegem} />
+                            <CoinValue
+                              name="hera"
+                              value={obj.hera.toFixed(FIXED_DECIMAL)}
+                            />
+                            <CoinValue
+                              name="hegem"
+                              value={obj.hegem.toFixed(FIXED_DECIMAL)}
+                            />
                           </div>
                           <div className="fnt-s1 cl-grey">
                             {obj.countWinners} Winning Tickets

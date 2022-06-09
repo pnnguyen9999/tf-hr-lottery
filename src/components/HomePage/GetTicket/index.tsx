@@ -1,11 +1,13 @@
 import { HeroButton } from "@components/common/HeroButton";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { HeraValue } from "../Banner";
 import useCollapse from "react-collapsed";
 import { BuyTicketButton } from "@components/common/BuyTicketButton";
 import { useDispatch, useSelector } from "react-redux";
 import { Modal } from "antd";
 import { setOpenPersonalTicketInfo } from "@redux/globalState";
+import { FIXED_DECIMAL } from "src/constant";
+import moment from "moment";
 
 type Props = {};
 
@@ -43,17 +45,33 @@ export default function GetTicket({}: Props) {
   const latestPersonalData = useSelector(
     (state) => state.globalState.latestPersonalData
   );
+  const [countDown, setCountDown] = useState<string>();
+
+  useEffect(() => {
+    if (latestLotteryData?.drawnTimeMoment) {
+      setInterval(() => {
+        setCountDown(
+          moment
+            .utc(latestLotteryData?.drawnTimeMoment.diff(moment()))
+            .format("HH:mm:ss")
+        );
+      }, 1100);
+    }
+  });
+
   return (
     <div className="get-ticket mb-5">
       <div className="text-center my-5">
         <div className="fnt-s4 cl-w fnt-b">Get your ticket now!</div>
         <div className="fnt-s3 cl-w my-3">
-          <span className="fnt-b cl-yl">1d: 1h: 44m</span>&nbsp;Until the draw
+          Round #{latestLotteryId} end in &nbsp;
+          <span className="fnt-b cl-yl">{countDown}</span>
+          &nbsp;
         </div>
       </div>
       <div className="get-ticket-cont">
         <div className="p-3 hrz-b d-flex justify-content-between align-items-center flex-wrap">
-          <div className="fnt-b fnt-s3 cl-w">Next Draw</div>
+          <div className="fnt-b fnt-s3 cl-w">Current Draw</div>
           <div className="fnt-s1 cl-w">
             #{latestLotteryId}|Draw: {latestLotteryData?.drawnTime}
           </div>
@@ -65,11 +83,15 @@ export default function GetTicket({}: Props) {
                 <div className="col-3 fnt-s3 fnt-b cl-w ">Prize Pot</div>
                 <div className="col-7 d-flex justify-content-between align-items-center flex-wrap">
                   <PrizePotValue
-                    value={latestLotteryData?.amountCollectedInHera}
+                    value={latestLotteryData?.amountCollectedInHera.toFixed(
+                      FIXED_DECIMAL
+                    )}
                     name="hera"
                   />
                   <PrizePotValue
-                    value={latestLotteryData?.amountCollectedInHegem}
+                    value={latestLotteryData?.amountCollectedInHegem.toFixed(
+                      FIXED_DECIMAL
+                    )}
                     name="hegem"
                   />
                 </div>
@@ -83,7 +105,7 @@ export default function GetTicket({}: Props) {
                     <div className="fnt-s1 cl-w">
                       You Have{" "}
                       <span className="fnt-b cl-yl">
-                        {latestPersonalData?.numberOfTickets} Ticket
+                        {latestPersonalData?.numberOfTickets} Ticket(s)
                       </span>{" "}
                       This Round
                     </div>
@@ -115,8 +137,14 @@ export default function GetTicket({}: Props) {
                         <div className="fnt-s2 cl-grey">
                           MATCH FIRST {parseInt(obj.index) + 1}
                         </div>
-                        <CoinValue name="hera" value={obj.hera} />
-                        <CoinValue name="hegem" value={obj.hegem} />
+                        <CoinValue
+                          name="hera"
+                          value={obj.hera.toFixed(FIXED_DECIMAL)}
+                        />
+                        <CoinValue
+                          name="hegem"
+                          value={obj.hegem.toFixed(FIXED_DECIMAL)}
+                        />
                       </div>
                     </div>
                   ))}

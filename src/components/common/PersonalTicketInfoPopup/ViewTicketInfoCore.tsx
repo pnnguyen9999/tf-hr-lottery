@@ -1,8 +1,9 @@
 import { Modal, Space } from "antd";
 import React from "react";
 import OtpInput from "react-otp-input";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { PersonalData } from "src/lib/hooks/useFetchPersonalInfo";
+import { ApproveButton } from "../ApproveButton";
 import { BuyTicketButton } from "../BuyTicketButton";
 
 type Props = {
@@ -17,6 +18,7 @@ export default function ViewTicketInfoCore({
   visibleState,
 }: Props) {
   const dispatch = useDispatch();
+  const allowance = useSelector((state) => state.web3.allowance);
   return (
     <Modal
       title={<div className="cl-br-drk fnt-s3 fnt-b">Round {data?.round}</div>}
@@ -33,9 +35,16 @@ export default function ViewTicketInfoCore({
             direction="vertical"
             className="bdr-bt-popup mb-3 pb-3"
           >
-            <div className="fnt-s2 fnt-bold cl-br-drk text-center">
-              Your Tickets
-            </div>
+            {data?.tickets !== [] ? (
+              <div className="fnt-s2 fnt-bold cl-br-drk text-center">
+                Your Tickets
+              </div>
+            ) : (
+              <div className="fnt-s2 fnt-bold cl-br-drk text-center">
+                You have no ticket
+              </div>
+            )}
+
             {data?.tickets.map((obj: any, index: number) => (
               <div
                 className="d-flex justify-content-center animate__animated animate__flipInX"
@@ -58,7 +67,7 @@ export default function ViewTicketInfoCore({
             ))}
           </Space>
           <div className="d-flex w-100 justify-content-center">
-            <BuyTicketButton />
+            {allowance !== "0" ? <BuyTicketButton /> : <ApproveButton />}
           </div>
         </div>
       </div>

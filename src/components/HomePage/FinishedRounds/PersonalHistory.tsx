@@ -53,21 +53,32 @@ export default function PersonalHistory({}: Props) {
           <div className="d-flex align-items-center justity-content-end cl-grey">
             <Space direction="horizontal" size={15}>
               <ArrowLeftOutlined
-                style={{ color: "#FFB601" }}
+                style={{
+                  color: !(currentLotteryId - 1 === 1) ? "#FFB601" : "#605F60",
+                }}
                 onClick={() => {
-                  if (canPaginate()) {
+                  if (!(currentLotteryId - 1 === 1)) {
                     dispatch(setCurrentLotteryId(currentLotteryId - 1));
                   }
                 }}
               />
               <ArrowRightOutlined
+                style={{
+                  color: !(currentLotteryId === latestLotteryId)
+                    ? "#FFB601"
+                    : "#605F60",
+                }}
                 onClick={() => {
-                  if (canPaginate()) {
+                  if (!(currentLotteryId === latestLotteryId)) {
                     dispatch(setCurrentLotteryId(currentLotteryId + 1));
                   }
                 }}
               />
-              <VerticalLeftOutlined />
+              <VerticalLeftOutlined
+                onClick={() => {
+                  dispatch(setCurrentLotteryId(latestLotteryId));
+                }}
+              />
             </Space>
           </div>
         </div>

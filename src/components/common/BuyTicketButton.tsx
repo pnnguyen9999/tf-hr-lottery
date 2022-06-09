@@ -6,7 +6,14 @@ import { ApproveButton } from "./ApproveButton";
 import _ from "lodash";
 import OtpInput from "react-otp-input";
 import { ArrowLeftOutlined } from "@ant-design/icons";
-import { setOpenPopupStatus } from "@redux/globalState";
+import {
+  setlatestLotteryData,
+  setlatestPersonalData,
+  setLoadinglatestLotteryData,
+  setOpenPopupStatus,
+} from "@redux/globalState";
+import useFetchContractInfo from "src/lib/hooks/useFetchContractInfo";
+import useFetchPersonalInfo from "src/lib/hooks/useFetchPersonalInfo";
 /**
  * This is also include modal buy ticket
  */
@@ -19,7 +26,10 @@ export function BuyTicketButton() {
   const [ticketAmount, setTicketAmount] = useState<number>(0);
   const [lotteryNumberArray, setLotteryNumberArray] = useState<any>();
   const [switchPopupContent, setPopupContent] = useState<number>(1);
-
+  const latestLotteryId = useSelector(
+    (state) => state.globalState.latestLotteryId
+  );
+  const address = useSelector((state) => state.web3.address);
   const ModalHeader = () => {
     return switchPopupContent === 1 ? (
       <div className="cl-br-drk fnt-s3 fnt-b">Buy Tickets</div>
@@ -46,6 +56,17 @@ export function BuyTicketButton() {
         async (data: any) => {
           if (data.status === "EXECUTE_BUY_TICKET_SUCCESS") {
             setOpenModal(false);
+            if (latestLotteryId) {
+              console.log(latestLotteryId);
+              dispatch(setLoadinglatestLotteryData(true));
+              const data = await useFetchContractInfo(latestLotteryId);
+              dispatch(setLoadinglatestLotteryData(false));
+              dispatch(setlatestLotteryData(data));
+            }
+            if (address && latestLotteryId) {
+              const data = await useFetchPersonalInfo(latestLotteryId, address);
+              dispatch(setlatestPersonalData(data));
+            }
             dispatch(
               setOpenPopupStatus({
                 isOpen: true,

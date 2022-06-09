@@ -121,7 +121,11 @@ export default function PersonalHistoryPopup({}: Props) {
             direction="vertical"
             className="bdr-bt-popup mb-3 pb-3"
           >
-            <div className="fnt-s1 fnt-b cl-br-drk">Winning Number</div>
+            {!(selectedLotteryData?.finalNumber === "") ? (
+              <div className="fnt-s1 fnt-b cl-br-drk">Winning Number</div>
+            ) : (
+              <></>
+            )}
             <Space
               direction="horizontal"
               size={30}

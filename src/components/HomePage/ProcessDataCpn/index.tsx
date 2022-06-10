@@ -27,6 +27,7 @@ import useFetchRewardInfo, {
 import RewardPopup from "@components/common/RewardPopup";
 import { setAllTicketsRewardRx, setTotalRewardRx } from "@redux/rewardState";
 import PopupCore from "@components/common/StatusPopup/PopupCore";
+import { BuyTicketPopup } from "@components/common/BuyTicketPopup";
 type Props = {};
 interface TicketWithBracket extends Ticket {
   bracket: number;
@@ -57,6 +58,9 @@ export default function ProcessDataCpn({}: Props) {
   );
   const triggerLatestDataUseEff = useSelector(
     (state) => state.triggerState.triggerLatestDataUseEff
+  );
+  const triggerCurrentPersonalDataUseEff = useSelector(
+    (state) => state.triggerState.triggerCurrentPersonalDataUseEff
   );
 
   useEffect(() => {
@@ -131,6 +135,7 @@ export default function ProcessDataCpn({}: Props) {
      * -> load history personal round info
      */
     async function getInfo() {
+      console.log("test");
       if (address && currentLotteryId) {
         const data = await useFetchPersonalInfo(currentLotteryId - 1, address);
         dispatch(setHistoryPersonalData(data));
@@ -204,11 +209,12 @@ export default function ProcessDataCpn({}: Props) {
   }, [historyPersonalData, selectedLotteryData]);
 
   return (
-    <div>
+    <>
+      <BuyTicketPopup />
       <PersonalLatestPopup />
       <PersonalHistoryPopup />
       <RewardPopup />
       <PopupCore />
-    </div>
+    </>
   );
 }

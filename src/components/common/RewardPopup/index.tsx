@@ -3,11 +3,8 @@ import { setOpenPopupStatus } from "@redux/globalState";
 import { setOpenPopupReward } from "@redux/rewardState";
 import { Modal, Space } from "antd";
 import React from "react";
-import OtpInput from "react-otp-input";
 import { useDispatch, useSelector } from "react-redux";
 import { FIXED_DECIMAL } from "src/constant";
-import { PersonalData } from "src/lib/hooks/useFetchPersonalInfo";
-import { BuyTicketButton } from "../BuyTicketButton";
 import { HeroButton } from "../HeroButton";
 
 type Props = {};
@@ -25,43 +22,58 @@ export default function RewardPopup({}: Props) {
     (state) => state.rewardState.allTicketsRewardRx
   );
   const web3data = useSelector((state) => state.web3.utilsWallet) as any;
+  const historyPersonalData = useSelector(
+    (state) => state.globalState.historyPersonalData
+  );
 
   const executeClaim = async () => {
-    console.log(allTicketsRewardRx);
-    let ticketIds = [] as any;
-    let brackets = [] as any;
-    allTicketsRewardRx.map((ticketObject: TicketWithReward, index: number) => {
-      ticketIds.push(ticketObject.ticket.ticketId);
-      brackets.push(ticketObject.ticket.bracket);
-    });
-    await web3data.claimReward(
-      {
-        lotteryId: currentLotteryId - 1,
-        ticketIds: ticketIds,
-        brackets: brackets,
-      },
-      async (data: any) => {
-        if (data.status === "EXECUTE_CLAIM_TICKET_SUCCESS") {
-          dispatch(setOpenPopupReward(false));
-          dispatch(
-            setOpenPopupStatus({
-              isOpen: true,
-              type: "success",
-              message: "Claim Successfully !",
-            })
-          );
-        } else if (data.status === "EXECUTE_CLAIM_TICKET_FAIL") {
-          dispatch(setOpenPopupReward(false));
-          dispatch(
-            setOpenPopupStatus({
-              isOpen: true,
-              type: "fail",
-              message: "Claim Failed !",
-            })
-          );
+    if (!historyPersonalData?.ticketClaimStatus.includes(true)) {
+      let ticketIds = [] as any;
+      let brackets = [] as any;
+      allTicketsRewardRx.map(
+        (ticketObject: TicketWithReward, index: number) => {
+          ticketIds.push(ticketObject.ticket.ticketId);
+          brackets.push(ticketObject.ticket.bracket);
         }
-      }
-    );
+      );
+      await web3data.claimReward(
+        {
+          lotteryId: currentLotteryId - 1,
+          ticketIds: ticketIds,
+          brackets: brackets,
+        },
+        async (data: any) => {
+          if (data.status === "EXECUTE_CLAIM_TICKET_SUCCESS") {
+            dispatch(setOpenPopupReward(false));
+            dispatch(
+              setOpenPopupStatus({
+                isOpen: true,
+                type: "success",
+                message: "Claim Successfully !",
+              })
+            );
+          } else if (data.status === "EXECUTE_CLAIM_TICKET_FAIL") {
+            dispatch(setOpenPopupReward(false));
+            dispatch(
+              setOpenPopupStatus({
+                isOpen: true,
+                type: "fail",
+                message: "Claim Failed !",
+              })
+            );
+          }
+        }
+      );
+    } else {
+      dispatch(setOpenPopupReward(false));
+      dispatch(
+        setOpenPopupStatus({
+          isOpen: true,
+          type: "fail",
+          message: "This reward has already been claimed !",
+        })
+      );
+    }
   };
   return (
     <Modal

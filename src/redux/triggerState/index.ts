@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   triggerLatestDataUseEff: false,
+  triggerCurrentPersonalDataUseEff: false,
   triggerConnectWalletUseEff: false,
 };
 
@@ -15,10 +16,16 @@ const triggerState = createSlice({
     setTriggerConnectWalletUseEff: (state) => {
       state.triggerConnectWalletUseEff = !state.triggerConnectWalletUseEff;
     },
+    setTriggerCurrentPersonalDataUseEff: (state) => {
+      state.triggerConnectWalletUseEff = !state.triggerConnectWalletUseEff;
+    },
   },
 });
 
-export const { setTriggerLatestDataUseEff, setTriggerConnectWalletUseEff } =
-  triggerState.actions;
+export const {
+  setTriggerLatestDataUseEff,
+  setTriggerConnectWalletUseEff,
+  setTriggerCurrentPersonalDataUseEff,
+} = triggerState.actions;
 
 export default triggerState.reducer;

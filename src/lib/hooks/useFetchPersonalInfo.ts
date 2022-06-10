@@ -13,6 +13,7 @@ export interface PersonalData {
   numberOfTickets: number;
   tickets: string[];
   ticketsObj: Ticket[];
+  ticketClaimStatus: boolean[];
 }
 
 const useFetchPersonalInfo = async (
@@ -47,6 +48,8 @@ const useFetchPersonalInfo = async (
         .slice(0, -1),
     };
   });
+
+  const ticketClaimStatus = results[2];
   //   const tickets = ["0014", "0127", "0064", "1064", "0264"];
   //   const ticketsObj = [
   //     { ticketId: "10", ticketNumber: "0014" },
@@ -63,6 +66,7 @@ const useFetchPersonalInfo = async (
     numberOfTickets,
     tickets,
     ticketsObj,
+    ticketClaimStatus,
   };
 };
 

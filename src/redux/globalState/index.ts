@@ -15,6 +15,7 @@ type InitialState<
   A = []
 > = {
   isOpenPopupStatus: StatusPopup;
+  isOpenPopupBuyTicket: boolean;
   isOpenPersonalTicketInfo: B;
   isOpenPersonalHistoryTicketInfo: B;
   currentLotteryId: N;
@@ -28,6 +29,7 @@ type InitialState<
   loadinghistoryPersonalData: B;
   numberOfWinningTickets: A;
   maxAmountCanBuy: N;
+  isOnCalculatingTime: B;
 };
 
 const initialState: InitialState = {
@@ -49,6 +51,8 @@ const initialState: InitialState = {
     message: "",
   },
   maxAmountCanBuy: 0,
+  isOpenPopupBuyTicket: false,
+  isOnCalculatingTime: false,
 };
 
 const globalState = createSlice({
@@ -101,6 +105,12 @@ const globalState = createSlice({
     setMaxAmountCanBuy: (state, { payload }) => {
       state.maxAmountCanBuy = payload;
     },
+    setOpenPopupBuyTicket: (state, { payload }) => {
+      state.isOpenPopupBuyTicket = payload;
+    },
+    setOnCalculatingTime: (state, { payload }) => {
+      state.isOnCalculatingTime = payload;
+    },
   },
 });
 
@@ -118,6 +128,8 @@ export const {
   setNumberOfWinningTicket,
   setOpenPopupStatus,
   setMaxAmountCanBuy,
+  setOpenPopupBuyTicket,
+  setOnCalculatingTime,
 } = globalState.actions;
 
 export default globalState.reducer;

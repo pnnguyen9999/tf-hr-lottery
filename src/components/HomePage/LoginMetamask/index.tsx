@@ -19,26 +19,34 @@ export default function LoginMetamask({}: Props) {
   const triggerConnectWalletUseEff = useSelector(
     (state) => state.triggerState.triggerConnectWalletUseEff
   );
+
   useEffect(() => {
+    console.log("123");
     async function connectWallet() {
       if (window.ethereum) {
-        const walletMetamask = new WalletUtils();
-        await walletMetamask.connect();
-        dispatch(setUtilsWallet(walletMetamask));
-        dispatch(setBalance(await walletMetamask.getHegemBalance()));
-        dispatch(setAllowance(await walletMetamask.getAllowance()));
-        dispatch(setAddress(await walletMetamask.getCurrentAddress()));
+        const localDisconnect: any = localStorage.getItem("disconnected");
+        if (JSON.parse(localDisconnect) === false) {
+          const walletMetamask = new WalletUtils();
+          await walletMetamask.connect();
+          dispatch(setUtilsWallet(walletMetamask));
+          dispatch(setBalance(await walletMetamask.getHegemBalance()));
+          dispatch(setAllowance(await walletMetamask.getAllowance()));
+          dispatch(setAddress(await walletMetamask.getCurrentAddress()));
+          // localStorage.setItem("disconnected", "false");
+        }
       }
     }
     connectWallet();
   }, [triggerConnectWalletUseEff]);
 
   useEffect(() => {
-    window.ethereum.on("accountsChanged", async (accountID: any) => {
-      // console.log("acc changed");
-      dispatch(setTriggerConnectWalletUseEff());
-      dispatch(setTriggerLatestDataUseEff());
-    });
+    if (window.ethereum) {
+      window.ethereum.on("accountsChanged", async (accountID: any) => {
+        // console.log("acc changed");
+        dispatch(setTriggerConnectWalletUseEff());
+        dispatch(setTriggerLatestDataUseEff());
+      });
+    }
   }, []);
   return <></>;
 }

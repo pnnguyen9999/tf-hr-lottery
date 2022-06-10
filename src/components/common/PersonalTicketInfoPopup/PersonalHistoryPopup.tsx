@@ -3,6 +3,7 @@ import {
   setOpenHistoryPersonalTicketInfo,
 } from "@redux/globalState";
 import { setOpenPopupReward } from "@redux/rewardState";
+import { setTriggerCurrentPersonalDataUseEff } from "@redux/triggerState";
 import { Modal, Space } from "antd";
 import React, { useEffect, useState } from "react";
 import { DefaultRootState, useDispatch, useSelector } from "react-redux";

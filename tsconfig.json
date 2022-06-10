@@ -30,7 +30,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "src/components/HomePage/Charts/index.jsx"
+    "src/components/HomePage/Charts/index.tsx"
   ],
   "exclude": ["node_modules"]
 }

@@ -5,7 +5,10 @@ import useCollapse from "react-collapsed";
 import { BuyTicketButton } from "@components/common/BuyTicketButton";
 import { useDispatch, useSelector } from "react-redux";
 import { Modal } from "antd";
-import { setOpenPersonalTicketInfo } from "@redux/globalState";
+import {
+  setOnCalculatingTime,
+  setOpenPersonalTicketInfo,
+} from "@redux/globalState";
 import { FIXED_DECIMAL } from "src/constant";
 import moment from "moment";
 
@@ -45,29 +48,44 @@ export default function GetTicket({}: Props) {
   const latestPersonalData = useSelector(
     (state) => state.globalState.latestPersonalData
   );
+  const isOnCalculatingTime = useSelector(
+    (state) => state.globalState.isOnCalculatingTime
+  );
   const [countDown, setCountDown] = useState<string>();
 
   useEffect(() => {
-    if (latestLotteryData?.drawnTimeMoment) {
-      setInterval(() => {
-        setCountDown(
-          moment
-            .utc(latestLotteryData?.drawnTimeMoment.diff(moment()))
-            .format("HH:mm:ss")
-        );
-      }, 1100);
-    }
-  });
+    const intervalCd = setInterval(() => {
+      if (latestLotteryData?.drawnTimeMoment) {
+        const then: any = new Date(latestLotteryData?.drawnTime).getTime();
+        // const then = 1648848951000;
+        const now: any = new Date().getTime();
+        const diffTimes = then - now;
+        if (diffTimes <= 0) {
+          clearInterval(intervalCd);
+          dispatch(setOnCalculatingTime(true));
+        } else {
+          dispatch(setOnCalculatingTime(false));
+          const duration: any = moment.duration(diffTimes, "milliseconds");
+          const result = moment.duration(duration - 1000, "milliseconds");
+          setCountDown(
+            `${result.days()} d: ${result.hours()} h: ${result.minutes()} m: ${result.seconds()} s`
+          );
+        }
+      }
+    }, 1000);
+    return () => clearInterval(intervalCd);
+  }, [latestLotteryData?.drawnTimeMoment]);
 
   return (
     <div className="get-ticket mb-5">
       <div className="text-center my-5">
         <div className="fnt-s4 cl-w fnt-b">Get your ticket now!</div>
-        <div className="fnt-s3 cl-w my-3">
-          Round #{latestLotteryId} end in &nbsp;
-          <span className="fnt-b cl-yl">{countDown}</span>
-          &nbsp;
-        </div>
+        {!isOnCalculatingTime && (
+          <div className="fnt-s3 cl-w my-3">
+            Round #{latestLotteryId} end in &nbsp;
+            <span className="fnt-b cl-yl">{countDown}</span>
+          </div>
+        )}
       </div>
       <div className="get-ticket-cont">
         <div className="p-3 hrz-b d-flex justify-content-between align-items-center flex-wrap">
@@ -79,22 +97,26 @@ export default function GetTicket({}: Props) {
         <div className="p-3 hrz-b">
           <div className="d-flex justify-content-between align-items-center flex-wrap">
             <div className="col-12 align-items-center my-3">
-              <div className="row">
+              <div className="row align-items-center">
                 <div className="col-3 fnt-s3 fnt-b cl-w ">Prize Pot</div>
-                <div className="col-7 d-flex justify-content-between align-items-center flex-wrap">
-                  <PrizePotValue
-                    value={latestLotteryData?.amountCollectedInHera.toFixed(
-                      FIXED_DECIMAL
-                    )}
-                    name="hera"
-                  />
-                  <PrizePotValue
-                    value={latestLotteryData?.amountCollectedInHegem.toFixed(
-                      FIXED_DECIMAL
-                    )}
-                    name="hegem"
-                  />
-                </div>
+                {!isOnCalculatingTime ? (
+                  <div className="col-7 d-flex justify-content-between align-items-center flex-wrap">
+                    <PrizePotValue
+                      value={latestLotteryData?.amountCollectedInHera.toFixed(
+                        FIXED_DECIMAL
+                      )}
+                      name="hera"
+                    />
+                    <PrizePotValue
+                      value={latestLotteryData?.amountCollectedInHegem.toFixed(
+                        FIXED_DECIMAL
+                      )}
+                      name="hegem"
+                    />
+                  </div>
+                ) : (
+                  <div className="fnt-b cl-yl fnt-s5">Calculating...</div>
+                )}
               </div>
             </div>
             <div className="col-12 align-items-center my-3">

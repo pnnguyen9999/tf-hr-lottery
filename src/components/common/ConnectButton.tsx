@@ -15,6 +15,7 @@ export interface ConnectButton {
 export function ConnectButton({ type, text }: ConnectButton) {
   const dispatch = useDispatch();
   const handleConnect = async () => {
+    localStorage.setItem("disconnected", "false");
     dispatch(setTriggerConnectWalletUseEff());
   };
   const ReturnImgBg = () => {

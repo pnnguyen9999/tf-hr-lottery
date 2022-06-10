@@ -1,6 +1,7 @@
 import Banner from "@components/HomePage/Banner";
 import BannerWinner from "@components/HomePage/BannerWinner";
 import Charts from "@components/HomePage/Charts/index";
+import Footer from "@components/HomePage/Footer";
 import GetTicket from "@components/HomePage/GetTicket";
 import HowToPlay from "@components/HomePage/HowToPlay";
 import LoginMetamask from "@components/HomePage/LoginMetamask";
@@ -23,11 +24,11 @@ const Home: React.FC = () => {
         <Nav />
         <Banner />
         <GetTicket />
-        {/* <BannerWinner /> */}
         <FinishedRounds />
         <HowToPlay />
         <Charts />
       </div>
+      <Footer />
     </div>
   );
 };

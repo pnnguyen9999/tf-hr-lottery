@@ -20,7 +20,7 @@ export function BuyTicketButton() {
     <HeroButton
       text="Buy Ticket"
       action={async () => {
-        if (isOnCalculatingTime) {
+        if (!isOnCalculatingTime) {
           if (address) {
             dispatch(setBalance(await web3data.getHegemBalance()));
             dispatch(setOpenPersonalTicketInfo(false));

@@ -59,9 +59,6 @@ export default function ProcessDataCpn({}: Props) {
   const triggerLatestDataUseEff = useSelector(
     (state) => state.triggerState.triggerLatestDataUseEff
   );
-  const triggerCurrentPersonalDataUseEff = useSelector(
-    (state) => state.triggerState.triggerCurrentPersonalDataUseEff
-  );
 
   useEffect(() => {
     const getCurrentRound = async () => {

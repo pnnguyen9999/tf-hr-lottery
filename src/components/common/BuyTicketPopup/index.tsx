@@ -40,7 +40,7 @@ export function BuyTicketPopup() {
 
   const checkValidNumberArray = (): boolean[] =>
     lotteryNumberArray.map((number: any) => {
-      if (typeof number === "number") {
+      if (number.toString().split("").length === 4) {
         return true;
       } else {
         return false;
@@ -56,7 +56,7 @@ export function BuyTicketPopup() {
           await web3data.buyTicket(
             {
               ticketNumbers: lotteryNumberArray.map(
-                (number: any) =>
+                (number: number | string) =>
                   10000 +
                   parseInt(_.reverse(number.toString().split("")).join(""))
               ),

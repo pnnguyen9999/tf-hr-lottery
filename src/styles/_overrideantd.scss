@@ -47,3 +47,15 @@
     color: #e4e4e4 !important;
     border-bottom: 1px solid #4d4b49 !important;
 }
+.ant-drawer-content {
+    background-color: #383735 !important;
+    color: #fff !important;
+}
+.ant-drawer-header {
+    background-color: #383735 !important;
+    border-bottom: 1px solid #96938f !important;
+    .ant-drawer-close,
+    .ant-drawer-title {
+        color: #fff !important;
+    }
+}

@@ -84,7 +84,7 @@ export default function PersonalHistory({}: Props) {
         </div>
 
         {!loadingSelectedLotteryData ? (
-          <RibbonContainer className="p-4 hrz-b d-flex justify-content-between align-items-center">
+          <RibbonContainer className="p-4 hrz-b d-flex flex-wrap justify-content-between align-items-center">
             {currentLotteryId === latestLotteryId && (
               <RightCornerRibbon
                 backgroundColor="#D91C34"

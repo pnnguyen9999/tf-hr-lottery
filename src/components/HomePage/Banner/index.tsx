@@ -30,7 +30,7 @@ export default function Banner({}: Props) {
       <div className="banner-desktop">
         <div className="d-flex flex-column align-items-center justify-content-center h-100">
           <div className="cl-br fnt-s5 fnt-b">The Hero Arena Lottery</div>
-          <div className="d-flex align-items-center my-2">
+          <div className="d-flex align-items-center my-2 flex-wrap">
             <HeraValue
               name="hera"
               value={latestLotteryData?.amountCollectedInHera.toFixed(

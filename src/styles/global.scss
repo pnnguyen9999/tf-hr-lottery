@@ -16,6 +16,9 @@ body {
   // background-color: #fff;
   background-color: #000;
 }
+ul {
+  padding: 0px 0px 0px 12px;
+}
 .home-lottery {
   background-image: url(/img/bg.png);
   background: {
@@ -147,6 +150,7 @@ body {
     height: 20px;
   }
 }
+.step-panel,
 .digits-matched,
 .all-history,
 .personal-history,

@@ -94,7 +94,7 @@ export default class WalletUtils {
         });
       })
       .on("error", (error: any) => {
-        console.log(error);
+        // console.log(error);
         callback({
           status: "EXECUTE_APPROVE_FAIL",
           error: error.message,
@@ -109,7 +109,7 @@ export default class WalletUtils {
         }
       })
       .catch((err: any) => {
-        console.log(err);
+        // console.log(err);
         callback({ status: "EXECUTE_APPROVE_FAIL", error: err.message });
       });
     return executeApproveResult;
@@ -148,7 +148,7 @@ export default class WalletUtils {
         });
       })
       .on("error", (error: any) => {
-        console.log(error);
+        // console.log(error);
         callback({
           status: "EXECUTE_BUY_TICKET_FAIL",
           error: error.message,
@@ -163,7 +163,7 @@ export default class WalletUtils {
         }
       })
       .catch((err: any) => {
-        console.log(err);
+        // console.log(err);
         callback({ status: "EXECUTE_BUY_TICKET_FAIL", error: err.message });
       });
     return executeBuyTicket;
@@ -188,7 +188,7 @@ export default class WalletUtils {
         });
       })
       .on("error", (error: any) => {
-        console.log(error);
+        // console.log(error);
         callback({
           status: "EXECUTE_CLAIM_TICKET_FAIL",
           error: error.message,
@@ -203,7 +203,7 @@ export default class WalletUtils {
         }
       })
       .catch((err: any) => {
-        console.log(err);
+        // console.log(err);
         callback({ status: "EXECUTE_CLAIM_TICKET_FAIL", error: err.message });
       });
     return executeBuyTicket;

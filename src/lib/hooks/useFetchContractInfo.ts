@@ -24,7 +24,7 @@ const useFetchContractInfo = async (
     return data;
   };
   const results = await getLotteryData(lotteryId);
-  console.log(results);
+  // console.log(results);
   const finalNumber = _.reverse(results[14].toString().split(""))
     .join("")
     .slice(0, -1);

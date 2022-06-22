@@ -32,7 +32,7 @@ const useFetchPersonalInfo = async (
     return data;
   };
   const results = await getLotteryData(lotteryId, address);
-  console.log(results);
+  // console.log(results);
   const numberOfTickets = parseInt(results[3]);
   const round = lotteryId;
 
@@ -58,7 +58,7 @@ const useFetchPersonalInfo = async (
   //     { ticketId: "13", ticketNumber: "1064" },
   //     { ticketId: "14", ticketNumber: "0264" },
   //   ];
-  console.log(ticketsObj);
+  // console.log(ticketsObj);
 
   return {
     results,

@@ -68,7 +68,7 @@ export default function ProcessDataCpn({}: Props) {
       const maxAmountCanBuy = await contract.methods
         .maxNumberTicketsPerBuyOrClaim()
         .call();
-      console.log(id);
+      // console.log(id);
       dispatch(setCurrentLotteryId(parseInt(id)));
       dispatch(setlatestLotteryId(parseInt(id)));
       dispatch(setMaxAmountCanBuy(maxAmountCanBuy));
@@ -84,7 +84,7 @@ export default function ProcessDataCpn({}: Props) {
      */
     async function getInfo() {
       if (latestLotteryId) {
-        console.log(latestLotteryId);
+        // console.log(latestLotteryId);
         dispatch(setLoadinglatestLotteryData(true));
         const data = await useFetchContractInfo(latestLotteryId);
         dispatch(setLoadinglatestLotteryData(false));
@@ -100,7 +100,7 @@ export default function ProcessDataCpn({}: Props) {
      */
     async function getInfo() {
       if (currentLotteryId) {
-        console.log(currentLotteryId);
+        // console.log(currentLotteryId);
         dispatch(setLoadingHistoryLotteryData(true));
         const data = await useFetchContractInfo(currentLotteryId - 1);
         dispatch(setLoadingHistoryLotteryData(false));
@@ -109,10 +109,6 @@ export default function ProcessDataCpn({}: Props) {
     }
     getInfo();
   }, [currentLotteryId]);
-
-  useEffect(() => {
-    console.log(selectedLotteryData);
-  }, [selectedLotteryData]);
 
   useEffect(() => {
     /**
@@ -132,7 +128,7 @@ export default function ProcessDataCpn({}: Props) {
      * -> load history personal round info
      */
     async function getInfo() {
-      console.log("test");
+      // console.log("test");
       if (address && currentLotteryId) {
         const data = await useFetchPersonalInfo(currentLotteryId - 1, address);
         dispatch(setHistoryPersonalData(data));
@@ -180,7 +176,7 @@ export default function ProcessDataCpn({}: Props) {
               ticketObject.ticketId,
               ticketObject.bracket
             );
-            console.log(dataReward);
+            // console.log(dataReward);
             const dataTicketWithReward: TicketWithReward = {
               ticket: ticketObject,
               hegemReward: dataReward.hegemReward,
@@ -193,13 +189,13 @@ export default function ProcessDataCpn({}: Props) {
       };
       allTicketsReward = await processGetAllRewardPromises(allTicketsStatus);
 
-      console.log(allTicketsReward);
+      // console.log(allTicketsReward);
       dispatch(setAllTicketsRewardRx(allTicketsReward));
       allTicketsReward.map((twr: TicketWithReward, index) => {
         totalReward.hegemReward = totalReward.hegemReward + twr.hegemReward;
         totalReward.heraReward = totalReward.heraReward + twr.heraReward;
       });
-      console.log(totalReward);
+      // console.log(totalReward);
       dispatch(setTotalRewardRx(totalReward));
     }
     processData();

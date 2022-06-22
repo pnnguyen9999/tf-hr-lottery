@@ -152,7 +152,8 @@ export function BuyTicketPopup() {
               <div className="w-100 d-flex align-items-center justify-content-end">
                 <div className="cl-br-drk fnt-s1">
                   You can buy up to
-                  <span className="fnt-b"> {maxAmountCanBuy}</span> tickets
+                  <span className="fnt-b"> {maxAmountCanBuy}</span>{" "}
+                  tickets/transaction
                 </div>
               </div>
               <div className="w-100 d-flex justify-content-center">

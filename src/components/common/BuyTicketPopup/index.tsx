@@ -24,6 +24,9 @@ export function BuyTicketPopup() {
   const isOpenPopupBuyTicket = useSelector(
     (state) => state.globalState.isOpenPopupBuyTicket
   );
+  const latestLotteryData = useSelector(
+    (state) => state.globalState.latestLotteryData
+  );
   const [ticketAmount, setTicketAmount] = useState<number>(1);
   const [lotteryNumberArray, setLotteryNumberArray] = useState<any>();
   const [switchPopupContent, setPopupContent] = useState<number>(1);
@@ -151,6 +154,24 @@ export function BuyTicketPopup() {
                 value={ticketAmount}
                 onChange={(e) => inputValidator(e.target.value)}
               />
+              {ticketAmount ? (
+                <div className="w-100 d-flex align-items-center justify-content-end">
+                  {(latestLotteryData?.ticketPrice || 0) * ticketAmount >
+                  hegemBalance ? (
+                    <div className="cl-r fnt-s1 fnt-b">
+                      Insufficient HEGEM balance
+                    </div>
+                  ) : (
+                    <div className="cl-br-drk fnt-s1 fnt-b">
+                      ~ {(latestLotteryData?.ticketPrice || 0) * ticketAmount}
+                      <span className="fnt-b"></span> HEGEM
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <></>
+              )}
+
               <div className="w-100 d-flex align-items-center justify-content-end">
                 <div className="cl-br-drk fnt-s1 fnt-b">HEGEM</div>
                 <div className="cl-br-drk fnt-s1">

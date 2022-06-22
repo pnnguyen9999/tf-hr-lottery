@@ -21,7 +21,6 @@ export default function LoginMetamask({}: Props) {
   );
 
   useEffect(() => {
-    console.log("123");
     async function connectWallet() {
       if (window.ethereum) {
         const localDisconnect: any = localStorage.getItem("disconnected");

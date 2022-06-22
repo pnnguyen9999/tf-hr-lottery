@@ -12,6 +12,7 @@ export interface LotteryData {
   coinPerBracket: [];
   drawnTime: string;
   drawnTimeMoment: moment.Moment;
+  ticketPrice: number;
 }
 
 const useFetchContractInfo = async (
@@ -24,7 +25,7 @@ const useFetchContractInfo = async (
     return data;
   };
   const results = await getLotteryData(lotteryId);
-  // console.log(results);
+
   const finalNumber = _.reverse(results[14].toString().split(""))
     .join("")
     .slice(0, -1);
@@ -48,6 +49,7 @@ const useFetchContractInfo = async (
 
   const drawnTime = moment.unix(results[2]).format("ll HH:mm:ss");
   const drawnTimeMoment = moment.unix(results[2]);
+  const ticketPrice = parseFloat(Web3.utils.fromWei(results[3], "ether"));
   return {
     results,
     finalNumber,
@@ -56,6 +58,7 @@ const useFetchContractInfo = async (
     coinPerBracket,
     drawnTime,
     drawnTimeMoment,
+    ticketPrice,
   };
 };
 

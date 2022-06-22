@@ -4,7 +4,11 @@ import { useEffect, useState } from "react";
 import _ from "lodash";
 import OtpInput from "react-otp-input";
 import { ArrowLeftOutlined } from "@ant-design/icons";
-import { setOpenPopupBuyTicket, setOpenPopupStatus } from "@redux/globalState";
+import {
+  setOpenLoadingPopup,
+  setOpenPopupBuyTicket,
+  setOpenPopupStatus,
+} from "@redux/globalState";
 import { setTriggerLatestDataUseEff } from "@redux/triggerState";
 import { HeroButton } from "../HeroButton";
 import { ApproveButton } from "../ApproveButton";
@@ -62,7 +66,10 @@ export function BuyTicketPopup() {
               ),
             },
             async (data: any) => {
-              if (data.status === "EXECUTE_BUY_TICKET_SUCCESS") {
+              if (data.status === "EXECUTE_BUY_TICKET_SUBMIT") {
+                dispatch(setOpenLoadingPopup(true));
+              } else if (data.status === "EXECUTE_BUY_TICKET_SUCCESS") {
+                dispatch(setOpenLoadingPopup(false));
                 dispatch(setOpenPopupBuyTicket(false));
                 dispatch(setTriggerLatestDataUseEff());
                 dispatch(
@@ -73,6 +80,7 @@ export function BuyTicketPopup() {
                   })
                 );
               } else if (data.status === "EXECUTE_BUY_TICKET_FAIL") {
+                dispatch(setOpenLoadingPopup(false));
                 dispatch(setOpenPopupBuyTicket(false));
                 dispatch(
                   setOpenPopupStatus({

@@ -1,5 +1,5 @@
 import { TicketWithReward } from "@components/HomePage/ProcessDataCpn";
-import { setOpenPopupStatus } from "@redux/globalState";
+import { setOpenLoadingPopup, setOpenPopupStatus } from "@redux/globalState";
 import { setOpenPopupReward } from "@redux/rewardState";
 import { Modal, Space } from "antd";
 import React from "react";
@@ -43,7 +43,10 @@ export default function RewardPopup({}: Props) {
           brackets: brackets,
         },
         async (data: any) => {
-          if (data.status === "EXECUTE_CLAIM_TICKET_SUCCESS") {
+          if (data.status === "EXECUTE_CLAIM_TICKET_SUBMIT") {
+            dispatch(setOpenLoadingPopup(true));
+          } else if (data.status === "EXECUTE_CLAIM_TICKET_SUCCESS") {
+            dispatch(setOpenLoadingPopup(false));
             dispatch(setOpenPopupReward(false));
             dispatch(
               setOpenPopupStatus({
@@ -53,6 +56,7 @@ export default function RewardPopup({}: Props) {
               })
             );
           } else if (data.status === "EXECUTE_CLAIM_TICKET_FAIL") {
+            dispatch(setOpenLoadingPopup(false));
             dispatch(setOpenPopupReward(false));
             dispatch(
               setOpenPopupStatus({

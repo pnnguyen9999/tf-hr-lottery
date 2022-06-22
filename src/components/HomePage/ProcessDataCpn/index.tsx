@@ -28,6 +28,7 @@ import RewardPopup from "@components/common/RewardPopup";
 import { setAllTicketsRewardRx, setTotalRewardRx } from "@redux/rewardState";
 import PopupCore from "@components/common/StatusPopup/PopupCore";
 import { BuyTicketPopup } from "@components/common/BuyTicketPopup";
+import LoadingPopup from "@components/common/LoadingPopup";
 type Props = {};
 interface TicketWithBracket extends Ticket {
   bracket: number;
@@ -208,6 +209,7 @@ export default function ProcessDataCpn({}: Props) {
       <PersonalHistoryPopup />
       <RewardPopup />
       <PopupCore />
+      <LoadingPopup />
     </>
   );
 }

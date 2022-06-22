@@ -6,7 +6,8 @@ import {
   YoutubeOutlined,
   MediumOutlined,
 } from "@ant-design/icons";
-import { Space } from "antd";
+import { Popover, Space } from "antd";
+import { MainMenu, SubMenu } from "../Nav/MenuItems";
 
 interface Props {}
 
@@ -29,21 +30,36 @@ export default function Footer({}: Props): ReactElement {
             </div>
             <div className="col-md-4">
               <Space direction="vertical" size={10}>
-                <h5 className="cl-yl">About Us</h5>
+                <h5 className="cl-yl">Navigation</h5>
                 <br />
-                <h6 className="cl-w">Download</h6>
-                <h6 className="cl-w">Play Game</h6>
-                <a
-                  href="https://nft.heroarena.app/"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <h6 className="cl-w">NFT Market</h6>
-                </a>
-                <h6 className="cl-w">HERA Token</h6>
-                <h6 className="cl-w">Tokenomic</h6>
-                <h6 className="cl-w">Staking</h6>
-                <h6 className="cl-w">Inventory</h6>
+                {MainMenu.map((item: MainMenu) =>
+                  item.sub ? (
+                    <Popover
+                      content={item.sub.map((sub: SubMenu) => (
+                        <a
+                          className="nav-item"
+                          key={sub.name}
+                          href={sub.url}
+                          target={`${sub.isNewTab ? "_blank" : ""}`}
+                        >
+                          {sub.name}
+                        </a>
+                      ))}
+                      title={false}
+                    >
+                      <a className="nav-item">{item.title}</a>
+                    </Popover>
+                  ) : (
+                    <a
+                      className="nav-item"
+                      key={item.title}
+                      href={item.link}
+                      target={`${item.isNewTab ? "_blank" : ""}`}
+                    >
+                      {item.title}
+                    </a>
+                  )
+                )}
               </Space>
             </div>
             <div className="col-md-4">

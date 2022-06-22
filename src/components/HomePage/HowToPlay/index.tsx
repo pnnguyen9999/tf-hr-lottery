@@ -17,7 +17,7 @@ const StepComponents: StepComponent[] = [
     title: "STEP 2",
     name: "Wait for the Draw",
     description:
-      "There is one draw every week alternating between 0 AM UTC on Monday and 12 PM UTC on Sunday",
+      "There is one draw every week alternating between 4 AM UTC on Wednesday and 3:50 AM UTC on next Wednesday",
   },
   {
     title: "STEP 3",

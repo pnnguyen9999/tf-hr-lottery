@@ -16,6 +16,20 @@ body {
   // background-color: #fff;
   background-color: #000;
 }
+a {
+  text-decoration: none !important;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  font-size: 12pt;
+  color: #ebebed !important;
+  font-family: fontbold;
+  transition: all 0.2s ease-in-out;
+  &:hover {
+    cursor: pointer;
+    color: #e5a700 !important;
+  }
+}
 ul {
   padding: 0px 0px 0px 12px;
 }

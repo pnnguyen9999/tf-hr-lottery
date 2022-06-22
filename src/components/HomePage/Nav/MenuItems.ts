@@ -1,30 +1,109 @@
-export interface IMenuItem {
+export interface SubMenu {
   name: string;
   url: string;
+  isNewTab: boolean;
 }
-export const MenuItem: IMenuItem[] = [
+export interface MainMenu {
+  title: string;
+  link?: string;
+  sub?: SubMenu[];
+  isNewTab?: boolean;
+}
+export const MainMenu: MainMenu[] = [
   {
-    name: "Homepage",
-    url: "/",
+    title: "DAPP",
+    sub: [
+      {
+        name: "NFT MARKETPLACE",
+        url: "https://nft.heroarena.app/",
+        isNewTab: true,
+      },
+      {
+        name: "NFT STAKING",
+        url: "https://defi.heroarena.app/",
+        isNewTab: true,
+      },
+      {
+        name: "NFT FUSION",
+        url: "https://nft.heroarena.app/fusion",
+        isNewTab: true,
+      },
+      {
+        name: "LOTTERY",
+        url: "/",
+        isNewTab: false,
+      },
+      {
+        name: "PAYMENT GATEWAY",
+        url: "#",
+        isNewTab: false,
+      },
+    ],
   },
   {
-    name: "Marketplace",
-    url: "/",
+    title: "FARMING",
+    sub: [
+      {
+        name: "BUNICORN",
+        url: "https://bunicorn.exchange/#/hero-arena-farms",
+        isNewTab: true,
+      },
+      {
+        name: "TOKENPLAY DEFI",
+        url: "#",
+        isNewTab: false,
+      },
+    ],
   },
   {
-    name: "Battle",
-    url: "/",
+    title: "TRADE",
+    sub: [
+      {
+        name: "PANCAKESWAP",
+        url: "https://pancakeswap.finance/swap?outputCurrency=0x49c7295ff86eabf5bf58c6ebc858db4805738c01",
+        isNewTab: true,
+      },
+      {
+        name: "GATE.IO",
+        url: "https://www.gate.io/trade/HERA_USDT",
+        isNewTab: true,
+      },
+      {
+        name: "MEXC GLOBAL",
+        url: "https://www.mexc.com/vi-VN/exchange/HERA_USDT",
+        isNewTab: true,
+      },
+      {
+        name: "ZT GLOBAL",
+        url: "https://www.ztb.im/exchange?coin=HERA_USDT",
+        isNewTab: true,
+      },
+    ],
   },
   {
-    name: "Farm",
-    url: "/",
+    title: "FARMING",
+    sub: [
+      {
+        name: "BUNICORN",
+        url: "https://bunicorn.exchange/#/hero-arena-farms",
+        isNewTab: true,
+      },
+      {
+        name: "TOKENPLAY DEFI",
+        url: "#",
+        isNewTab: false,
+      },
+    ],
   },
   {
-    name: "INO",
-    url: "/",
+    title: "BLOG",
+    link: "https://blog.heroarena.app/",
+    isNewTab: true,
   },
   {
-    name: "Whitepaper",
-    url: "/",
+    title: "SCHOLARSHIP",
+    link: "https://guild.heroarena.app/",
+    isNewTab: true,
   },
+  { title: "PLAYNOW", link: "https://play.heroarena.app/", isNewTab: true },
 ];

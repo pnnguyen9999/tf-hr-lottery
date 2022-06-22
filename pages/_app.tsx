@@ -6,10 +6,14 @@ import "antd/dist/antd.css";
 import "animate.css";
 import { Provider } from "react-redux";
 import store from "@redux/store";
+import Head from "next/head";
 
 function MyApp({ Component, pageProps }: any): JSX.Element {
   return (
     <Provider store={store}>
+      <Head>
+        <title>Hero Arena Lottery</title>
+      </Head>
       <Component {...pageProps} />
     </Provider>
   );

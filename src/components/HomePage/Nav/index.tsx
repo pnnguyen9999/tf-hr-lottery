@@ -3,7 +3,7 @@ import { HeroButton } from "@components/common/HeroButton";
 import { Avatar, Drawer, Popover, Space } from "antd";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { IMenuItem, MenuItem } from "./MenuItems";
+import { MainMenu, SubMenu } from "./MenuItems";
 import { MenuOutlined } from "@ant-design/icons";
 type Props = {};
 export const processAddressString = (_address: string): string => {
@@ -41,13 +41,34 @@ export default function Nav({}: Props) {
         <img className="logo" src="/img/logo.png" />
       </div>
       <div className="d-flex align-items-center">
-        {MenuItem.map((item: IMenuItem) => {
-          return (
-            <div className="nav-item d-none d-md-block" key={item.name}>
-              {item.name}
-            </div>
-          );
-        })}
+        {MainMenu.map((item: MainMenu) =>
+          item.sub ? (
+            <Popover
+              content={item.sub.map((sub: SubMenu) => (
+                <a
+                  className="nav-item d-none d-md-block"
+                  key={sub.name}
+                  href={sub.url}
+                  target={`${sub.isNewTab ? "_blank" : ""}`}
+                >
+                  {sub.name}
+                </a>
+              ))}
+              title={false}
+            >
+              <div className="nav-item d-none d-md-block">{item.title}</div>
+            </Popover>
+          ) : (
+            <a
+              className="nav-item d-none d-md-block"
+              key={item.title}
+              href={item.link}
+              target={`${item.isNewTab ? "_blank" : ""}`}
+            >
+              {item.title}
+            </a>
+          )
+        )}
         <Drawer
           title="Navigation"
           placement="right"
@@ -55,13 +76,34 @@ export default function Nav({}: Props) {
           visible={isOpenDrawerMobile}
         >
           <Space direction="vertical" size={10}>
-            {MenuItem.map((item: IMenuItem) => {
-              return (
-                <div className="nav-item" key={item.name}>
-                  {item.name}
-                </div>
-              );
-            })}
+            {MainMenu.map((item: MainMenu) =>
+              item.sub ? (
+                <Popover
+                  content={item.sub.map((sub: SubMenu) => (
+                    <a
+                      className="nav-item"
+                      key={sub.name}
+                      href={sub.url}
+                      target={`${sub.isNewTab ? "_blank" : ""}`}
+                    >
+                      {sub.name}
+                    </a>
+                  ))}
+                  title={false}
+                >
+                  <a className="nav-item">{item.title}</a>
+                </Popover>
+              ) : (
+                <a
+                  className="nav-item"
+                  key={item.title}
+                  href={item.link}
+                  target={`${item.isNewTab ? "_blank" : ""}`}
+                >
+                  {item.title}
+                </a>
+              )
+            )}
           </Space>
         </Drawer>
 

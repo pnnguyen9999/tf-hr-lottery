@@ -81,21 +81,6 @@ export const MainMenu: MainMenu[] = [
     ],
   },
   {
-    title: "FARMING",
-    sub: [
-      {
-        name: "BUNICORN",
-        url: "https://bunicorn.exchange/#/hero-arena-farms",
-        isNewTab: true,
-      },
-      {
-        name: "TOKENPLAY DEFI",
-        url: "#",
-        isNewTab: false,
-      },
-    ],
-  },
-  {
     title: "BLOG",
     link: "https://blog.heroarena.app/",
     isNewTab: true,

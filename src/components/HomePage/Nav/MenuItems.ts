@@ -87,7 +87,7 @@ export const MainMenu: MainMenu[] = [
   },
   {
     title: "SCHOLARSHIP",
-    link: "https://guild.heroarena.app/",
+    link: "https://scholarship.heroarena.app",
     isNewTab: true,
   },
   { title: "PLAYNOW", link: "https://play.heroarena.app/", isNewTab: true },

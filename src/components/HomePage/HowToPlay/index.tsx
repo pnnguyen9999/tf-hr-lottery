@@ -17,7 +17,7 @@ const StepComponents: StepComponent[] = [
     title: "STEP 2",
     name: "Wait for the Draw",
     description:
-      "There is one draw every week alternating between 4 AM UTC on Wednesday and 3:50 AM UTC on next Wednesday",
+      "There is one draw every day alternating between 4 AM UTC and 3:50 AM UTC on next day",
   },
   {
     title: "STEP 3",
@@ -89,14 +89,14 @@ export default function HowToPlay({}: Props) {
             <section>
               <div className="cl-yl fnt-s2 fnt-b">Prize Funds</div>
               <div className="cl-w fnt-s1 fnt-b">
-                60% of HEGEM per Pool, 40% of each Pool will be burned + 5000
+                60% of HEGEM per Pool, 40% of each Pool will be burned + 3000
                 HERA
               </div>
               <ul>
                 <li>
                   <span className="cl-yl fnt-s1">Specifically:&nbsp;</span>
                   Next period's prize = Number of HERA + HEGEM remaining of
-                  previous period's Pool + 60% of next period's Pool + 5000 HERA
+                  previous period's Pool + 60% of next period's Pool + 3000 HERA
                   from HERO ARENA
                 </li>
                 <li>
@@ -108,7 +108,7 @@ export default function HowToPlay({}: Props) {
                 </li>
               </ul>
               <div className="cl-w fnt-s1 fnt-b">
-                The prize each person gets will be 350 HERA + 5000 HEGEM
+                The prize each person gets will be 350 HERA + 3000 HEGEM
               </div>
             </section>
           </div>

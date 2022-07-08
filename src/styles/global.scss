@@ -167,6 +167,16 @@ ul {
     align-items: center;
     justify-content: flex-end;
   }
+  .herobutton {
+    .herobutton-btn {
+      height: 65px;
+      width: 160px;
+    }
+    .herobutton--text {
+      font-size: 14pt;
+      margin-top: 3px;
+    }
+  }
 }
 
 .bracket-ticket {
@@ -223,4 +233,8 @@ li {
 }
 .bdr-bt-popup {
   border-bottom: 2px dashed #d0b07c !important;
+}
+.herobutton-btn {
+  height: 46px;
+  width: 120px;
 }

@@ -14,13 +14,16 @@ export default function Banner({}: Props) {
   const latestLotteryData = useSelector(
     (state) => state.globalState.latestLotteryData
   );
-  const HeraValue = ({ name, value }: HeraValue) => {
+  const CoinValue = ({ name, value }: HeraValue) => {
     return (
-      <div className="hera-value">
-        <div>
-          <img src={`/img/coins/${name}.png`} />
+      <div className="bracket-ticket">
+        <div
+          className="text-center d-flex flex-column align-center-center justify-content-center"
+          style={{ height: "100%" }}
+        >
+          <div className="cl-w fnt-s3 text-uppercase">{name}</div>
+          <div className="cl-gradient-yl fnt-s4 fnt-b">{value}</div>
         </div>
-        <div className="cl-yl fnt-s6 fnt-b">{value}</div>
       </div>
     );
   };
@@ -29,26 +32,31 @@ export default function Banner({}: Props) {
       <h4 className="fnt-b cl-w ">LOTTERY</h4>
       <div className="banner-desktop">
         <div className="d-flex flex-column align-items-center justify-content-center h-100">
-          <div className="cl-br fnt-s5 fnt-b">The Hero Arena Lottery</div>
-          <div className="d-flex align-items-center my-2 flex-wrap">
-            <HeraValue
-              name="hera"
-              value={latestLotteryData?.amountCollectedInHera.toFixed(
-                FIXED_DECIMAL
-              )}
-            />
-            <HeraValue
-              name="hegem"
-              value={latestLotteryData?.amountCollectedInHegem.toFixed(
-                FIXED_DECIMAL
-              )}
-            />
+          <div className="cl-w fnt-s6 fnt-b fnt-eff-glow mb-3 text-center">
+            THE HERO ARENA LOTTERY
           </div>
-          <div className="cl-br fnt-s2 fnt-b my-2">In Prizes</div>
-          <div className="bagde">
-            <BuyTicketButton />
+          <div className="d-flex w-100 justify-content-center justify-content-md-start flex">
+            <div className="ml-0 ml-md-5 d-flex flex-column align-items-center">
+              <div className="pool-button" />
+              <div className="w-100 d-flex justify-content-center">
+                <div className="d-flex align-items-center justify-content-center my-2 flex-wrap">
+                  <CoinValue
+                    name="hera"
+                    value={latestLotteryData?.amountCollectedInHera.toFixed(
+                      FIXED_DECIMAL
+                    )}
+                  />
+                  <CoinValue
+                    name="hegem"
+                    value={latestLotteryData?.amountCollectedInHegem.toFixed(
+                      FIXED_DECIMAL
+                    )}
+                  />
+                </div>
+              </div>
+              <BuyTicketButton />
+            </div>
           </div>
-          <div />
         </div>
       </div>
     </div>

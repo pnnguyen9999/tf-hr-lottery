@@ -67,6 +67,11 @@ ul {
   &-grey {
     color: #d1d1cf;
   }
+  &-gradient-yl {
+    background: linear-gradient(180.79deg, #fdca00, #f3e379, #fdca00);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
 }
 .fnt {
   &-b {
@@ -89,6 +94,12 @@ ul {
   }
   &-s6 {
     font-size: 27pt;
+  }
+  &-eff {
+    &-glow {
+      text-shadow: 3px 0 2px #67350f, -3px 0 2px #67350f, 0 3px 2px #67350f, 0 -3px 0 #67350f, 1px 1px #67350f,
+        -2px -2px 0 #67350f, 2px -2px 0 #67350f, -2px 2px 0 #67350f;
+    }
   }
 }
 
@@ -129,11 +140,12 @@ ul {
 .banner-desktop {
   height: 400px;
   width: 100%;
-  background: url(/img/banner/banner-desktop.png);
+  background: url(/img/banner/banner-desktop-n.png);
   background: {
     repeat: no-repeat;
     size: cover;
   }
+  border-radius: 10px;
   .hera-value {
     display: flex;
     align-items: center;
@@ -154,6 +166,32 @@ ul {
     display: flex;
     align-items: center;
     justify-content: flex-end;
+  }
+}
+
+.bracket-ticket {
+  margin: 10px;
+  $bracket-ratio: 0.58;
+  $bracket-width: 210px;
+  $bracket-height: $bracket-width * $bracket-ratio;
+  height: $bracket-height;
+  width: $bracket-width;
+  background: url(/img/bracket.png);
+  background: {
+    repeat: no-repeat;
+    size: cover;
+  }
+}
+.pool-button {
+  $pool-button-ratio: 0.2;
+  $pool-button-width: 125px;
+  $pool-button-height: $pool-button-width * $pool-button-ratio;
+  height: $pool-button-height;
+  width: $pool-button-width;
+  background: url(/img/pool.png);
+  background: {
+    repeat: no-repeat;
+    size: cover;
   }
 }
 .coin {

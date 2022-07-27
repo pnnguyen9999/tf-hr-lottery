@@ -25,7 +25,7 @@ export const MainMenu: MainMenu[] = [
       },
       {
         name: "NFT FUSION",
-        url: "https://nft.heroarena.app/fusion",
+        url: "https://fusion.heroarena.app/",
         isNewTab: true,
       },
       {

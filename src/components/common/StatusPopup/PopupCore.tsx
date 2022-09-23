@@ -14,7 +14,7 @@ export default function PopupCore() {
       title={false}
       centered
       style={{ top: 20 }}
-      visible={isOpenPopupStatus.isOpen}
+      open={isOpenPopupStatus.isOpen}
       footer={false}
       onOk={() =>
         dispatch(

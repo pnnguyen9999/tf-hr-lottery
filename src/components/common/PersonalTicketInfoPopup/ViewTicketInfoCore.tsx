@@ -23,7 +23,7 @@ export default function ViewTicketInfoCore({
     <Modal
       title={<div className="cl-br-drk fnt-s3 fnt-b">Round {data?.round}</div>}
       style={{ top: 20 }}
-      visible={visibleState}
+      open={visibleState}
       footer={false}
       onOk={() => dispatch(setOpen(false))}
       onCancel={() => dispatch(setOpen(false))}
@@ -35,13 +35,13 @@ export default function ViewTicketInfoCore({
             direction="vertical"
             className="bdr-bt-popup mb-3 pb-3"
           >
-            {data?.tickets !== [] ? (
+            {data?.tickets.length > 0 ? (
               <div className="fnt-s2 fnt-bold cl-br-drk text-center">
                 Your Tickets
               </div>
             ) : (
               <div className="fnt-s2 fnt-bold cl-br-drk text-center">
-                You have no ticket
+                You have 0 ticket(s)
               </div>
             )}
 

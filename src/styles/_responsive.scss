@@ -1,17 +1,32 @@
 @media screen and (max-width: 766px) {
-    .step-panel-cont {
-        height: inherit !important;
+  .step-panel-cont {
+    height: inherit !important;
+  }
+  .banner-desktop {
+    height: 550px !important;
+    width: 100%;
+    background: url(/img/banner/banner-mobile-new.png) !important;
+    background: {
+      repeat: no-repeat !important;
+      size: cover !important;
     }
-    .banner-desktop {
-        height: 550px !important;
-        width: 100%;
-        background: url(/img/banner/banner-mobile-n.png) !important;
-        background: {
-            repeat: no-repeat !important;
-            size: cover !important;
-        }
-        .fnt-s6 {
-            font-size: 23pt !important;
-        }
+    .fnt-s6 {
+      font-size: 23pt !important;
     }
+  }
+
+  .with-hera-token {
+    transform: none !important;
+    margin-top: -25vw;
+  }
+
+  .pool-button {
+    background-image: url(/img/pool-white.png) !important;
+    // width: 210px !important;
+    --pool-button-width: 210px !important;
+  }
 }
+
+// @include media-breakpoint-down(md) {
+
+// }

@@ -139,7 +139,7 @@ export function BuyTicketPopup() {
       <Modal
         title={<ModalHeader />}
         style={{ top: 20 }}
-        visible={isOpenPopupBuyTicket}
+        open={isOpenPopupBuyTicket}
         footer={false}
         onOk={() => dispatch(setOpenPopupBuyTicket(false))}
         onCancel={() => dispatch(setOpenPopupBuyTicket(false))}

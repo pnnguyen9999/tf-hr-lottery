@@ -21,8 +21,8 @@ export default function LoadingPopup() {
       title={false}
       centered
       style={{ top: 20 }}
-      visible={isOpenPopupStatus}
-      //   visible={true}
+      open={isOpenPopupStatus}
+      //   open={true}
       footer={false}
       closeIcon={() => <div></div>}
       bodyStyle={{ zIndex: 9999 }}

@@ -32,11 +32,23 @@ export default function Banner({}: Props) {
       <h4 className="fnt-b cl-w ">LOTTERY</h4>
       <div className="banner-desktop">
         <div className="d-flex flex-column align-items-center justify-content-center h-100">
-          <div className="cl-w fnt-s6 fnt-b fnt-eff-glow mb-3 text-center">
-            THE HERO ARENA LOTTERY
-          </div>
-          <div className="d-flex w-100 justify-content-center justify-content-md-start flex">
-            <div className="ml-0 ml-md-5 d-flex flex-column align-items-center">
+          <div className="row w-100 justify-content-center mx-md-5 py-5">
+            {/* TWO COLUMNS */}
+            <div className="col-12 col-md-5 ml-0 ml-md-5 d-flex flex-column align-items-center">
+              <div className="cl-yl fnt-s3 fnt-b mb-2 text-center font-italic">
+                From September 1<sup>st</sup>, 2022
+              </div>
+              <div
+                className="cl-w fnt-s6 fnt-b fnt-eff-glow mb-3 text-center"
+                style={{ lineHeight: "1.2" }}
+              >
+                BUY LOTTERY <br className="d-none d-md-block" /> TICKET
+              </div>
+              <div className="with-hera-token">
+                <img src="/img/banner/banner-with-hera-token.png" alt="" />
+              </div>
+            </div>
+            <div className="col mr-0 mr-md-5 d-flex flex-column align-items-center">
               <div className="pool-button" />
               <div className="w-100 d-flex justify-content-center">
                 <div className="d-flex align-items-center justify-content-center my-2 flex-wrap">

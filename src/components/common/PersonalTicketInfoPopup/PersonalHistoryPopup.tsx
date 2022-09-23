@@ -110,7 +110,7 @@ export default function PersonalHistoryPopup({}: Props) {
         </div>
       }
       style={{ top: 20 }}
-      visible={isOpenPersonalHistoryTicketInfo}
+      open={isOpenPersonalHistoryTicketInfo}
       footer={false}
       onOk={() => dispatch(setOpenHistoryPersonalTicketInfo(false))}
       onCancel={() => dispatch(setOpenHistoryPersonalTicketInfo(false))}

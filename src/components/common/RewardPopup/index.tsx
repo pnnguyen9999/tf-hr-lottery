@@ -83,7 +83,7 @@ export default function RewardPopup({}: Props) {
     <Modal
       title={<div className="cl-br-drk fnt-s3 fnt-b">Collect Winnings</div>}
       style={{ top: 20 }}
-      visible={isOpenPopupReward}
+      open={isOpenPopupReward}
       footer={false}
       onOk={() => dispatch(setOpenPopupReward(false))}
       onCancel={() => dispatch(setOpenPopupReward(false))}

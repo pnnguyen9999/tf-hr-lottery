@@ -89,26 +89,26 @@ export default function HowToPlay({}: Props) {
             <section>
               <div className="cl-yl fnt-s2 fnt-b">Prize Funds</div>
               <div className="cl-w fnt-s1 fnt-b">
-                60% of HEGEM per Pool, 40% of each Pool will be burned + 3000
+                60% of HERA per Pool, 40% of each Pool will be burned + 3000
                 HERA
               </div>
               <ul>
                 <li>
                   <span className="cl-yl fnt-s1">Specifically:&nbsp;</span>
-                  Next period's prize = Number of HERA + HEGEM remaining of
-                  previous period's Pool + 60% of next period's Pool + 3000 HERA
-                  from HERO ARENA
+                  Next period's prize = Number of HERA remaining of previous
+                  period's Pool + 60% of next period's Pool + 3000 HERA from
+                  HERO ARENA
                 </li>
                 <li>
                   <span className="cl-yl fnt-s1">Example:&nbsp;</span>
                   The first Matches 3 prize (the first 3 digits coincide with
-                  the jackpot number) has a total prize value of 1750 HERA +
-                  25000 HEGEM, there are 5 people with the first 3 numbers
-                  matching the jackpot number
+                  the jackpot number) has a total prize value of 1750 HERA,
+                  there are 5 people with the first 3 numbers matching the
+                  jackpot number
                 </li>
               </ul>
               <div className="cl-w fnt-s1 fnt-b">
-                The prize each person gets will be 350 HERA + 3000 HEGEM
+                The prize each person gets will be 350 HERA
               </div>
             </section>
           </div>

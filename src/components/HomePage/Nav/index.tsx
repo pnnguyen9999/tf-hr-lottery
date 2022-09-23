@@ -73,7 +73,7 @@ export default function Nav({}: Props) {
           title="Navigation"
           placement="right"
           onClose={() => setOpenDrawerMobile(false)}
-          visible={isOpenDrawerMobile}
+          open={isOpenDrawerMobile}
         >
           <Space direction="vertical" size={10}>
             {MainMenu.map((item: MainMenu) =>
@@ -118,7 +118,7 @@ export default function Nav({}: Props) {
               </div>
             }
             trigger="click"
-            visible={isOpenPopoverInfo}
+            open={isOpenPopoverInfo}
             onVisibleChange={() => setOpenPopoverInfo(!isOpenPopoverInfo)}
           >
             <Avatar

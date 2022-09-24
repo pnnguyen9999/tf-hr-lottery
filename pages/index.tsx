@@ -5,7 +5,7 @@ import GetTicket from "@components/HomePage/GetTicket";
 import HowToPlay from "@components/HomePage/HowToPlay";
 import LoginMetamask from "@components/HomePage/LoginMetamask";
 import Nav from "@components/HomePage/Nav";
-import ProcessHERAContractDataCpn from "@components/HomePage/ProcessHERADataCpn";
+import ProcessHERAContractDataCpn from "@components/HomePage/ProcessHERALotteryDataCpn";
 import dynamic from "next/dynamic";
 import React from "react";
 const FinishedRounds: any = dynamic(

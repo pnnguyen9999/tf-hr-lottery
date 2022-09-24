@@ -32,9 +32,10 @@ export default function Footer({}: Props): ReactElement {
               <Space direction="vertical" size={10}>
                 <h5 className="cl-yl">Navigation</h5>
                 <br />
-                {MainMenu.map((item: MainMenu) =>
+                {MainMenu.map((item: MainMenu, index) =>
                   item.sub ? (
                     <Popover
+                      key={index}
                       content={item.sub.map((sub: SubMenu) => (
                         <a
                           className="nav-item"

@@ -1,5 +1,8 @@
-import { LOTTERY_CONTRACT, RPC_BSC } from "src/config";
-import lotteryABI from "src/lib/contract/lotteryABI.abi.json";
+import {
+  LOTTERY_CONTRACT as LOTTERY_HEGEM_CONTRACT,
+  RPC_BSC,
+} from "src/config";
+import hegemLotteryABI from "src/lib/contract/lotteryABI.abi.json";
 import _ from "lodash";
 import Web3 from "web3";
 import moment from "moment";
@@ -15,16 +18,20 @@ export interface LotteryData {
   ticketPrice: number;
 }
 
-const useFetchContractInfo = async (
+const useFetchHegemLotteryInfo = async (
   lotteryId: number
 ): Promise<LotteryData> => {
   const getLotteryData = async (id: number): Promise<any> => {
     const web3 = new Web3(RPC_BSC) as any;
-    let contract = new web3.eth.Contract(lotteryABI, LOTTERY_CONTRACT);
+    let contract = new web3.eth.Contract(
+      hegemLotteryABI,
+      LOTTERY_HEGEM_CONTRACT
+    );
     const data = await contract.methods.viewLottery(id).call();
     return data;
   };
   const results = await getLotteryData(lotteryId);
+  console.log("useFetchHegemLotteryInfo", { lotteryId, results });
 
   const finalNumber = _.reverse(results[14].toString().split(""))
     .join("")
@@ -62,4 +69,4 @@ const useFetchContractInfo = async (
   };
 };
 
-export default useFetchContractInfo;
+export default useFetchHegemLotteryInfo;

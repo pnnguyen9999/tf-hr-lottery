@@ -57,7 +57,7 @@ export default function GetTicket({}: Props) {
     const intervalCd = setInterval(() => {
       if (latestLotteryData?.drawnTimeMoment) {
         const then: any = new Date(latestLotteryData?.drawnTime).getTime();
-        console.log(then);
+        // console.log(then);
         // const then = 1648848951000;
         const now: any = new Date().getTime();
         const diffTimes = then - now;
@@ -100,24 +100,18 @@ export default function GetTicket({}: Props) {
             <div className="col-12 align-items-center my-3">
               <div className="row align-items-center">
                 <div className="col-3 fnt-s3 fnt-b cl-w ">Prize Pot</div>
-                {/* {!isOnCalculatingTime ? ( */}
-                <div className="col-7 d-flex justify-content-between align-items-center flex-wrap">
-                  <PrizePotValue
-                    value={latestLotteryData?.amountCollectedInHera.toFixed(
-                      FIXED_DECIMAL
-                    )}
-                    name="hera"
-                  />
-                  <PrizePotValue
-                    value={latestLotteryData?.amountCollectedInHegem.toFixed(
-                      FIXED_DECIMAL
-                    )}
-                    name="hegem"
-                  />
-                </div>
-                {/* ) : (
+                {!isOnCalculatingTime ? (
+                  <div className="col-7 d-flex justify-content-between align-items-center flex-wrap">
+                    <PrizePotValue
+                      value={latestLotteryData?.amountCollectedInHera.toFixed(
+                        FIXED_DECIMAL
+                      )}
+                      name="hera"
+                    />
+                  </div>
+                ) : (
                   <div className="fnt-b cl-yl fnt-s5">Calculating...</div>
-                )} */}
+                )}
               </div>
             </div>
             <div className="col-12 align-items-center my-3">

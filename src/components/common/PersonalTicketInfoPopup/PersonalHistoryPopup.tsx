@@ -134,8 +134,12 @@ export default function PersonalHistoryPopup({}: Props) {
             >
               {selectedLotteryData?.finalNumber
                 .split("")
-                .map((number: string) => (
-                  <div className="lottery-number" class-type={number}>
+                .map((number: string, index) => (
+                  <div
+                    key={index}
+                    className="lottery-number"
+                    class-type={number}
+                  >
                     {number}
                   </div>
                 ))}

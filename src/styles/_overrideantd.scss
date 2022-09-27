@@ -1,61 +1,64 @@
 // override ant tab style
 .ant-tabs-ink-bar {
-    display: none;
+  display: none;
 }
 .ant-tabs-nav::before {
-    border: 0px !important;
+  border: 0px !important;
 }
 .ant-tabs-tab {
-    &-btn {
-        padding: 5px 15px;
-        border-radius: 5px;
-        color: white !important;
-        &:focus {
-            color: white !important;
-        }
+  &-btn {
+    padding: 5px 15px;
+    border-radius: 5px;
+    color: white !important;
+    &:focus {
+      color: white !important;
     }
+  }
 }
 .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
-    color: white !important;
-    background-color: #67350e;
+  color: white !important;
+  background-color: #67350e;
 }
 .ant-tabs-nav-operations {
-    display: none !important;
+  display: none !important;
 }
 .ant-modal-content,
 .ant-modal-header {
-    background-color: #ece4ca !important;
-    border-radius: 8px !important;
+  background-color: #ece4ca !important;
+  border-radius: 8px !important;
 }
 .ant-modal-header {
-    border-bottom: 2px dashed #d0b07c !important;
+  border-bottom: 2px dashed #d0b07c !important;
 }
 .ant-input {
-    background: #fffbef !important;
-    border-radius: 8px !important;
-    border: 1px solid #e1caa2 !important;
+  background: #fffbef !important;
+  border-radius: 8px !important;
+  border: 1px solid #e1caa2 !important;
 }
 .ant-popover-inner {
-    background-color: #383736 !important;
-    color: #fff !important;
+  background-color: #383736 !important;
+  color: #fff !important;
 }
 .ant-popover-title {
-    color: #e4e4e4 !important;
-    border-bottom: 1px solid #4d4b49 !important;
+  color: #e4e4e4 !important;
+  border-bottom: 1px solid #4d4b49 !important;
 }
 .ant-popover-inner-content {
-    color: #e4e4e4 !important;
-    border-bottom: 1px solid #4d4b49 !important;
+  color: #e4e4e4 !important;
+  border-bottom: 1px solid #4d4b49 !important;
 }
 .ant-drawer-content {
-    background-color: #383735 !important;
-    color: #fff !important;
+  background-color: #383735 !important;
+  color: #fff !important;
 }
 .ant-drawer-header {
-    background-color: #383735 !important;
-    border-bottom: 1px solid #96938f !important;
-    .ant-drawer-close,
-    .ant-drawer-title {
-        color: #fff !important;
-    }
+  background-color: #383735 !important;
+  border-bottom: 1px solid #96938f !important;
+  .ant-drawer-close,
+  .ant-drawer-title {
+    color: #fff !important;
+  }
+}
+.ant-message .anticon {
+  top: -3px !important;
 }

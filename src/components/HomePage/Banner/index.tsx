@@ -1,25 +1,33 @@
-import { ApproveButton } from "@components/common/ApproveButton";
-import { BuyTicketButton } from "@components/common/BuyTicketButton";
-import { HeroButton } from "@components/common/HeroButton";
-import React from "react";
-import { useSelector } from "react-redux";
-import { FIXED_DECIMAL } from "src/constant";
+import { ApproveButton } from '@components/common/ApproveButton';
+import { BuyTicketButton } from '@components/common/BuyTicketButton';
+import { HeroButton } from '@components/common/HeroButton';
+import React from 'react';
+import { useSelector } from 'react-redux';
+import { FIXED_DECIMAL } from 'src/constant';
 
 type Props = {};
 export interface HeraValue {
-  name: "hera" | "hegem";
+  name: 'hera' | 'hegem';
   value: number | string;
 }
+
+const formatCoinValue = (coinValue: unknown) =>
+  typeof coinValue === 'number' && !Number.isNaN(coinValue) ? coinValue.toFixed(FIXED_DECIMAL) : '';
+
 export default function Banner({}: Props) {
-  const latestLotteryData = useSelector(
-    (state) => state.globalState.latestLotteryData
-  );
+  const latestHERALotteryData = useSelector((state) => state.globalState.latestLotteryData);
+  const latestHegemLottery = useSelector((state) => state.globalState.latestHegemLotteryData);
+  const poolAmount = {
+    HERA: latestHERALotteryData?.amountCollectedInHera + latestHegemLottery?.amountCollectedInHera,
+    hegem: latestHegemLottery?.amountCollectedInHegem,
+  };
+
   const CoinValue = ({ name, value }: HeraValue) => {
     return (
       <div className="bracket-ticket">
         <div
           className="text-center d-flex flex-column align-center-center justify-content-center"
-          style={{ height: "100%" }}
+          style={{ height: '100%' }}
         >
           <div className="cl-w fnt-s3 text-uppercase">{name}</div>
           <div className="cl-gradient-yl fnt-s4 fnt-b">{value}</div>
@@ -40,7 +48,7 @@ export default function Banner({}: Props) {
               </div>
               <div
                 className="cl-w fnt-s6 fnt-b fnt-eff-glow mb-3 text-center"
-                style={{ lineHeight: "1.2" }}
+                style={{ lineHeight: '1.2' }}
               >
                 BUY LOTTERY <br className="d-none d-md-block" /> TICKET
               </div>
@@ -52,18 +60,8 @@ export default function Banner({}: Props) {
               <div className="pool-button" />
               <div className="w-100 d-flex justify-content-center">
                 <div className="d-flex align-items-center justify-content-center my-2 flex-wrap">
-                  <CoinValue
-                    name="hera"
-                    value={latestLotteryData?.amountCollectedInHera.toFixed(
-                      FIXED_DECIMAL
-                    )}
-                  />
-                  <CoinValue
-                    name="hegem"
-                    value={latestLotteryData?.amountCollectedInHegem.toFixed(
-                      FIXED_DECIMAL
-                    )}
-                  />
+                  <CoinValue name="hera" value={formatCoinValue(poolAmount.HERA)} />
+                  <CoinValue name="hegem" value={formatCoinValue(poolAmount.hegem)} />
                 </div>
               </div>
               <BuyTicketButton />

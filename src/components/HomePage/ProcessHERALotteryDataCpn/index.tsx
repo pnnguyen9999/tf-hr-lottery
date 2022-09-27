@@ -1,44 +1,29 @@
-import PersonalLatestPopup from "@components/common/PersonalTicketInfoPopup/PersonalLatestPopup";
 import PersonalHistoryPopup from "@components/common/PersonalTicketInfoPopup/PersonalHistoryPopup";
+import PersonalLatestPopup from "@components/common/PersonalTicketInfoPopup/PersonalLatestPopup";
 import {
   setCurrentLotteryId,
-  setLoadingHistoryLotteryData,
   setHistoryLotteryData,
+  setlatestHegemLotteryData,
+  setlatestHegemLotteryId,
   setlatestLotteryData,
-  setLoadinglatestLotteryData,
   setlatestLotteryId,
-  setlatestPersonalData,
-  setHistoryPersonalData,
-  setNumberOfWinningTicket,
+  setLoadingHistoryLotteryData,
+  setLoadinglatestLotteryData,
   setMaxAmountCanBuy,
 } from "@redux/globalState";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  LOTTERY_CONTRACT as LOTTERY_HEGEM_CONTRACT,
-  LOTTERY_HERA_CONTRACT,
-  RPC_BSC,
-} from "src/config";
-import lotteryABI from "src/lib/contract/lotteryABI.abi.json";
-import lotteryHeraABI from "src/lib/contract/lotteryHeraABI.abi.json";
 // import useFetchContractInfo from "src/lib/hooks/useFetchContractInfo";
-import useFetchPersonalInfo, {
-  Ticket,
-} from "src/lib/hooks/useFetchPersonalInfo";
-import Web3 from "web3";
-import useFetchRewardInfo, {
-  RewardInfo,
-} from "src/lib/hooks/useFetchRewardInfo";
-import RewardPopup from "@components/common/RewardPopup";
-import { setAllTicketsRewardRx, setTotalRewardRx } from "@redux/rewardState";
-import PopupCore from "@components/common/StatusPopup/PopupCore";
 import { BuyTicketPopup } from "@components/common/BuyTicketPopup";
 import LoadingPopup from "@components/common/LoadingPopup";
-import useFetchHERALotteryInfo from "src/lib/hooks/LotteryWithHera/useFetchHERALotteryInfo";
-import { AbiItem } from "ethereum-multicall/dist/esm/models";
-import LotteryContracts from "src/lib/class/LotteryContracts";
+import RewardPopup from "@components/common/RewardPopup";
+import PopupCore from "@components/common/StatusPopup/PopupCore";
+import { getLotteryContracts } from "src/lib/class/LotteryContracts";
 import useFetchHegemLotteryInfo from "src/lib/hooks/LotteryWithHera/useFetchHegemLotteryInfo";
-import lotteryContracts from "src/lib/contract/lotteryContracts";
+import useFetchHERALotteryInfo from "src/lib/hooks/LotteryWithHera/useFetchHERALotteryInfo";
+import { LotteryData } from "src/lib/hooks/useFetchContractInfo";
+import { Ticket } from "src/lib/hooks/useFetchPersonalInfo";
+import { RewardInfo } from "src/lib/hooks/useFetchRewardInfo";
 type Props = {};
 interface TicketWithBracket extends Ticket {
   bracket: number;
@@ -47,7 +32,8 @@ export interface TicketWithReward extends RewardInfo {
   ticket: TicketWithBracket;
 }
 /**
- * @RULE1 trừ 1 đơn vị paginate cho load history data
+ * @RULE1 //// trừ 1 đơn vị paginate cho load history data
+ * -> không trừ
  * @RULE2 đơn vị paginate cho load latest giữ nguyên
  * @currentLotteryId lottery ID cho paginate
  * @latestLotteryId lottery ID mới nhất get từ contract
@@ -55,93 +41,95 @@ export interface TicketWithReward extends RewardInfo {
 export default function ProcessHERALotteryDataCpn({}: Props) {
   const dispatch = useDispatch();
   const address = useSelector((state) => state.web3.address);
-  const latestLotteryId = useSelector(
-    (state) => state.globalState.latestLotteryId
-  );
-  const currentLotteryId = useSelector(
-    (state) => state.globalState.currentLotteryId
-  );
-  const selectedLotteryData = useSelector(
-    (state) => state.globalState.historyLotteryData
-  );
-  const historyPersonalData = useSelector(
-    (state) => state.globalState.historyPersonalData
-  );
+  const latestLotteryId = useSelector((state) => state.globalState.latestLotteryId);
+  const latestHegemLotteryId = useSelector((state) => state.globalState.latestHegemLotteryId);
+  const currentLotteryId = useSelector((state) => state.globalState.currentLotteryId);
+  const selectedLotteryData = useSelector((state) => state.globalState.historyLotteryData);
+  const historyPersonalData = useSelector((state) => state.globalState.historyPersonalData);
   const triggerLatestDataUseEff = useSelector(
     (state) => state.triggerState.triggerLatestDataUseEff
   );
 
+  const currentHistoryLottery = useSelector((state) => state.globalState.currentHistoryLottery);
+
   useEffect(() => {
-    const getCurrentRound = async () => {
+    const getLotteryRound = async () => {
       // init lotteries contracts
-      const { hegem: hegemLotteryContract, HERA: HERALotteryContract } =
-        lotteryContracts;
+      const { hegem: hegemLotteryContract, HERA: HERALotteryContract } = getLotteryContracts();
 
       // get latest lotteries id
-      const lotteryIds = {
-        hegem_contract: await hegemLotteryContract.methods
+      const latestLotteryIds = {
+        hegem_contract: (await hegemLotteryContract.methods
           .viewCurrentLotteryId()
-          .call(),
-        HERA_contract: await HERALotteryContract.methods
-          .viewCurrentLotteryId()
-          .call(),
+          .call()) as string,
+        HERA_contract: (await HERALotteryContract.methods.viewCurrentLotteryId().call()) as string,
       };
 
       // fetch max tickets can buy for lottery with HERA
       const maxBuyTickets = {
-        HERA: await HERALotteryContract.methods
-          .maxNumberTicketsPerBuyOrClaim()
-          .call(),
+        HERA: await HERALotteryContract.methods.maxNumberTicketsPerBuyOrClaim().call(),
       };
 
       console.log({
-        hegemLotteryId: lotteryIds.hegem_contract,
-        HERALotteryId: lotteryIds.HERA_contract,
+        hegemLotteryId: latestLotteryIds.hegem_contract,
+        HERALotteryId: latestLotteryIds.HERA_contract,
         maxBuyTickets: maxBuyTickets.HERA,
       });
 
       // set lotteries id to store
-      dispatch(setCurrentLotteryId(parseInt(lotteryIds.hegem_contract))); // buy with HERA
-      dispatch(setlatestLotteryId(parseInt(lotteryIds.hegem_contract))); // buy with HERA
+      dispatch(setCurrentLotteryId(parseInt(latestLotteryIds.HERA_contract) - 1)); // buy with HERA
+      dispatch(setlatestLotteryId(parseInt(latestLotteryIds.HERA_contract))); // buy with HERA
+      dispatch(
+        setlatestHegemLotteryId(parseInt(latestLotteryIds.hegem_contract)) // buy with Hegem
+      );
       dispatch(setMaxAmountCanBuy(maxBuyTickets.HERA)); // buy with HERA
     };
-    if (window) {
-      getCurrentRound();
-    }
+    // if (window) {
+    getLotteryRound();
+    // }
   }, []);
+
+  /**
+   * -> load latest data
+   */
+  useEffect(() => {
+    const updateLatestLotteryInfo = async () => {
+      dispatch(setLoadinglatestLotteryData(true));
+      if (latestLotteryId) {
+        const HERALotteryData = await useFetchHERALotteryInfo(latestLotteryId);
+        dispatch(setlatestLotteryData(HERALotteryData as LotteryData));
+        // console.log({ HERALotteryData });
+      }
+      if (latestHegemLotteryId) {
+        const hegemLotteryData = await useFetchHegemLotteryInfo(latestHegemLotteryId);
+        dispatch(setlatestHegemLotteryData(hegemLotteryData));
+        // console.log({ hegemLotteryData });
+      }
+      dispatch(setLoadinglatestLotteryData(false));
+    };
+
+    updateLatestLotteryInfo();
+  }, [latestLotteryId, latestHegemLotteryId, triggerLatestDataUseEff]);
 
   useEffect(() => {
     /**
-     * -> load latest data
+     * -> load paginate history data
      */
     async function getInfo() {
-      if (latestLotteryId) {
-        // console.log(latestLotteryId);
-        dispatch(setLoadinglatestLotteryData(true));
-        const data = await useFetchHERALotteryInfo(latestLotteryId);
-        // const data = await useFetchHegemLotteryInfo(latestLotteryId);
-        dispatch(setLoadinglatestLotteryData(false));
-        dispatch(setlatestLotteryData(data));
+      if (currentLotteryId) {
+        // console.log(currentLotteryId);
+        dispatch(setLoadingHistoryLotteryData(true));
+        const lotteryInfoFetcher =
+          currentHistoryLottery === "hegem" ? useFetchHegemLotteryInfo : useFetchHERALotteryInfo;
+
+        const data = await lotteryInfoFetcher(currentLotteryId);
+        // console.log("load paginate history data", { currentLotteryId, data });
+        dispatch(setLoadingHistoryLotteryData(false));
+        dispatch(setHistoryLotteryData(data));
       }
     }
     getInfo();
-  }, [latestLotteryId, triggerLatestDataUseEff]);
-
-  // useEffect(() => {
-  //   /**
-  //    * -> load paginate history data
-  //    */
-  //   async function getInfo() {
-  //     if (currentLotteryId) {
-  //       // console.log(currentLotteryId);
-  //       dispatch(setLoadingHistoryLotteryData(true));
-  //       const data = await useFetchHERALotteryInfo(currentLotteryId - 1);
-  //       dispatch(setLoadingHistoryLotteryData(false));
-  //       dispatch(setHistoryLotteryData(data));
-  //     }
-  //   }
-  //   getInfo();
-  // }, [currentLotteryId]);
+  }, [currentLotteryId]);
 
   // useEffect(() => {
   //   /**

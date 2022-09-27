@@ -3,17 +3,9 @@ import moment from "moment";
 import { HERA_LOTTERY_CONTRACT, RPC_BSC } from "src/config";
 import HERALotteryABI from "src/lib/contract/lotteryHeraABI.abi.json";
 import Web3 from "web3";
+import { LotteryData } from "../useFetchContractInfo";
 
-export interface LotteryData {
-  results: [];
-  finalNumber: string;
-  amountCollectedInHegem: number;
-  amountCollectedInHera: number;
-  coinPerBracket: [];
-  drawnTime: string;
-  drawnTimeMoment: moment.Moment;
-  ticketPrice: number;
-}
+type HeraLotteryData = Omit<LotteryData, "amountCollectedInHegem">;
 
 const getHERALotteryData = async (id: number): Promise<any> => {
   const web3 = new Web3(RPC_BSC) as any;
@@ -24,30 +16,39 @@ const getHERALotteryData = async (id: number): Promise<any> => {
 
 const useFetchHERALotteryInfo = async (
   lotteryId: number
-): Promise<LotteryData> => {
+): Promise<HeraLotteryData> => {
   const results = await getHERALotteryData(lotteryId);
-  console.log("useFetchHERALotteryInfo", { lotteryId, results });
+  const viewLotteryMethod = HERALotteryABI.find(
+    ({ name }) => name === "viewLottery"
+  );
+  const viewLotteryOutputsABI = (viewLotteryMethod?.outputs?.[0] as any)
+    .components as any[];
 
-  const finalNumber = _.reverse(results[14].toString().split(""))
+  const outputRs = (outputName: string) => {
+    // debugger;
+    const outputIndex = viewLotteryOutputsABI.findIndex(
+      ({ name }) => name === outputName
+    );
+    return results[outputIndex ?? -1] ?? "";
+  };
+
+  const finalNumber = _.reverse(outputRs("finalNumber").toString().split(""))
     .join("")
     .slice(0, -1);
 
-  const amountCollectedInHegem = parseFloat(
-    Web3.utils.fromWei(results[12], "ether")
-  );
   const amountCollectedInHera = parseFloat(
-    Web3.utils.fromWei(results[13], "ether")
+    Web3.utils.fromWei(outputRs("amountCollectedInHera") as string, "ether")
   );
 
-  const coinPerBracket = results[4].map((number: any, index: number) => {
-    return {
-      index,
-      hegem: ((parseFloat(number) / 100) * amountCollectedInHegem) / 100,
-      hera:
-        ((parseFloat(results[5][index]) / 100) * amountCollectedInHera) / 100,
-      countWinners: results[9][index],
-    };
-  });
+  const coinPerBracket = outputRs("heraRewardsBreakdown").map(
+    (number, index: number) => {
+      return {
+        index,
+        hera: ((parseFloat(number) / 100) * amountCollectedInHera) / 100,
+        countWinners: outputRs("countWinnersPerBracket")[index],
+      };
+    }
+  );
 
   const drawnTime = moment.unix(results[2]).format("ll HH:mm:ss");
   const drawnTimeMoment = moment.unix(results[2]);
@@ -55,7 +56,6 @@ const useFetchHERALotteryInfo = async (
   return {
     results,
     finalNumber,
-    amountCollectedInHegem,
     amountCollectedInHera,
     coinPerBracket,
     drawnTime,

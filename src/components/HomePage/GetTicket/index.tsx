@@ -1,16 +1,16 @@
-import { HeroButton } from "@components/common/HeroButton";
-import React, { useEffect, useState } from "react";
-import { HeraValue } from "../Banner";
-import useCollapse from "react-collapsed";
-import { BuyTicketButton } from "@components/common/BuyTicketButton";
-import { useDispatch, useSelector } from "react-redux";
-import { Modal } from "antd";
-import {
-  setOnCalculatingTime,
-  setOpenPersonalTicketInfo,
-} from "@redux/globalState";
-import { FIXED_DECIMAL } from "src/constant";
-import moment from "moment";
+import { HeroButton } from '@components/common/HeroButton';
+import React, { useEffect, useState } from 'react';
+import { HeraValue } from '../Banner';
+import useCollapse from 'react-collapsed';
+import { BuyTicketButton } from '@components/common/BuyTicketButton';
+import { useDispatch, useSelector } from 'react-redux';
+import { Modal, Typography } from 'antd';
+import { setOnCalculatingTime, setOpenPersonalTicketInfo } from '@redux/globalState';
+import { FIXED_DECIMAL } from 'src/constant';
+import moment from 'moment';
+import { sliceAddressString } from '@utils/index';
+import { HERA_LOTTERY_CONTRACT } from 'src/config';
+import { message } from 'antd';
 
 type Props = {};
 
@@ -39,18 +39,10 @@ export const CoinValue = ({ name, value }: HeraValue) => {
 export default function GetTicket({}: Props) {
   const dispatch = useDispatch();
   const { getCollapseProps, getToggleProps, isExpanded } = useCollapse();
-  const latestLotteryData = useSelector(
-    (state) => state.globalState.latestLotteryData
-  );
-  const latestLotteryId = useSelector(
-    (state) => state.globalState.latestLotteryId
-  );
-  const latestPersonalData = useSelector(
-    (state) => state.globalState.latestPersonalData
-  );
-  const isOnCalculatingTime = useSelector(
-    (state) => state.globalState.isOnCalculatingTime
-  );
+  const latestLotteryData = useSelector((state) => state.globalState.latestLotteryData);
+  const latestLotteryId = useSelector((state) => state.globalState.latestLotteryId);
+  const latestPersonalData = useSelector((state) => state.globalState.latestPersonalData);
+  const isOnCalculatingTime = useSelector((state) => state.globalState.isOnCalculatingTime);
   const [countDown, setCountDown] = useState<string>();
 
   useEffect(() => {
@@ -66,8 +58,8 @@ export default function GetTicket({}: Props) {
           dispatch(setOnCalculatingTime(true));
         } else {
           dispatch(setOnCalculatingTime(false));
-          const duration: any = moment.duration(diffTimes, "milliseconds");
-          const result = moment.duration(duration - 1000, "milliseconds");
+          const duration: any = moment.duration(diffTimes, 'milliseconds');
+          const result = moment.duration(duration - 1000, 'milliseconds');
           setCountDown(
             `${result.days()} d: ${result.hours()} h: ${result.minutes()} m: ${result.seconds()} s`
           );
@@ -83,16 +75,33 @@ export default function GetTicket({}: Props) {
         <div className="fnt-s4 cl-w fnt-b">Get your ticket now!</div>
         {!isOnCalculatingTime && (
           <div className="fnt-s3 cl-w my-3">
-            Round #{latestLotteryId} end in &nbsp;
+            Round #{latestLotteryId} ends in &nbsp;
             <span className="fnt-b cl-yl">{countDown}</span>
           </div>
         )}
       </div>
       <div className="get-ticket-cont">
-        <div className="p-3 hrz-b d-flex justify-content-between align-items-center flex-wrap">
-          <div className="fnt-b fnt-s3 cl-w">Current Draw</div>
-          <div className="fnt-s1 cl-w">
-            #{latestLotteryId}|Draw: {latestLotteryData?.drawnTime}
+        <div className="p-3 hrz-b d-flex align-items-center flex-wrap">
+          <div className="col-3 fnt-b fnt-s3 cl-w">Next Draw{/* Current Draw */}</div>
+
+          <div className="col d-flex">
+            <Typography.Text
+              className="fnt-s2 cl-w"
+              copyable={{
+                text: HERA_LOTTERY_CONTRACT,
+                tooltips: false,
+                icon: Array.from(Array(2)).map(() => (
+                  <img src="/icons/copy-icon-btn.png" className="ml-1" />
+                )),
+                onCopy: () => message.success('Copied'),
+              }}
+            >
+              Contract Address : {sliceAddressString(HERA_LOTTERY_CONTRACT)}
+            </Typography.Text>
+
+            <div className="fnt-s1 cl-w ml-auto">
+              #{latestLotteryId}|Draw: {latestLotteryData?.drawnTime}
+            </div>
           </div>
         </div>
         <div className="p-3 hrz-b">
@@ -103,14 +112,12 @@ export default function GetTicket({}: Props) {
                 {!isOnCalculatingTime ? (
                   <div className="col-7 d-flex justify-content-between align-items-center flex-wrap">
                     <PrizePotValue
-                      value={latestLotteryData?.amountCollectedInHera.toFixed(
-                        FIXED_DECIMAL
-                      )}
+                      value={(latestLotteryData?.amountCollectedInHera ?? 0).toFixed(FIXED_DECIMAL)}
                       name="hera"
                     />
                   </div>
                 ) : (
-                  <div className="fnt-b cl-yl fnt-s5">Calculating...</div>
+                  <div className="col fnt-b cl-yl fnt-s5">Calculating...</div>
                 )}
               </div>
             </div>
@@ -120,10 +127,10 @@ export default function GetTicket({}: Props) {
                 <div className="col-7 d-flex justify-content-between align-items-center flex-wrap">
                   <div className="d-flex align-items-start flex-column">
                     <div className="fnt-s1 cl-w">
-                      You Have{" "}
+                      You Have{' '}
                       <span className="fnt-b cl-yl">
                         {latestPersonalData?.numberOfTickets} Ticket(s)
-                      </span>{" "}
+                      </span>{' '}
                       This Round
                     </div>
                     <u
@@ -143,25 +150,20 @@ export default function GetTicket({}: Props) {
           <section {...getCollapseProps()}>
             <div>
               <div className="cl-grey fnt-s1 my-3 mb-4">
-                Match the winning number in the same order to share prize.
-                Current prizes up for grabs:
+                Match the winning number in the same order to share prize. Current prizes up for
+                grabs:
               </div>
               <div className="col-12">
                 <div className="row">
                   {latestLotteryData?.coinPerBracket.map((obj: any) => (
                     <div className="col-md-3 col-6">
                       <div className="d-flex flex-column align-items-start">
-                        <div className="fnt-s2 cl-grey">
-                          MATCH FIRST {parseInt(obj.index) + 1}
-                        </div>
-                        <CoinValue
-                          name="hera"
-                          value={obj.hera.toFixed(FIXED_DECIMAL)}
-                        />
-                        <CoinValue
+                        <div className="fnt-s2 cl-grey">MATCH FIRST {parseInt(obj.index) + 1}</div>
+                        <CoinValue name="hera" value={obj.hera.toFixed(FIXED_DECIMAL)} />
+                        {/* <CoinValue
                           name="hegem"
                           value={obj.hegem.toFixed(FIXED_DECIMAL)}
-                        />
+                        /> */}
                       </div>
                     </div>
                   ))}

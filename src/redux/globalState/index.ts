@@ -1,19 +1,15 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { LotteryData } from "src/lib/hooks/useFetchContractInfo";
-import { PersonalData } from "src/lib/hooks/useFetchPersonalInfo";
+import { createSlice } from '@reduxjs/toolkit';
+import type { LotteryTokenUnit } from 'src/@types';
+import type { LotteryData } from 'src/lib/hooks/useFetchContractInfo';
+import { PersonalData } from 'src/lib/hooks/useFetchPersonalInfo';
 
 export type StatusPopup = {
   isOpen: boolean;
-  type: "success" | "fail";
+  type: 'success' | 'fail';
   message: string;
 };
-type InitialState<
-  B = boolean,
-  N = number,
-  L = LotteryData,
-  P = PersonalData,
-  A = []
-> = {
+
+type InitialState<B = boolean, N = number, L = LotteryData, P = PersonalData, A = []> = {
   isOpenPopupStatus: StatusPopup;
   isOpenPopupBuyTicket: boolean;
   isOpenPersonalTicketInfo: B;
@@ -23,7 +19,9 @@ type InitialState<
   historyLotteryData: L;
   loadinghistoryLotteryData: B;
   latestLotteryId: N;
+  latestHegemLotteryId: N;
   latestLotteryData: L;
+  latestHegemLotteryData: L;
   loadinglatestLotteryData: B;
   latestPersonalData: P;
   historyPersonalData: P;
@@ -31,9 +29,12 @@ type InitialState<
   numberOfWinningTickets: A;
   maxAmountCanBuy: N;
   isOnCalculatingTime: B;
+  currentHistoryLottery: LotteryTokenUnit;
 };
 
 const initialState: InitialState = {
+  currentHistoryLottery: 'hera',
+  // lotteryOrder: ["hegem", "hera"],
   isOpenPersonalTicketInfo: false,
   isOpenPersonalHistoryTicketInfo: false,
   isOpenLoadingPopup: false,
@@ -41,7 +42,9 @@ const initialState: InitialState = {
   historyLotteryData: null as unknown as LotteryData,
   loadinghistoryLotteryData: false,
   latestLotteryId: null as unknown as number,
+  latestHegemLotteryId: null as unknown as number,
   latestLotteryData: null as unknown as LotteryData,
+  latestHegemLotteryData: null as unknown as LotteryData,
   loadinglatestLotteryData: false,
   latestPersonalData: null as unknown as PersonalData,
   historyPersonalData: null as unknown as PersonalData,
@@ -49,8 +52,8 @@ const initialState: InitialState = {
   numberOfWinningTickets: [],
   isOpenPopupStatus: {
     isOpen: false,
-    type: "fail",
-    message: "",
+    type: 'fail',
+    message: '',
   },
   maxAmountCanBuy: 0,
   isOpenPopupBuyTicket: false,
@@ -58,20 +61,29 @@ const initialState: InitialState = {
 };
 
 const globalState = createSlice({
-  name: "globalState",
+  name: 'globalState',
   initialState,
   reducers: {
     setlatestLotteryId: (state, { payload }) => {
       state.latestLotteryId = payload;
     },
+    setlatestHegemLotteryId: (state, { payload }) => {
+      state.latestHegemLotteryId = payload;
+    },
     setCurrentLotteryId: (state, { payload }) => {
       state.currentLotteryId = payload;
+    },
+    setCurrentHistoryLottery: (state, { payload }: { payload: LotteryTokenUnit }) => {
+      state.currentHistoryLottery = payload;
     },
     setHistoryLotteryData: (state, { payload }) => {
       state.historyLotteryData = payload;
     },
-    setlatestLotteryData: (state, { payload }) => {
+    setlatestLotteryData: (state, { payload }: { payload: LotteryData }) => {
       state.latestLotteryData = payload;
+    },
+    setlatestHegemLotteryData(state, { payload }: { payload: LotteryData }) {
+      state.latestHegemLotteryData = payload;
     },
     setlatestPersonalData: (state, { payload }) => {
       state.latestPersonalData = payload;
@@ -124,8 +136,11 @@ export const {
   setHistoryLotteryData,
   setLoadingHistoryLotteryData,
   setlatestLotteryData,
+  setlatestHegemLotteryData,
+  setCurrentHistoryLottery,
   setLoadinglatestLotteryData,
   setlatestLotteryId,
+  setlatestHegemLotteryId,
   setlatestPersonalData,
   setOpenPersonalTicketInfo,
   setHistoryPersonalData,

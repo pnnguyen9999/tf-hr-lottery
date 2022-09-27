@@ -1,10 +1,10 @@
 @font-face {
   font-family: fontreg;
-  src: url(/font/ChaparralPro-Regular.otf) format("opentype");
+  src: url(/font/ChaparralPro-Regular.otf) format('opentype');
 }
 @font-face {
   font-family: fontbold;
-  src: url(/font/ChaparralPro-Bold.otf) format("opentype");
+  src: url(/font/ChaparralPro-Bold.otf) format('opentype');
 }
 
 html,
@@ -50,22 +50,22 @@ ul {
 }
 .cl {
   &-r {
-    color: #ef466f;
+    color: #ef466f !important;
   }
   &-w {
-    color: #fff;
+    color: #fff !important;
   }
   &-br {
-    color: #b46005;
+    color: #b46005 !important;
   }
   &-br-drk {
-    color: #67350f;
+    color: #67350f !important;
   }
   &-yl {
-    color: #fdc606;
+    color: #fdc606 !important;
   }
   &-grey {
-    color: #d1d1cf;
+    color: #d1d1cf !important;
   }
   &-gradient-yl {
     background: linear-gradient(180.79deg, #fdca00, #f3e379, #fdca00);
@@ -97,9 +97,8 @@ ul {
   }
   &-eff {
     &-glow {
-      text-shadow: 3px 0 2px #67350f, -3px 0 2px #67350f, 0 3px 2px #67350f,
-        0 -3px 0 #67350f, 1px 1px #67350f, -2px -2px 0 #67350f,
-        2px -2px 0 #67350f, -2px 2px 0 #67350f;
+      text-shadow: 3px 0 2px #67350f, -3px 0 2px #67350f, 0 3px 2px #67350f, 0 -3px 0 #67350f,
+        1px 1px #67350f, -2px -2px 0 #67350f, 2px -2px 0 #67350f, -2px 2px 0 #67350f;
     }
   }
 }
@@ -229,6 +228,7 @@ ul {
 .digits-matched,
 .all-history,
 .personal-history,
+.history,
 .get-ticket {
   &-cont {
     width: 100%;

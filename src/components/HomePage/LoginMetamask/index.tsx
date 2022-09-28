@@ -1,16 +1,8 @@
-import {
-  setTriggerConnectWalletUseEff,
-  setTriggerLatestDataUseEff,
-} from "@redux/triggerState";
-import {
-  setAddress,
-  setAllowance,
-  setBalance,
-  setUtilsWallet,
-} from "@redux/web3";
-import React, { useEffect } from "react";
+import { setTriggerConnectWalletUseEff, setTriggerLatestDataUseEff } from "@redux/triggerState";
+import { setAddress, setAllowance, setBalance, setUtilsWallet } from "@redux/web3";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import WalletUtils from "src/lib/class/CryptoWallet";
+import HeraWalletUtils from "src/lib/class/HeraCryptoWallet";
 
 type Props = {};
 
@@ -25,11 +17,12 @@ export default function LoginMetamask({}: Props) {
       if (window.ethereum) {
         const localDisconnect: any = localStorage.getItem("disconnected");
         if (JSON.parse(localDisconnect) === false) {
-          const walletMetamask = new WalletUtils();
+          const walletMetamask = new HeraWalletUtils();
           await walletMetamask.connect();
           dispatch(setUtilsWallet(walletMetamask));
-          dispatch(setBalance(await walletMetamask.getHegemBalance()));
-          dispatch(setAllowance(await walletMetamask.getAllowance()));
+          dispatch(setBalance(await walletMetamask.getHERABalance()));
+          console.log(LoginMetamask, walletMetamask.currentBalance);
+          dispatch(setAllowance(await walletMetamask.getAllowanceHERA()));
           dispatch(setAddress(await walletMetamask.getCurrentAddress()));
           // localStorage.setItem("disconnected", "false");
         }

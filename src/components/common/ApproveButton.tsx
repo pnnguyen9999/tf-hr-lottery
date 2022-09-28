@@ -6,7 +6,7 @@ import { HeroButton } from "./HeroButton";
 
 export function ApproveButton() {
   const dispatch = useDispatch();
-  const web3data = useSelector((state) => state.web3.utilsWallet) as any;
+  const web3data = useSelector((state) => state.web3.utilsWallet);
   const approveContract = async () => {
     await web3data.approveLotteryContract(async (data: any) => {
       if (data.status === "EXECUTE_APPROVE_SUBMIT") {
@@ -14,11 +14,7 @@ export function ApproveButton() {
       } else if (data.status === "EXECUTE_APPROVE_SUCCESS") {
         dispatch(setOpenLoadingPopup(false));
         console.log("approved");
-        dispatch(
-          setAllowance(
-            Web3.utils.fromWei(await web3data.getAllowance(), "ether")
-          )
-        );
+        dispatch(setAllowance(Web3.utils.fromWei(await web3data.getAllowanceHERA(), "ether")));
       } else if (data.status === "EXECUTE_APPROVE_FAIL") {
         console.log("execute fail");
         dispatch(setOpenLoadingPopup(false));

@@ -11,34 +11,26 @@ type Props = {};
 
 export default function RewardPopup({}: Props) {
   const dispatch = useDispatch();
-  const isOpenPopupReward = useSelector(
-    (state) => state.rewardState.isOpenPopupReward
-  );
+  const isOpenPopupReward = useSelector((state) => state.rewardState.isOpenPopupReward);
   const totalReward = useSelector((state) => state.rewardState.totalRewardRx);
-  const currentLotteryId = useSelector(
-    (state) => state.globalState.currentLotteryId
-  );
-  const allTicketsRewardRx = useSelector(
-    (state) => state.rewardState.allTicketsRewardRx
-  );
-  const web3data = useSelector((state) => state.web3.utilsWallet) as any;
-  const historyPersonalData = useSelector(
-    (state) => state.globalState.historyPersonalData
-  );
+  const currentLotteryId = useSelector((state) => state.globalState.currentLotteryId);
+  const allTicketsRewardRx = useSelector((state) => state.rewardState.allTicketsRewardRx);
+  const web3data = useSelector((state) => state.web3.utilsWallet);
+  const historyPersonalData = useSelector((state) => state.globalState.historyPersonalData);
+  const currentHistoryLottery = useSelector((state) => state.globalState.currentHistoryLottery);
 
   const executeClaim = async () => {
     if (!historyPersonalData?.ticketClaimStatus.includes(true)) {
       let ticketIds = [] as any;
       let brackets = [] as any;
-      allTicketsRewardRx.map(
-        (ticketObject: TicketWithReward, index: number) => {
-          ticketIds.push(ticketObject.ticket.ticketId);
-          brackets.push(ticketObject.ticket.bracket);
-        }
-      );
+      allTicketsRewardRx.forEach((ticketObject: TicketWithReward) => {
+        ticketIds.push(ticketObject.ticket.ticketId);
+        brackets.push(ticketObject.ticket.bracket);
+      });
       await web3data.claimReward(
         {
-          lotteryId: currentLotteryId - 1,
+          lottery: currentHistoryLottery,
+          lotteryId: currentLotteryId,
           ticketIds: ticketIds,
           brackets: brackets,
         },
@@ -90,18 +82,16 @@ export default function RewardPopup({}: Props) {
     >
       <div className="d-flex flex-column justify-content-center">
         <div className="d-flex flex-column justify-content-center">
-          <Space
-            size={10}
-            direction="vertical"
-            className="bdr-bt-popup mb-3 pb-3"
-          >
+          <Space size={10} direction="vertical" className="bdr-bt-popup mb-3 pb-3">
             <div className="fnt-s1 fnt-b cl-br-drk">You Won</div>
             <div className="d-flex w-100 align-items-center justify-content-between">
               <Space direction="vertical" size={5}>
-                <div className="fnt-s5 fnt-b cl-br">
-                  {totalReward.hegemReward.toFixed(FIXED_DECIMAL)}{" "}
-                  <span className="cl-yl">HEGEM</span>
-                </div>
+                {currentHistoryLottery === "hegem" && (
+                  <div className="fnt-s5 fnt-b cl-br">
+                    {totalReward.hegemReward.toFixed(FIXED_DECIMAL)}{" "}
+                    <span className="cl-yl">HEGEM</span>
+                  </div>
+                )}
                 <div className="fnt-s5 fnt-b cl-br">
                   {totalReward.heraReward.toFixed(FIXED_DECIMAL)}{" "}
                   <span className="cl-yl">HERA</span>
@@ -109,9 +99,7 @@ export default function RewardPopup({}: Props) {
               </Space>
               <img className="" src="/icons/giftbox.png" />
             </div>
-            <div className="fnt-s2 cl-br-drk text-center">
-              Round #{currentLotteryId - 1}
-            </div>
+            <div className="fnt-s2 cl-br-drk text-center">Round #{currentLotteryId}</div>
           </Space>
           <div className="d-flex w-100 justify-content-center">
             <HeroButton text="Claim" action={() => executeClaim()} />

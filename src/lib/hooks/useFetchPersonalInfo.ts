@@ -16,14 +16,8 @@ export interface PersonalData {
   ticketClaimStatus: boolean[];
 }
 
-const useFetchPersonalInfo = async (
-  lotteryId: number,
-  address: string
-): Promise<PersonalData> => {
-  const getLotteryData = async (
-    _lotteryId: number,
-    _address: string
-  ): Promise<any> => {
+const useFetchPersonalInfo = async (lotteryId: number, address: string): Promise<PersonalData> => {
+  const getLotteryData = async (_lotteryId: number, _address: string): Promise<any> => {
     const web3 = new Web3(RPC_BSC) as any;
     let contract = new web3.eth.Contract(lotteryABI, LOTTERY_CONTRACT);
     const data = await contract.methods
@@ -31,6 +25,7 @@ const useFetchPersonalInfo = async (
       .call();
     return data;
   };
+
   const results = await getLotteryData(lotteryId, address);
   // console.log(results);
   const numberOfTickets = parseInt(results[3]);
@@ -43,9 +38,7 @@ const useFetchPersonalInfo = async (
   const ticketsObj = results[1].map((number: number, index: number) => {
     return {
       ticketId: results[0][index],
-      ticketNumber: _.reverse(number.toString().split(""))
-        .join("")
-        .slice(0, -1),
+      ticketNumber: _.reverse(number.toString().split("")).join("").slice(0, -1),
     };
   });
 

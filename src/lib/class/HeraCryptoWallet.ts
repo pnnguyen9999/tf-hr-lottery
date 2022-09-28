@@ -3,16 +3,17 @@ import BigNumber from "bignumber.js";
 import {
   CHAIN_ID,
   // HEGEM_ADDRESS,
-  // LOTTERY_CONTRACT as HEGEM_LOTTERY_CONTRACT,
+  LOTTERY_CONTRACT as HEGEM_LOTTERY_CONTRACT,
   HERA_LOTTERY_CONTRACT,
   HERA_ADDRESS,
 } from "../../config/index";
 import heraABI from "src/lib/contract/heraABI.abi.json";
 import HERAlotteryABI from "src/lib/contract/lotteryHeraABI.abi.json";
+import { LotteryTokenUnit } from "src/@types";
 // import hegemABI from "src/lib/contract/hegemABI.abi.json";
-// import hegemLotteryABI from "src/lib/contract/lotteryABI.abi.json";
+import hegemLotteryABI from "src/lib/contract/lotteryABI.abi.json";
 
-export default class WalletUtils {
+export default class HeraWalletUtils {
   web3: any;
   address: string | null;
   currentBalance: any | null;
@@ -151,8 +152,15 @@ export default class WalletUtils {
   //   return this.web3.utils.fromWei(`${balance.toFixed()}`, 'ether');
   // };
 
-  buyTicket = async ({ ticketNumbers }: { ticketNumbers: [] }, callback: any) => {
-    const lotteryContract = new this.web3.eth.Contract(HERAlotteryABI, HERA_LOTTERY_CONTRACT);
+  buyTicket = async (
+    { lottery = "hera", ticketNumbers }: { ticketNumbers: []; lottery?: LotteryTokenUnit },
+    callback: any
+  ) => {
+    const lotteryContract = new this.web3.eth.Contract(
+      ...(lottery === "hegem"
+        ? [hegemLotteryABI, HEGEM_LOTTERY_CONTRACT]
+        : [HERAlotteryABI, HERA_LOTTERY_CONTRACT])
+    );
     const currentPoolId = await lotteryContract.methods.viewCurrentLotteryId().call();
     const executeBuyTicket = await lotteryContract.methods
       .buyTickets(currentPoolId, ticketNumbers)
@@ -186,11 +194,20 @@ export default class WalletUtils {
   };
 
   claimReward = async (
-    { lotteryId, ticketIds, brackets }: { lotteryId: number; ticketIds: []; brackets: [] },
+    {
+      lotteryId,
+      ticketIds,
+      brackets,
+      lottery = "hera",
+    }: { lotteryId: number; ticketIds: []; brackets: []; lottery?: LotteryTokenUnit },
     callback: any
   ) => {
-    const contract = new this.web3.eth.Contract(HERAlotteryABI, HERA_LOTTERY_CONTRACT);
-    const executeBuyTicket = await contract.methods
+    const contract = new this.web3.eth.Contract(
+      ...(lottery === "hegem"
+        ? [hegemLotteryABI, HEGEM_LOTTERY_CONTRACT]
+        : [HERAlotteryABI, HERA_LOTTERY_CONTRACT])
+    );
+    const executeClaimReward = await contract.methods
       .claimTickets(lotteryId, ticketIds, brackets)
       .send({ from: this.address })
       .on("transactionHash", (hash: any) => {
@@ -218,6 +235,6 @@ export default class WalletUtils {
         // console.log(err);
         callback({ status: "EXECUTE_CLAIM_TICKET_FAIL", error: err.message });
       });
-    return executeBuyTicket;
+    return executeClaimReward;
   };
 }

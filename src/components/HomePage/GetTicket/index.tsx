@@ -1,16 +1,16 @@
-import { HeroButton } from '@components/common/HeroButton';
-import React, { useEffect, useState } from 'react';
-import { HeraValue } from '../Banner';
-import useCollapse from 'react-collapsed';
-import { BuyTicketButton } from '@components/common/BuyTicketButton';
-import { useDispatch, useSelector } from 'react-redux';
-import { Modal, Typography } from 'antd';
-import { setOnCalculatingTime, setOpenPersonalTicketInfo } from '@redux/globalState';
-import { FIXED_DECIMAL } from 'src/constant';
-import moment from 'moment';
-import { sliceAddressString } from '@utils/index';
-import { HERA_LOTTERY_CONTRACT } from 'src/config';
-import { message } from 'antd';
+import { HeroButton } from "@components/common/HeroButton";
+import React, { useEffect, useState } from "react";
+import { HeraValue } from "../Banner";
+import useCollapse from "react-collapsed";
+import { BuyTicketButton } from "@components/common/BuyTicketButton";
+import { useDispatch, useSelector } from "react-redux";
+import { Modal, Skeleton, Typography } from "antd";
+import { setOnCalculatingTime, setOpenPersonalTicketInfo } from "@redux/globalState";
+import { FIXED_DECIMAL } from "src/constant";
+import moment from "moment";
+import { sliceAddressString } from "@utils/index";
+import { HERA_LOTTERY_CONTRACT } from "src/config";
+import { message } from "antd";
 
 type Props = {};
 
@@ -49,7 +49,6 @@ export default function GetTicket({}: Props) {
     const intervalCd = setInterval(() => {
       if (latestLotteryData?.drawnTimeMoment) {
         const then: any = new Date(latestLotteryData?.drawnTime).getTime();
-        // console.log(then);
         // const then = 1648848951000;
         const now: any = new Date().getTime();
         const diffTimes = then - now;
@@ -58,8 +57,8 @@ export default function GetTicket({}: Props) {
           dispatch(setOnCalculatingTime(true));
         } else {
           dispatch(setOnCalculatingTime(false));
-          const duration: any = moment.duration(diffTimes, 'milliseconds');
-          const result = moment.duration(duration - 1000, 'milliseconds');
+          const duration: any = moment.duration(diffTimes, "milliseconds");
+          const result = moment.duration(duration - 1000, "milliseconds");
           setCountDown(
             `${result.days()} d: ${result.hours()} h: ${result.minutes()} m: ${result.seconds()} s`
           );
@@ -76,7 +75,7 @@ export default function GetTicket({}: Props) {
         {!isOnCalculatingTime && (
           <div className="fnt-s3 cl-w my-3">
             Round #{latestLotteryId} ends in &nbsp;
-            <span className="fnt-b cl-yl">{countDown}</span>
+            <span className="fnt-b cl-yl">{countDown || <Skeleton.Input active />}</span>
           </div>
         )}
       </div>
@@ -90,10 +89,10 @@ export default function GetTicket({}: Props) {
               copyable={{
                 text: HERA_LOTTERY_CONTRACT,
                 tooltips: false,
-                icon: Array.from(Array(2)).map(() => (
+                icon: [...Array(2)].map(() => (
                   <img src="/icons/copy-icon-btn.png" className="ml-1" />
                 )),
-                onCopy: () => message.success('Copied'),
+                onCopy: () => message.success("Copied"),
               }}
             >
               Contract Address : {sliceAddressString(HERA_LOTTERY_CONTRACT)}
@@ -127,10 +126,10 @@ export default function GetTicket({}: Props) {
                 <div className="col-7 d-flex justify-content-between align-items-center flex-wrap">
                   <div className="d-flex align-items-start flex-column">
                     <div className="fnt-s1 cl-w">
-                      You Have{' '}
+                      You Have{" "}
                       <span className="fnt-b cl-yl">
                         {latestPersonalData?.numberOfTickets} Ticket(s)
-                      </span>{' '}
+                      </span>{" "}
                       This Round
                     </div>
                     <u

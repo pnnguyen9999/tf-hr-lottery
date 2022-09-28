@@ -4,29 +4,19 @@ import { useEffect, useState } from "react";
 import _ from "lodash";
 import OtpInput from "react-otp-input";
 import { ArrowLeftOutlined } from "@ant-design/icons";
-import {
-  setOpenLoadingPopup,
-  setOpenPopupBuyTicket,
-  setOpenPopupStatus,
-} from "@redux/globalState";
+import { setOpenLoadingPopup, setOpenPopupBuyTicket, setOpenPopupStatus } from "@redux/globalState";
 import { setTriggerLatestDataUseEff } from "@redux/triggerState";
 import { HeroButton } from "../HeroButton";
 import { ApproveButton } from "../ApproveButton";
 
 export function BuyTicketPopup() {
   const dispatch = useDispatch();
-  const web3data = useSelector((state) => state.web3.utilsWallet) as any;
-  const hegemBalance = useSelector((state) => state.web3.balance);
-  const allowance = useSelector((state) => state.web3.allowance);
-  const maxAmountCanBuy = useSelector(
-    (state) => state.globalState.maxAmountCanBuy
-  );
-  const isOpenPopupBuyTicket = useSelector(
-    (state) => state.globalState.isOpenPopupBuyTicket
-  );
-  const latestLotteryData = useSelector(
-    (state) => state.globalState.latestLotteryData
-  );
+  const web3data = useSelector((state) => state.web3.utilsWallet);
+  const HERABalance = useSelector((state) => state.web3.balance);
+  const allowanceHera = useSelector((state) => state.web3.allowance);
+  const maxAmountCanBuy = useSelector((state) => state.globalState.maxAmountCanBuy);
+  const isOpenPopupBuyTicket = useSelector((state) => state.globalState.isOpenPopupBuyTicket);
+  const latestLotteryData = useSelector((state) => state.globalState.latestLotteryData);
   const [ticketAmount, setTicketAmount] = useState<number>(1);
   const [lotteryNumberArray, setLotteryNumberArray] = useState<any>();
   const [switchPopupContent, setPopupContent] = useState<number>(1);
@@ -36,10 +26,7 @@ export function BuyTicketPopup() {
       <div className="cl-br-drk fnt-s3 fnt-b">Buy Tickets</div>
     ) : (
       <div className="cl-br-drk d-flex align-items-center">
-        <ArrowLeftOutlined
-          className="cursor-pointer fnt-s3"
-          onClick={() => setPopupContent(1)}
-        />
+        <ArrowLeftOutlined className="cursor-pointer fnt-s3" onClick={() => setPopupContent(1)} />
         <div className="fnt-s3 fnt-b mt-2 ml-1">Edit Ticket Number</div>
       </div>
     );
@@ -64,9 +51,9 @@ export function BuyTicketPopup() {
             {
               ticketNumbers: lotteryNumberArray.map(
                 (number: number | string) =>
-                  10000 +
-                  parseInt(_.reverse(number.toString().split("")).join(""))
+                  10000 + parseInt(_.reverse(number.toString().split("")).join(""))
               ),
+              // lottery: "hegem",
             },
             async (data: any) => {
               if (data.status === "EXECUTE_BUY_TICKET_SUBMIT") {
@@ -107,9 +94,7 @@ export function BuyTicketPopup() {
     setLotteryNumberArray([]);
     for (let i = 0; i < ticketAmount; i++) {
       setLotteryNumberArray((prev: any) =>
-        prev == undefined
-          ? []
-          : [...prev, Math.floor(1000 + Math.random() * 9000)]
+        prev == undefined ? [] : [...prev, Math.floor(1000 + Math.random() * 9000)]
       );
     }
   };
@@ -156,15 +141,12 @@ export function BuyTicketPopup() {
               />
               {ticketAmount ? (
                 <div className="w-100 d-flex align-items-center justify-content-end">
-                  {(latestLotteryData?.ticketPrice || 0) * ticketAmount >
-                  hegemBalance ? (
-                    <div className="cl-r fnt-s1 fnt-b">
-                      Insufficient HEGEM balance
-                    </div>
+                  {(latestLotteryData?.ticketPrice || 0) * ticketAmount > HERABalance ? (
+                    <div className="cl-r fnt-s1 fnt-b">Insufficient HERA balance</div>
                   ) : (
                     <div className="cl-br-drk fnt-s1 fnt-b">
                       ~ {(latestLotteryData?.ticketPrice || 0) * ticketAmount}
-                      <span className="fnt-b"></span> HEGEM
+                      <span className="fnt-b"></span> HERA
                     </div>
                   )}
                 </div>
@@ -173,24 +155,19 @@ export function BuyTicketPopup() {
               )}
 
               <div className="w-100 d-flex align-items-center justify-content-end">
-                <div className="cl-br-drk fnt-s1 fnt-b">HEGEM</div>
+                {/* <div className="cl-br-drk fnt-s1 fnt-b">HERA</div> */}
                 <div className="cl-br-drk fnt-s1">
-                  &nbsp;balance:&nbsp;{hegemBalance}
+                  <span className="fnt-b">HERA</span>&nbsp;balance:&nbsp;{HERABalance}
                 </div>
               </div>
               <div className="w-100 d-flex align-items-center justify-content-end">
                 <div className="cl-br-drk fnt-s1">
                   You can buy up to
-                  <span className="fnt-b"> {maxAmountCanBuy}</span>{" "}
-                  tickets/transaction
+                  <span className="fnt-b"> {maxAmountCanBuy}</span> tickets/transaction
                 </div>
               </div>
               <div className="w-100 d-flex justify-content-center">
-                {allowance !== "0" ? (
-                  <BuyInstantly text="Buy Instantly" />
-                ) : (
-                  <ApproveButton />
-                )}
+                {allowanceHera !== "0" ? <BuyInstantly text="Buy Instantly" /> : <ApproveButton />}
               </div>
 
               <div className="w-100 d-flex justify-content-center">
@@ -208,16 +185,15 @@ export function BuyTicketPopup() {
                 </u>
               </div>
               <div className="fnt-s1 cl-br-drk text-center">
-                Buy Instantly chooses random numbers, with no duplicates among
-                your tickets.
+                Buy Instantly chooses random numbers, with no duplicates among your tickets.
               </div>
             </Space>
           ) : (
             <div className="d-flex flex-column justify-content-center">
               <Space size={10} direction="vertical">
                 <div className="fnt-s1 cl-br-drk text-center">
-                  Numbers are randomized with no duplicates among your tickets.
-                  Tap a number to edit it. Available digits 0-9
+                  Numbers are randomized with no duplicates among your tickets. Tap a number to edit
+                  it. Available digits 0-9
                 </div>
                 <div className="d-flex w-100 justify-content-center">
                   <div
@@ -234,9 +210,7 @@ export function BuyTicketPopup() {
                     style={{ animationDelay: `${index / 15}s` }}
                   >
                     <div className="my-1">
-                      <div className="cl-br-drk fnt-s1">
-                        Ticket #{index + 1}
-                      </div>
+                      <div className="cl-br-drk fnt-s1">Ticket #{index + 1}</div>
                       <OtpInput
                         containerStyle=""
                         isInputNum={true}
@@ -254,7 +228,7 @@ export function BuyTicketPopup() {
                   </div>
                 ))}
                 <div className="d-flex w-100 justify-content-center">
-                  {allowance !== "0" ? (
+                  {allowanceHera !== "0" ? (
                     <BuyInstantly text="Buy Instantly" />
                   ) : (
                     <ApproveButton />

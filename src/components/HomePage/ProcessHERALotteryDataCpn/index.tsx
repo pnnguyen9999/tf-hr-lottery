@@ -3,13 +3,16 @@ import PersonalLatestPopup from "@components/common/PersonalTicketInfoPopup/Pers
 import {
   setCurrentLotteryId,
   setHistoryLotteryData,
+  setHistoryPersonalData,
   setlatestHegemLotteryData,
   setlatestHegemLotteryId,
   setlatestLotteryData,
   setlatestLotteryId,
+  setlatestPersonalData,
   setLoadingHistoryLotteryData,
   setLoadinglatestLotteryData,
   setMaxAmountCanBuy,
+  setNumberOfWinningTicket,
 } from "@redux/globalState";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -22,8 +25,11 @@ import { getLotteryContracts } from "src/lib/class/LotteryContracts";
 import useFetchHegemLotteryInfo from "src/lib/hooks/LotteryWithHera/useFetchHegemLotteryInfo";
 import useFetchHERALotteryInfo from "src/lib/hooks/LotteryWithHera/useFetchHERALotteryInfo";
 import { LotteryData } from "src/lib/hooks/useFetchContractInfo";
-import { Ticket } from "src/lib/hooks/useFetchPersonalInfo";
-import { RewardInfo } from "src/lib/hooks/useFetchRewardInfo";
+import useFetchHegemPersonalInfo, { Ticket } from "src/lib/hooks/useFetchPersonalInfo";
+import useFetchRewardInfo, { RewardInfo } from "src/lib/hooks/useFetchRewardInfo";
+import useFetchHERAPersonalInfo from "src/lib/hooks/LotteryWithHera/useFetchHERAPersonalInfo";
+import { setAllTicketsRewardRx, setTotalRewardRx } from "@redux/rewardState";
+import useFetchHERARewardInfo from "src/lib/hooks/LotteryWithHera/useFetchHERARewardInfo";
 type Props = {};
 interface TicketWithBracket extends Ticket {
   bracket: number;
@@ -70,11 +76,11 @@ export default function ProcessHERALotteryDataCpn({}: Props) {
         HERA: await HERALotteryContract.methods.maxNumberTicketsPerBuyOrClaim().call(),
       };
 
-      console.log({
-        hegemLotteryId: latestLotteryIds.hegem_contract,
-        HERALotteryId: latestLotteryIds.HERA_contract,
-        maxBuyTickets: maxBuyTickets.HERA,
-      });
+      // console.log({
+      //   hegemLotteryId: latestLotteryIds.hegem_contract,
+      //   HERALotteryId: latestLotteryIds.HERA_contract,
+      //   maxBuyTickets: maxBuyTickets.HERA,
+      // });
 
       // set lotteries id to store
       dispatch(setCurrentLotteryId(parseInt(latestLotteryIds.HERA_contract) - 1)); // buy with HERA
@@ -115,7 +121,7 @@ export default function ProcessHERALotteryDataCpn({}: Props) {
     /**
      * -> load paginate history data
      */
-    async function getInfo() {
+    const getInfo = async () => {
       if (currentLotteryId) {
         // console.log(currentLotteryId);
         dispatch(setLoadingHistoryLotteryData(true));
@@ -127,100 +133,108 @@ export default function ProcessHERALotteryDataCpn({}: Props) {
         dispatch(setLoadingHistoryLotteryData(false));
         dispatch(setHistoryLotteryData(data));
       }
+    };
+    getInfo();
+  }, [currentLotteryId, currentHistoryLottery]);
+
+  useEffect(() => {
+    /**
+     * -> load latest personal round info
+     */
+    async function getInfo() {
+      if (address && latestLotteryId) {
+        const data = await useFetchHERAPersonalInfo(latestLotteryId, address);
+        console.log(useFetchHERAPersonalInfo, latestLotteryId, address, data);
+        dispatch(setlatestPersonalData(data));
+      }
     }
     getInfo();
-  }, [currentLotteryId]);
+  }, [address, latestLotteryId, triggerLatestDataUseEff]);
 
-  // useEffect(() => {
-  //   /**
-  //    * -> load latest personal round info
-  //    */
-  //   async function getInfo() {
-  //     if (address && latestLotteryId) {
-  //       const data = await useFetchPersonalInfo(latestLotteryId, address);
-  //       dispatch(setlatestPersonalData(data));
-  //     }
-  //   }
-  //   getInfo();
-  // }, [address, latestLotteryId, triggerLatestDataUseEff]);
+  useEffect(() => {
+    /**
+     * -> load history personal round info
+     */
+    async function getInfo() {
+      // console.log("test");
+      if (address && currentLotteryId) {
+        const personalInfoFetcher =
+          currentHistoryLottery === "hegem" ? useFetchHegemPersonalInfo : useFetchHERAPersonalInfo;
 
-  // useEffect(() => {
-  //   /**
-  //    * -> load history personal round info
-  //    */
-  //   async function getInfo() {
-  //     // console.log("test");
-  //     if (address && currentLotteryId) {
-  //       const data = await useFetchPersonalInfo(currentLotteryId - 1, address);
-  //       dispatch(setHistoryPersonalData(data));
-  //     }
-  //   }
-  //   getInfo();
-  // }, [address, currentLotteryId]);
+        const data = await personalInfoFetcher(currentLotteryId, address);
+        dispatch(setHistoryPersonalData(data));
+      }
+    }
+    getInfo();
+  }, [address, currentLotteryId, currentHistoryLottery]);
 
-  // useEffect(() => {
-  //   /**
-  //    * -> Cái này để xử lý data so sánh vé user với số trúng các thứ
-  //    * -> Mỗi lần paginate history sẽ gọi cái này
-  //    */
-  //   async function processData() {
-  //     const finalNumberArr = selectedLotteryData?.finalNumber.split("");
-  //     let allTicketsStatus = [] as TicketWithBracket[];
-  //     let allTicketsReward = [] as TicketWithReward[];
-  //     let totalReward: RewardInfo = {
-  //       hegemReward: 0,
-  //       heraReward: 0,
-  //     };
-  //     historyPersonalData?.ticketsObj.map((ticketObj: Ticket) => {
-  //       const tempBracket = [false, false, false, false];
-  //       for (let i = 0; i < ticketObj.ticketNumber.split("").length; i++) {
-  //         if (finalNumberArr[i] === ticketObj.ticketNumber[i]) {
-  //           tempBracket[i] = true;
-  //         } else {
-  //           break;
-  //         }
-  //       }
-  //       if (tempBracket.includes(true)) {
-  //         const bracket = tempBracket.filter((x: boolean) => x === true).length;
-  //         allTicketsStatus.push({ ...ticketObj, bracket: bracket - 1 });
-  //       }
-  //     });
-  //     dispatch(setNumberOfWinningTicket(allTicketsStatus));
+  useEffect(() => {
+    /**
+     * -> Cái này để xử lý data so sánh vé user với số trúng các thứ
+     * -> Mỗi lần paginate history sẽ gọi cái này
+     */
+    async function processData() {
+      const finalNumberArr = selectedLotteryData?.finalNumber.split("");
+      let allTicketsStatus = [] as TicketWithBracket[];
+      let allTicketsReward = [] as TicketWithReward[];
+      let totalReward: RewardInfo = {
+        hegemReward: 0,
+        heraReward: 0,
+      };
 
-  //     const processGetAllRewardPromises = (
-  //       arr: TicketWithBracket[]
-  //     ): Promise<TicketWithReward[]> => {
-  //       const rewardPromises = arr.map(
-  //         async (ticketObject: TicketWithBracket) => {
-  //           const dataReward = await useFetchRewardInfo(
-  //             currentLotteryId - 1,
-  //             ticketObject.ticketId,
-  //             ticketObject.bracket
-  //           );
-  //           // console.log(dataReward);
-  //           const dataTicketWithReward: TicketWithReward = {
-  //             ticket: ticketObject,
-  //             hegemReward: dataReward.hegemReward,
-  //             heraReward: dataReward.heraReward,
-  //           };
-  //           return dataTicketWithReward;
-  //         }
-  //       );
-  //       return Promise.all(rewardPromises);
-  //     };
-  //     allTicketsReward = await processGetAllRewardPromises(allTicketsStatus);
+      const historyPersonalTickets: Ticket[] = historyPersonalData?.ticketsObj ?? [];
 
-  //     // console.log(allTicketsReward);
-  //     dispatch(setAllTicketsRewardRx(allTicketsReward));
-  //     allTicketsReward.map((twr: TicketWithReward) => {
-  //       totalReward.hegemReward = totalReward.hegemReward + twr.hegemReward;
-  //       totalReward.heraReward = totalReward.heraReward + twr.heraReward;
-  //     });
-  //     // console.log(totalReward);
-  //     dispatch(setTotalRewardRx(totalReward));
-  //   }
-  //   processData();
-  // }, [historyPersonalData, selectedLotteryData]);
+      for (const ticketObj of historyPersonalTickets) {
+        const tempBracket = [false, false, false, false];
+        for (let i = 0; i < ticketObj.ticketNumber.split("").length; i++) {
+          if (finalNumberArr[i] === ticketObj.ticketNumber[i]) {
+            tempBracket[i] = true;
+          } else {
+            break;
+          }
+        }
+        if (tempBracket.includes(true)) {
+          const bracket = tempBracket.filter((x: boolean) => x === true).length;
+          allTicketsStatus.push({ ...ticketObj, bracket: bracket - 1 });
+        }
+      }
+      dispatch(setNumberOfWinningTicket(allTicketsStatus));
+
+      const rewardInfoFetcher =
+        currentHistoryLottery === "hegem" ? useFetchRewardInfo : useFetchHERARewardInfo;
+      console.log(allTicketsStatus);
+
+      const processGetAllRewardPromises = (
+        arr: TicketWithBracket[]
+      ): Promise<TicketWithReward[]> => {
+        const rewardPromises = arr.map(async (ticketObject: TicketWithBracket) => {
+          const dataReward = await rewardInfoFetcher(
+            currentLotteryId,
+            ticketObject.ticketId,
+            ticketObject.bracket
+          );
+          const dataTicketWithReward: TicketWithReward = {
+            ticket: ticketObject,
+            hegemReward: dataReward.hegemReward,
+            heraReward: dataReward.heraReward,
+          };
+          return dataTicketWithReward;
+        });
+        return Promise.all(rewardPromises);
+      };
+      allTicketsReward = await processGetAllRewardPromises(allTicketsStatus);
+
+      console.log(allTicketsReward);
+      dispatch(setAllTicketsRewardRx(allTicketsReward));
+      for (const ticket of allTicketsReward) {
+        totalReward.hegemReward = totalReward.hegemReward + ticket.hegemReward;
+        totalReward.heraReward = totalReward.heraReward + ticket.heraReward;
+      }
+      // console.log(totalReward);
+      dispatch(setTotalRewardRx(totalReward));
+    }
+    processData();
+  }, [historyPersonalData, selectedLotteryData]);
 
   return (
     <>

@@ -59,9 +59,7 @@ export default function GetTicket({}: Props) {
           dispatch(setOnCalculatingTime(false));
           const duration: any = moment.duration(diffTimes, "milliseconds");
           const result = moment.duration(duration - 1000, "milliseconds");
-          setCountDown(
-            `${result.days()} d: ${result.hours()} h: ${result.minutes()} m: ${result.seconds()} s`
-          );
+          setCountDown(`${result.days()} d: ${result.hours()} h: ${result.minutes()} m: ${result.seconds()} s`);
         }
       }
     }, 1000);
@@ -81,26 +79,24 @@ export default function GetTicket({}: Props) {
       </div>
       <div className="get-ticket-cont">
         <div className="p-3 hrz-b d-flex align-items-center flex-wrap">
-          <div className="col-3 fnt-b fnt-s3 cl-w">Next Draw{/* Current Draw */}</div>
+          <div className="col-12 col-md-3 fnt-b fnt-s3 cl-w">Next Draw{/* Current Draw */}</div>
 
-          <div className="col d-flex">
+          <div className="col-12 col-md-auto d-flex">
             <Typography.Text
-              className="fnt-s2 cl-w"
+              className="cl-w"
+              style={{ fontSize: "18px" }}
               copyable={{
                 text: HERA_LOTTERY_CONTRACT,
                 tooltips: false,
-                icon: [...Array(2)].map(() => (
-                  <img src="/icons/copy-icon-btn.png" className="ml-1" />
-                )),
+                icon: [...Array(2)].map(() => <img src="/icons/copy-icon-btn.png" className="ml-1" />),
                 onCopy: () => message.success("Copied"),
               }}
             >
               Contract Address : {sliceAddressString(HERA_LOTTERY_CONTRACT)}
             </Typography.Text>
-
-            <div className="fnt-s1 cl-w ml-auto">
-              #{latestLotteryId}|Draw: {latestLotteryData?.drawnTime}
-            </div>
+          </div>
+          <div className="cl-w col-auto fnt-s1 ml-md-auto">
+            #{latestLotteryId}|Draw: {latestLotteryData?.drawnTime}
           </div>
         </div>
         <div className="p-3 hrz-b">
@@ -126,11 +122,8 @@ export default function GetTicket({}: Props) {
                 <div className="col-7 d-flex justify-content-between align-items-center flex-wrap">
                   <div className="d-flex align-items-start flex-column">
                     <div className="fnt-s1 cl-w">
-                      You Have{" "}
-                      <span className="fnt-b cl-yl">
-                        {latestPersonalData?.numberOfTickets} Ticket(s)
-                      </span>{" "}
-                      This Round
+                      You Have <span className="fnt-b cl-yl">{latestPersonalData?.numberOfTickets} Ticket(s)</span> This
+                      Round
                     </div>
                     <u
                       className="fnt-s1 cl-br cursor-pointer"
@@ -149,8 +142,7 @@ export default function GetTicket({}: Props) {
           <section {...getCollapseProps()}>
             <div>
               <div className="cl-grey fnt-s1 my-3 mb-4">
-                Match the winning number in the same order to share prize. Current prizes up for
-                grabs:
+                Match the winning number in the same order to share prize. Current prizes up for grabs:
               </div>
               <div className="col-12">
                 <div className="row">

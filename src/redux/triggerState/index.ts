@@ -17,15 +17,12 @@ const triggerState = createSlice({
       state.triggerConnectWalletUseEff = !state.triggerConnectWalletUseEff;
     },
     setTriggerCurrentPersonalDataUseEff: (state) => {
-      state.triggerConnectWalletUseEff = !state.triggerConnectWalletUseEff;
+      state.triggerCurrentPersonalDataUseEff = !state.triggerCurrentPersonalDataUseEff;
     },
   },
 });
 
-export const {
-  setTriggerLatestDataUseEff,
-  setTriggerConnectWalletUseEff,
-  setTriggerCurrentPersonalDataUseEff,
-} = triggerState.actions;
+export const { setTriggerLatestDataUseEff, setTriggerConnectWalletUseEff, setTriggerCurrentPersonalDataUseEff } =
+  triggerState.actions;
 
 export default triggerState.reducer;

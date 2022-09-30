@@ -20,11 +20,11 @@ const useFetchRewardInfo = async (lotteryId: number, ticketId: string, bracket: 
   const hegemReward = parseFloat(Web3.utils.fromWei(results[0], "ether"));
   const heraReward = parseFloat(Web3.utils.fromWei(results[1], "ether"));
 
-  console.log("useFetchRewardInfo Hegem round = ", lotteryId, "tickedId=", ticketId, "bracket=", bracket, {
-    results,
-    hegemReward,
-    heraReward,
-  });
+  // console.log("useFetchRewardInfo Hegem round = ", lotteryId, "tickedId=", ticketId, "bracket=", bracket, {
+  //   results,
+  //   hegemReward,
+  //   heraReward,
+  // });
 
   return {
     hegemReward,

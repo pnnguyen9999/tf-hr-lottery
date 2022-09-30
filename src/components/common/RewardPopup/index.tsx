@@ -1,6 +1,7 @@
 import { TicketWithReward } from "@components/HomePage/ProcessDataCpn";
 import { setOpenLoadingPopup, setOpenPopupStatus } from "@redux/globalState";
 import { setOpenPopupReward } from "@redux/rewardState";
+import { setTriggerCurrentPersonalDataUseEff } from "@redux/triggerState";
 import { Modal, Space } from "antd";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -38,6 +39,7 @@ export default function RewardPopup({}: Props) {
           if (data.status === "EXECUTE_CLAIM_TICKET_SUBMIT") {
             dispatch(setOpenLoadingPopup(true));
           } else if (data.status === "EXECUTE_CLAIM_TICKET_SUCCESS") {
+            dispatch(setTriggerCurrentPersonalDataUseEff());
             dispatch(setOpenLoadingPopup(false));
             dispatch(setOpenPopupReward(false));
             dispatch(
@@ -48,6 +50,7 @@ export default function RewardPopup({}: Props) {
               })
             );
           } else if (data.status === "EXECUTE_CLAIM_TICKET_FAIL") {
+            dispatch(setTriggerCurrentPersonalDataUseEff());
             dispatch(setOpenLoadingPopup(false));
             dispatch(setOpenPopupReward(false));
             dispatch(
@@ -88,13 +91,11 @@ export default function RewardPopup({}: Props) {
               <Space direction="vertical" size={5}>
                 {currentHistoryLottery === "hegem" && (
                   <div className="fnt-s5 fnt-b cl-br">
-                    {totalReward.hegemReward.toFixed(FIXED_DECIMAL)}{" "}
-                    <span className="cl-yl">HEGEM</span>
+                    {totalReward.hegemReward.toFixed(FIXED_DECIMAL)} <span className="cl-yl">HEGEM</span>
                   </div>
                 )}
                 <div className="fnt-s5 fnt-b cl-br">
-                  {totalReward.heraReward.toFixed(FIXED_DECIMAL)}{" "}
-                  <span className="cl-yl">HERA</span>
+                  {totalReward.heraReward.toFixed(FIXED_DECIMAL)} <span className="cl-yl">HERA</span>
                 </div>
               </Space>
               <img className="" src="/icons/giftbox.png" />

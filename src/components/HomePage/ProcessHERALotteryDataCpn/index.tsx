@@ -53,6 +53,7 @@ export default function ProcessHERALotteryDataCpn({}: Props) {
   const selectedLotteryData = useSelector((state) => state.globalState.historyLotteryData);
   const historyPersonalData = useSelector((state) => state.globalState.historyPersonalData);
   const triggerLatestDataUseEff = useSelector((state) => state.triggerState.triggerLatestDataUseEff);
+  const triggerCurrentPersonalDataUseEff = useSelector((state) => state.triggerState.triggerCurrentPersonalDataUseEff);
 
   const currentHistoryLottery = useSelector((state) => state.globalState.currentHistoryLottery);
 
@@ -116,7 +117,7 @@ export default function ProcessHERALotteryDataCpn({}: Props) {
 
   useEffect(() => {
     /**
-     * -> load paginate history data
+     * -> load lottery history round data
      */
     const getInfo = async () => {
       if (currentLotteryId) {
@@ -159,13 +160,17 @@ export default function ProcessHERALotteryDataCpn({}: Props) {
           currentHistoryLottery === "hegem" ? useFetchHegemPersonalInfo : useFetchHERAPersonalInfo;
 
         const data = await personalInfoFetcher(currentLotteryId, address);
-        // console.log("load finished round personal info", currentLotteryId, address, data);
+        console.log(
+          `address: ${address} history 🕖 round info  ${currentHistoryLottery} round=`,
+          currentLotteryId,
+          data
+        );
 
         dispatch(setHistoryPersonalData(data));
       }
     }
     getInfo();
-  }, [address, currentLotteryId, currentHistoryLottery]);
+  }, [address, currentLotteryId, currentHistoryLottery, triggerCurrentPersonalDataUseEff]);
 
   useEffect(() => {
     /**
@@ -179,7 +184,7 @@ export default function ProcessHERALotteryDataCpn({}: Props) {
       const winningTicketsStatus: TicketWithBracket[] = [];
       const myHistoryTickets: Ticket[] = historyPersonalData?.ticketsObj ?? [];
 
-      console.log("my history 🕖 all tickets", historyPersonalData);
+      // console.log("my history 🕖 all tickets", historyPersonalData);
       for (const ticketObj of myHistoryTickets) {
         const tempBracket = [false, false, false, false];
         for (let i = 0; i < ticketObj.ticketNumber.split("").length; i++) {
@@ -194,13 +199,13 @@ export default function ProcessHERALotteryDataCpn({}: Props) {
           winningTicketsStatus.push({ ...ticketObj, bracket: bracket - 1 });
         }
       }
-      console.log(
-        `my winning 🥇 tickets 🎫 statuses at ${currentHistoryLottery} round=`,
-        currentLotteryId,
-        "with finalNumber=",
-        finalNumberArr,
-        winningTicketsStatus
-      );
+      // console.log(
+      //   `my winning 🥇 tickets 🎫 statuses at ${currentHistoryLottery} round=`,
+      //   currentLotteryId,
+      //   "with finalNumber=",
+      //   finalNumberArr,
+      //   winningTicketsStatus
+      // );
       dispatch(setNumberOfWinningTicket(winningTicketsStatus));
 
       const ticketRewardInfoFetcher =

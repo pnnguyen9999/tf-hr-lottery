@@ -1,9 +1,11 @@
+@import "./global";
+
 @media screen and (max-width: 766px) {
   .step-panel-cont {
     height: inherit !important;
   }
   .banner-desktop {
-    height: 550px !important;
+    // height: 550px !important;
     width: 100%;
     background: url(/img/banner/banner-mobile-new.png) !important;
     background: {
@@ -15,8 +17,13 @@
     }
   }
 
-  // .with-hera-token {
-  // }
+  .with-hera-token {
+    font-size: 18pt;
+
+    margin-top: 0 !important;
+    margin-bottom: 25px;
+    // padding: 0.3125rem 1.875rem !important;
+  }
 
   .pool-button {
     background-image: url(/img/pool-white.png) !important;

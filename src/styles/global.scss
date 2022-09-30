@@ -99,8 +99,8 @@ ul {
   }
   &-eff {
     &-glow {
-      text-shadow: 3px 0 2px #67350f, -3px 0 2px #67350f, 0 3px 2px #67350f, 0 -3px 0 #67350f,
-        1px 1px #67350f, -2px -2px 0 #67350f, 2px -2px 0 #67350f, -2px 2px 0 #67350f;
+      text-shadow: 3px 0 2px #67350f, -3px 0 2px #67350f, 0 3px 2px #67350f, 0 -3px 0 #67350f, 1px 1px #67350f,
+        -2px -2px 0 #67350f, 2px -2px 0 #67350f, -2px 2px 0 #67350f;
     }
   }
 }
@@ -140,12 +140,13 @@ ul {
 }
 
 .banner-desktop {
-  height: 400px;
+  min-height: 400px;
   width: 100%;
   background: url(/img/banner/banner-desktop-new.png);
   background: {
+    position: right bottom;
     repeat: no-repeat;
-    size: 100% 100%;
+    size: cover;
   }
   border-radius: 10px;
   .hera-value {
@@ -197,15 +198,16 @@ ul {
 .with-hera-token {
   @extend .fnt-b, .fnt-s4;
 
-  margin-top: 50px;
   position: relative;
+  margin-top: 50px;
+  padding: 0.5rem 3rem;
+  z-index: 0;
+
+  border-radius: 100px;
   font-weight: 700;
   color: #740011;
   background: linear-gradient(92.49deg, #f9e11c 0%, #ff8c0a 100%);
-
-  border-radius: 100px;
-  padding: 0.5rem 3rem;
-  z-index: 0;
+  white-space: nowrap;
 
   img {
     @extend .position-absolute;

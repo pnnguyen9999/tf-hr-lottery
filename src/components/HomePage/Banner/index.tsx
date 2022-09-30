@@ -1,18 +1,18 @@
-import { ApproveButton } from '@components/common/ApproveButton';
-import { BuyTicketButton } from '@components/common/BuyTicketButton';
-import { HeroButton } from '@components/common/HeroButton';
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { FIXED_DECIMAL } from 'src/constant';
+import { ApproveButton } from "@components/common/ApproveButton";
+import { BuyTicketButton } from "@components/common/BuyTicketButton";
+import { HeroButton } from "@components/common/HeroButton";
+import React from "react";
+import { useSelector } from "react-redux";
+import { FIXED_DECIMAL } from "src/constant";
 
 type Props = {};
 export interface HeraValue {
-  name: 'hera' | 'hegem';
+  name: "hera" | "hegem";
   value: number | string;
 }
 
 const formatCoinValue = (coinValue: unknown) =>
-  typeof coinValue === 'number' && !Number.isNaN(coinValue) ? coinValue.toFixed(FIXED_DECIMAL) : '';
+  typeof coinValue === "number" && !Number.isNaN(coinValue) ? coinValue.toFixed(FIXED_DECIMAL) : "";
 
 export default function Banner({}: Props) {
   const latestHERALotteryData = useSelector((state) => state.globalState.latestLotteryData);
@@ -27,7 +27,7 @@ export default function Banner({}: Props) {
       <div className="bracket-ticket">
         <div
           className="text-center d-flex flex-column align-center-center justify-content-center"
-          style={{ height: '100%' }}
+          style={{ height: "100%" }}
         >
           <div className="cl-w fnt-s3 text-uppercase">{name}</div>
           <div className="cl-gradient-yl fnt-s4 fnt-b">{value}</div>
@@ -48,15 +48,17 @@ export default function Banner({}: Props) {
               </div>
               <div
                 className="cl-w fnt-s6 fnt-b fnt-eff-glow mb-3 text-center"
-                style={{ lineHeight: '1.2' }}
+                style={{ lineHeight: "1.2" }}
               >
                 BUY LOTTERY <br className="d-none d-md-block" /> TICKET
               </div>
               <div className="with-hera-token">
-                <img src="/img/banner/banner-with-hera-token.png" alt="" />
+                <img src="/img/banner/with-hera-bg-effect.png" alt="" />
+                <div className="with-hera-token__text">WITH HERA TOKEN</div>
               </div>
             </div>
-            <div className="col mr-0 mr-md-5 d-flex flex-column align-items-center">
+
+            <div className="col mt-md-n3 mr-0 mr-md-5 d-flex flex-column align-items-center">
               <div className="pool-button" />
               <div className="w-100 d-flex justify-content-center">
                 <div className="d-flex align-items-center justify-content-center my-2 flex-wrap">

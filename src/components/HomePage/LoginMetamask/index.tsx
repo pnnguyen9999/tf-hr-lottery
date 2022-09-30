@@ -21,7 +21,7 @@ export default function LoginMetamask({}: Props) {
           await walletMetamask.connect();
           dispatch(setUtilsWallet(walletMetamask));
           dispatch(setBalance(await walletMetamask.getHERABalance()));
-          console.log(LoginMetamask, walletMetamask.currentBalance);
+          // console.log(LoginMetamask, walletMetamask.currentBalance);
           dispatch(setAllowance(await walletMetamask.getAllowanceHERA()));
           dispatch(setAddress(await walletMetamask.getCurrentAddress()));
           // localStorage.setItem("disconnected", "false");

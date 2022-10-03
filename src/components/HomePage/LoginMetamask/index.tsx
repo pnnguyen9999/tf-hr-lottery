@@ -8,9 +8,8 @@ type Props = {};
 
 export default function LoginMetamask({}: Props) {
   const dispatch = useDispatch();
-  const triggerConnectWalletUseEff = useSelector(
-    (state) => state.triggerState.triggerConnectWalletUseEff
-  );
+  const triggerConnectWalletUseEff = useSelector((state) => state.triggerState.triggerConnectWalletUseEff);
+  const web3data = useSelector((state) => state.web3.utilsWallet);
 
   useEffect(() => {
     async function connectWallet() {
@@ -31,6 +30,31 @@ export default function LoginMetamask({}: Props) {
     connectWallet();
   }, [triggerConnectWalletUseEff]);
 
+  // update balance manually
+  useEffect(() => {
+    if (web3data) {
+      const balanceInterval = setInterval(async () => {
+        dispatch(setBalance(await web3data.getHERABalance()));
+      }, 500);
+
+      return () => {
+        clearInterval(balanceInterval);
+      };
+    }
+  }, [web3data]);
+
+  // useEffect(() => {
+  //   const web3 = new Web3(new Web3.providers.WebsocketProvider("wss://bsc-dataseed.binance.org/"));
+  //   const myContract = new web3.eth.Contract(heraABI as AbiItem[], HERA_ADDRESS);
+
+  //   myContract.events
+  //     .Transfer({})
+  //     .on("data", (event) => console.log(event))
+  //     .on("changed", (changed) => console.log(changed))
+  //     .on("error", (err) => console.log("error", err.message, err.stack))
+  //     .on("connected", (str) => console.log(str));
+  // }, []);
+
   useEffect(() => {
     if (window.ethereum) {
       window.ethereum.on("accountsChanged", async (accountID: any) => {
@@ -40,5 +64,6 @@ export default function LoginMetamask({}: Props) {
       });
     }
   }, []);
+
   return <></>;
 }

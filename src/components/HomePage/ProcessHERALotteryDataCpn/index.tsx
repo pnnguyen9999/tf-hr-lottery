@@ -160,11 +160,11 @@ export default function ProcessHERALotteryDataCpn({}: Props) {
           currentHistoryLottery === "hegem" ? useFetchHegemPersonalInfo : useFetchHERAPersonalInfo;
 
         const data = await personalInfoFetcher(currentLotteryId, address);
-        console.log(
-          `address: ${address} history 🕖 round info  ${currentHistoryLottery} round=`,
-          currentLotteryId,
-          data
-        );
+        // console.log(
+        //   `address: ${address} history 🕖 round info  ${currentHistoryLottery} round=`,
+        //   currentLotteryId,
+        //   data
+        // );
 
         dispatch(setHistoryPersonalData(data));
       }

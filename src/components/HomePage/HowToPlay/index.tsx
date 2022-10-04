@@ -76,7 +76,7 @@ export default function HowToPlay({}: Props) {
             </section>
             <section>
               <div className="cl-yl fnt-s2 fnt-b">Prize Funds</div>
-              <div className="cl-w fnt-s1 fnt-b">80% of HERA per Pool, 40% of each Pool will be burned + 1000 HERA</div>
+              <div className="cl-w fnt-s1 fnt-b">80% of HERA per Pool, 20% of each Pool will be burned + 1000 HERA</div>
               <ul>
                 <li>
                   <span className="cl-yl fnt-s1">Specifically:&nbsp;</span>

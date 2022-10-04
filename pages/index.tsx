@@ -16,7 +16,7 @@ const FinishedRounds: any = dynamic(() => import("@components/HomePage/FinishedR
 const Home: React.FC = () => {
   return (
     <div className="home-lottery">
-      <div className="container" style={{ overflowY: "hidden" }}>
+      <div className="container overflow-hidden">
         <ProcessHERAContractDataCpn />
         <LoginMetamask />
         <Nav />

@@ -44,12 +44,9 @@ export default function Banner({}: Props) {
             {/* TWO COLUMNS */}
             <div className="col-12 col-md-5 ml-0 ml-md-5 d-flex flex-column align-items-center">
               <div className="cl-yl fnt-s3 fnt-b mb-2 text-center font-italic">
-                From September 1<sup>st</sup>, 2022
+                From October 4<sup>th</sup>, 2022
               </div>
-              <div
-                className="cl-w fnt-s6 fnt-b fnt-eff-glow mb-3 text-center"
-                style={{ lineHeight: "1.2" }}
-              >
+              <div className="cl-w fnt-s6 fnt-b fnt-eff-glow mb-3 text-center" style={{ lineHeight: "1.2" }}>
                 BUY LOTTERY <br className="d-none d-md-block" /> TICKET
               </div>
               <div className="with-hera-token">

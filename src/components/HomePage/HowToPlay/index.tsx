@@ -16,14 +16,12 @@ const StepComponents: StepComponent[] = [
   {
     title: "STEP 2",
     name: "Wait for the Draw",
-    description:
-      "There is one draw every day alternating between 4 AM UTC and 3:50 AM UTC on next day",
+    description: "There is one draw every day alternating between 4 AM UTC and 3:50 AM UTC on next day",
   },
   {
     title: "STEP 3",
     name: "Check for the Prizes",
-    description:
-      "Once the round’s over, come back to the page and check to see if you’ve won",
+    description: "Once the round’s over, come back to the page and check to see if you’ve won",
   },
 ];
 export default function HowToPlay({}: Props) {
@@ -48,18 +46,13 @@ export default function HowToPlay({}: Props) {
     <div className="how-to-play my-5">
       <div className="text-center cl-w fnt-b fnt-s5">HOW TO PLAY</div>
       <div className="fnt-s1 cl-w text-center my-4">
-        If the numbers code on your tickets match the winning numbers of our
-        Lottery, you win a portion of the prize pool.
+        If the numbers code on your tickets match the winning numbers of our Lottery, you win a portion of the prize
+        pool.
       </div>
       <div className="col-12">
         <div className="row">
           {StepComponents.map((step: StepComponent, index: number) => (
-            <StepComponent
-              key={index}
-              title={step.title}
-              name={step.name}
-              description={step.description}
-            />
+            <StepComponent key={index} title={step.title} name={step.name} description={step.description} />
           ))}
         </div>
       </div>
@@ -68,48 +61,35 @@ export default function HowToPlay({}: Props) {
           <div className="col-md-7">
             <section>
               <div className="cl-yl fnt-s2 fnt-b">Winning Criteria</div>
-              <div className="cl-w fnt-s1 fnt-b">
-                The digits on your ticket must match in the correct order to
-                win.
-              </div>
+              <div className="cl-w fnt-s1 fnt-b">The digits on your ticket must match in the correct order to win.</div>
               <div className="cl-w fnt-s1">Here’s an example lottery draw:</div>
               <ul>
                 <li>
-                  <span className="cl-yl fnt-s1">Ticket A:&nbsp;</span>The first
-                  number match, this ticket only wins a “Match first 1” prize
-                  and continuously,...
+                  <span className="cl-yl fnt-s1">Ticket A:&nbsp;</span>The first number match, this ticket only wins a
+                  “Match first 1” prize and continuously,...
                 </li>
                 <li>
-                  <span className="cl-yl fnt-s1">Ticket B:&nbsp;</span>The first
-                  2 numbers match, this ticket only wins a “Match first 2” prize
-                  and continuously,...
+                  <span className="cl-yl fnt-s1">Ticket B:&nbsp;</span>The first 2 numbers match, this ticket only wins
+                  a “Match first 2” prize and continuously,...
                 </li>
               </ul>
             </section>
             <section>
               <div className="cl-yl fnt-s2 fnt-b">Prize Funds</div>
-              <div className="cl-w fnt-s1 fnt-b">
-                60% of HERA per Pool, 40% of each Pool will be burned + 3000
-                HERA
-              </div>
+              <div className="cl-w fnt-s1 fnt-b">60% of HERA per Pool, 40% of each Pool will be burned + 1000 HERA</div>
               <ul>
                 <li>
                   <span className="cl-yl fnt-s1">Specifically:&nbsp;</span>
-                  Next period's prize = Number of HERA remaining of previous
-                  period's Pool + 60% of next period's Pool + 3000 HERA from
-                  HERO ARENA
+                  Next period's prize = Number of HERA remaining of previous period's Pool + 60% of next period's Pool +
+                  1000 HERA from HERO ARENA
                 </li>
                 <li>
                   <span className="cl-yl fnt-s1">Example:&nbsp;</span>
-                  The first Matches 3 prize (the first 3 digits coincide with
-                  the jackpot number) has a total prize value of 1750 HERA,
-                  there are 5 people with the first 3 numbers matching the
-                  jackpot number
+                  The first Matches 3 prize (the first 3 digits coincide with the jackpot number) has a total prize
+                  value of 1750 HERA, there are 5 people with the first 3 numbers matching the jackpot number
                 </li>
               </ul>
-              <div className="cl-w fnt-s1 fnt-b">
-                The prize each person gets will be 350 HERA
-              </div>
+              <div className="cl-w fnt-s1 fnt-b">The prize each person gets will be 350 HERA</div>
             </section>
           </div>
           <div className="col-md-5">

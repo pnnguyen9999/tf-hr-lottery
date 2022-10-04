@@ -1,12 +1,12 @@
-import React from "react";
-import { AppProps } from "next/app";
-import "@styles/app.scss";
-import "@styles/global.scss";
-import "antd/dist/antd.css";
-import "animate.css";
-import { Provider } from "react-redux";
 import store from "@redux/store";
+import "animate.css";
+import "antd/dist/antd.css";
+
+import "@styles/global.scss";
+
+import "@styles/app.scss";
 import Head from "next/head";
+import { Provider } from "react-redux";
 
 function MyApp({ Component, pageProps }: any): JSX.Element {
   return (

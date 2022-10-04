@@ -5,19 +5,19 @@ export default function HeraPie({}) {
   const data = [
     {
       type: "Matches First 4",
-      value: 55,
+      value: 56.25,
     },
     {
       type: "Matches First 3",
-      value: 25,
+      value: 28.12,
     },
     {
       type: "Matches First 2",
-      value: 15,
+      value: 12.5,
     },
     {
       type: "Matches First 1",
-      value: 5,
+      value: 3.13,
     },
   ];
   const config = {

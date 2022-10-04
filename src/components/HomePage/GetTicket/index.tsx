@@ -103,9 +103,9 @@ export default function GetTicket({}: Props) {
           <div className="d-flex justify-content-between align-items-center flex-wrap">
             <div className="col-12 align-items-center my-3">
               <div className="row align-items-center">
-                <div className="col-3 fnt-s3 fnt-b cl-w ">Prize Pot</div>
+                <div className="col-12 col-md-3 fnt-s3 fnt-b cl-w ">Prize Pot</div>
                 {!isOnCalculatingTime ? (
-                  <div className="col-7 d-flex justify-content-between align-items-center flex-wrap">
+                  <div className="col d-flex justify-content-between align-items-center flex-wrap">
                     <PrizePotValue
                       value={(latestLotteryData?.amountCollectedInHera ?? 0).toFixed(FIXED_DECIMAL)}
                       name="hera"
@@ -118,8 +118,8 @@ export default function GetTicket({}: Props) {
             </div>
             <div className="col-12 align-items-center my-3">
               <div className="row">
-                <div className="col-3 fnt-s3 fnt-b cl-w ">Your Ticket</div>
-                <div className="col-7 d-flex justify-content-between align-items-center flex-wrap">
+                <div className="col-12 col-md-3 fnt-s3 fnt-b cl-w ">Your Ticket</div>
+                <div className="col-md-12 col-lg-7 d-flex justify-content-between align-items-center flex-wrap">
                   <div className="d-flex align-items-start flex-column">
                     <div className="fnt-s1 cl-w">
                       You Have <span className="fnt-b cl-yl">{latestPersonalData?.numberOfTickets} Ticket(s)</span> This
@@ -132,7 +132,9 @@ export default function GetTicket({}: Props) {
                       View your tickets
                     </u>
                   </div>
-                  <BuyTicketButton />
+                  <div className="mx-auto mx-md-0">
+                    <BuyTicketButton />
+                  </div>
                 </div>
               </div>
             </div>

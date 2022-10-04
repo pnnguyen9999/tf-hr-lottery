@@ -1,5 +1,8 @@
-@import "./global";
-
+// @media screen and (max-width: 1199px) {
+//   .with-hera-token {
+//     width: auto;
+//   }
+// }
 @media screen and (max-width: 766px) {
   .step-panel-cont {
     height: inherit !important;
@@ -18,20 +21,20 @@
   }
 
   .with-hera-token {
-    font-size: 18pt;
+    &#{&} {
+      $xpad: 1.5rem;
+      padding-left: $xpad;
+      padding-right: $xpad;
 
-    margin-top: 0 !important;
-    margin-bottom: 25px;
-    // padding: 0.3125rem 1.875rem !important;
+      min-width: auto;
+      margin-top: 0;
+      margin-bottom: 25px;
+      font-size: 18pt;
+    }
   }
 
   .pool-button {
     background-image: url(/img/pool-white.png) !important;
-    // width: 210px !important;
     --pool-button-width: 210px !important;
   }
 }
-
-// @include media-breakpoint-down(md) {
-
-// }

@@ -196,12 +196,14 @@ ul {
   }
 }
 .with-hera-token {
-  @extend .fnt-b, .fnt-s4;
+  @extend .fnt-b, .fnt-s4, .d-flex, .justify-content-center, .align-items-center;
 
   position: relative;
   margin-top: 50px;
-  padding: 0.5rem 3rem;
+  padding: 0.5rem 0;
   z-index: 0;
+  // max-width: 75%;
+  min-width: 315px;
 
   border-radius: 100px;
   font-weight: 700;
@@ -220,6 +222,9 @@ ul {
     width: 100%;
     height: fit-content;
     object-fit: cover;
+
+    transform: scale(1.4);
+    transform-origin: bottom;
   }
 }
 .pool-button {

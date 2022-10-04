@@ -15,17 +15,17 @@ export const MainMenu: MainMenu[] = [
     sub: [
       {
         name: "NFT MARKETPLACE",
-        url: "https://nft.heroarena.app/",
+        url: "https://heroarena.app/gamefi/nft",
         isNewTab: true,
       },
       {
         name: "NFT STAKING",
-        url: "https://defi.heroarena.app/",
+        url: "https://heroarena.app/gamefi/defi",
         isNewTab: true,
       },
       {
         name: "NFT FUSION",
-        url: "https://fusion.heroarena.app/",
+        url: "https://heroarena.app/gamefi/fusion",
         isNewTab: true,
       },
       {
@@ -35,7 +35,7 @@ export const MainMenu: MainMenu[] = [
       },
       {
         name: "PAYMENT GATEWAY",
-        url: "#",
+        url: "https://heroarena.app/gamefi/payment",
         isNewTab: false,
       },
     ],
@@ -87,7 +87,7 @@ export const MainMenu: MainMenu[] = [
   },
   {
     title: "SCHOLARSHIP",
-    link: "https://scholarship.heroarena.app",
+    link: "https://heroarena.app/gamefi/scholarship",
     isNewTab: true,
   },
   { title: "PLAYNOW", link: "https://play.heroarena.app/", isNewTab: true },

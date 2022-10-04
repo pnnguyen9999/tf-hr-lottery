@@ -1,235 +1,236 @@
 .herobutton {
-    cursor: pointer;
-    position: relative;
-    width: fit-content;
-    height: fit-content;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    &--text {
-        position: absolute;
-        font-size: 10pt;
-        top: 14px;
-        font-family: fontbold;
-        margin: 0 auto;
-        color: #fff;
-        transition: 0.25s;
-        &:hover {
-            color: #fff !important;
-        }
+  cursor: pointer;
+  position: relative;
+  width: fit-content;
+  height: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &--text {
+    position: absolute;
+    font-size: 10pt;
+    top: 14px;
+    font-family: fontbold;
+    margin: 0 auto;
+    color: #fff;
+    transition: 0.25s;
+    &:hover {
+      color: #fff !important;
     }
+  }
 }
 .connectbutton {
-    cursor: pointer;
-    position: relative;
-    // background-color: red;
-    width: fit-content;
-    height: fit-content;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  cursor: pointer;
+  position: relative;
+  // background-color: red;
+  width: fit-content;
+  height: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-    &--text-yellow {
-        position: absolute;
-        font-size: 10pt;
-        top: 12px;
-        font-weight: bold;
-        margin: 0 auto;
-        color: #6f3c12;
-        transition: 0.25s;
-        &:hover {
-            color: #fff !important;
-        }
+  &--text-yellow {
+    position: absolute;
+    font-size: 10pt;
+    top: 12px;
+    font-weight: bold;
+    margin: 0 auto;
+    color: #6f3c12;
+    transition: 0.25s;
+    &:hover {
+      color: #fff !important;
     }
-    &--text-green {
-        position: absolute;
-        font-size: 15px;
-        top: 12px;
-        margin: 0 auto;
-        color: #6f3c12;
-        transition: 0.25s;
-        color: #fff !important;
-    }
-    &--text-gray {
-        position: absolute;
-        font-size: 10pt;
-        top: 12px;
-        font-weight: bold;
-        margin: 0 auto;
-        color: #3e3834;
-    }
-    img {
-        width: 140px;
-    }
+  }
+  &--text-green {
+    position: absolute;
+    font-size: 15px;
+    top: 12px;
+    margin: 0 auto;
+    color: #6f3c12;
+    transition: 0.25s;
+    color: #fff !important;
+  }
+  &--text-gray {
+    position: absolute;
+    font-size: 10pt;
+    top: 12px;
+    font-weight: bold;
+    margin: 0 auto;
+    color: #3e3834;
+  }
+  img {
+    width: 140px;
+  }
 }
 
 .order-badge {
-    background: #be6d02;
-    font-family: fontbold;
-    font-size: 10pt;
-    border-radius: 50px;
-    padding: 3px 10px;
+  background: #be6d02;
+  font-family: fontbold;
+  font-size: 10pt;
+  border-radius: 50px;
+  padding: 3px 10px;
 }
 $deg: 120deg;
 .lottery-number {
-    padding: 10px;
-    border-radius: 50%;
-    width: 55px;
-    height: 55px;
-    text-align: center;
-    font-family: fontbold;
-    font-size: 18pt;
-    color: #fff;
-    box-shadow: 0 0 10px #555;
-    &[class-type="1"] {
-        background-image: linear-gradient($deg, #ff4b00, #ff9b00);
-        border: 4px solid #ff9500;
-    }
-    &[class-type="2"] {
-        background-image: linear-gradient($deg, #01b367, #12ff96);
-        border: 4px solid #11f792;
-    }
-    &[class-type="3"] {
-        background-image: linear-gradient($deg, #9121ff, #c57bfe);
-        border: 4px solid #bf71fe;
-    }
-    &[class-type="4"] {
-        background-image: linear-gradient($deg, #840201, #e00a0e);
-        border: 4px solid #d1080c;
-    }
-    &[class-type="5"] {
-        background-image: linear-gradient($deg, #ff9c00, #ffcd00);
-        border: 4px solid #fec403;
-    }
-    &[class-type="6"] {
-        background-image: linear-gradient($deg, #00c3ea, #36eaff);
-        border: 4px solid #32e8fe;
-    }
-    &[class-type="7"] {
-        background-image: linear-gradient($deg, #fe0371, #fe589e);
-        border: 4px solid #ff4b98;
-    }
-    &[class-type="8"] {
-        background-image: linear-gradient($deg, #0281ff, #5dbfff);
-        border: 4px solid #56baff;
-    }
-    &[class-type="9"] {
-        background-image: linear-gradient($deg, #ff75b5, #fcb0d9);
-        border: 4px solid #fdacd7;
-    }
-    &[class-type="0"] {
-        background-image: linear-gradient($deg, #1c0289, #0b20ff);
-        border: 4px solid #0a1df1;
-    }
+  padding: 10px;
+  border-radius: 50%;
+  width: 55px;
+  height: 55px;
+  text-align: center;
+  font-family: fontbold;
+  font-size: 18pt;
+  color: #fff;
+  box-shadow: 0 0 10px #555;
+  &[class-type="1"] {
+    background-image: linear-gradient($deg, #ff4b00, #ff9b00);
+    border: 4px solid #ff9500;
+  }
+  &[class-type="2"] {
+    background-image: linear-gradient($deg, #01b367, #12ff96);
+    border: 4px solid #11f792;
+  }
+  &[class-type="3"] {
+    background-image: linear-gradient($deg, #9121ff, #c57bfe);
+    border: 4px solid #bf71fe;
+  }
+  &[class-type="4"] {
+    background-image: linear-gradient($deg, #840201, #e00a0e);
+    border: 4px solid #d1080c;
+  }
+  &[class-type="5"] {
+    background-image: linear-gradient($deg, #ff9c00, #ffcd00);
+    border: 4px solid #fec403;
+  }
+  &[class-type="6"] {
+    background-image: linear-gradient($deg, #00c3ea, #36eaff);
+    border: 4px solid #32e8fe;
+  }
+  &[class-type="7"] {
+    background-image: linear-gradient($deg, #fe0371, #fe589e);
+    border: 4px solid #ff4b98;
+  }
+  &[class-type="8"] {
+    background-image: linear-gradient($deg, #0281ff, #5dbfff);
+    border: 4px solid #56baff;
+  }
+  &[class-type="9"] {
+    background-image: linear-gradient($deg, #ff75b5, #fcb0d9);
+    border: 4px solid #fdacd7;
+  }
+  &[class-type="0"] {
+    background-image: linear-gradient($deg, #1c0289, #0b20ff);
+    border: 4px solid #0a1df1;
+  }
 }
 .digits-matched-cont {
-    width: fit-content !important;
-    .circle {
-        width: 25px;
-        height: 25px;
-        border-radius: 50%;
-        padding: 10px;
-        &[class-type="4"] {
-            background-color: #8067dc;
-        }
-        &[class-type="3"] {
-            background-color: #c766dc;
-        }
-        &[class-type="2"] {
-            background-color: #fbaf1c;
-        }
-        &[class-type="1"] {
-            background-color: #66b7dc;
-        }
+  width: fit-content !important;
+  height: fit-content !important;
+  .circle {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    padding: 10px;
+    &[class-type="4"] {
+      background-color: #8067dc;
     }
+    &[class-type="3"] {
+      background-color: #c766dc;
+    }
+    &[class-type="2"] {
+      background-color: #fbaf1c;
+    }
+    &[class-type="1"] {
+      background-color: #66b7dc;
+    }
+  }
 }
 .lottery-edit {
-    background-color: #fffbef;
-    color: #67350f;
-    font-family: fontbold;
-    font-size: 14pt;
-    width: 50px !important;
-    border-radius: 5px;
-    border: 3px solid #e1caa2;
+  background-color: #fffbef;
+  color: #67350f;
+  font-family: fontbold;
+  font-size: 14pt;
+  width: 50px !important;
+  border-radius: 5px;
+  border: 3px solid #e1caa2;
 }
 .lottery-ticket {
-    background-color: #fffbef;
-    color: #67350f;
-    font-family: fontbold;
-    font-size: 14pt;
-    width: 20% !important;
-    border-radius: 5px;
-    border: 3px solid #e1caa2;
-    &.matched {
-        background-color: #bc7316;
-        color: #fff;
-    }
+  background-color: #fffbef;
+  color: #67350f;
+  font-family: fontbold;
+  font-size: 14pt;
+  width: 20% !important;
+  border-radius: 5px;
+  border: 3px solid #e1caa2;
+  &.matched {
+    background-color: #bc7316;
+    color: #fff;
+  }
 }
 .icon {
-    &-sm {
-        height: 30px;
-    }
-    &-lg {
-        height: 90px;
-    }
+  &-sm {
+    height: 30px;
+  }
+  &-lg {
+    height: 90px;
+  }
 }
 .avatar {
-    border: 3px solid #67350f;
-    padding: 5px;
+  border: 3px solid #67350f;
+  padding: 5px;
 }
 .ha-input {
-    width: 100%;
-    // background: linear-gradient(to bottom, #b36f16, #2b1a06);
-    background: rgba(0, 0, 0, 0.3);
+  width: 100%;
+  // background: linear-gradient(to bottom, #b36f16, #2b1a06);
+  background: rgba(0, 0, 0, 0.3);
+  color: #fff;
+  input {
+    padding: 0.45rem 0.8rem;
+    width: 90%;
+    background: transparent;
     color: #fff;
-    input {
-        padding: 0.45rem 0.8rem;
-        width: 90%;
-        background: transparent;
-        color: #fff;
-        border: {
-            width: 0px;
-        }
-        &:focus {
-            outline: none;
-        }
-        ::placeholder {
-            /* Chrome, Firefox, Opera, Safari 10.1+ */
-            color: #80908a;
-            opacity: 1; /* Firefox */
-        }
-        :-ms-input-placeholder {
-            /* Internet Explorer 10-11 */
-            color: #80908a;
-        }
-        ::-ms-input-placeholder {
-            /* Microsoft Edge */
-            color: #80908a;
-        }
-    }
-    .submit-email {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 35px;
-        background: linear-gradient(to bottom, #b36f16, #2b1a06);
-        cursor: pointer;
-    }
     border: {
-        width: 2px;
-        radius: 2px;
-        style: solid;
-        image-slice: 1;
-        image-source: linear-gradient(to bottom, #faea75, #c07205);
+      width: 0px;
     }
+    &:focus {
+      outline: none;
+    }
+    ::placeholder {
+      /* Chrome, Firefox, Opera, Safari 10.1+ */
+      color: #80908a;
+      opacity: 1; /* Firefox */
+    }
+    :-ms-input-placeholder {
+      /* Internet Explorer 10-11 */
+      color: #80908a;
+    }
+    ::-ms-input-placeholder {
+      /* Microsoft Edge */
+      color: #80908a;
+    }
+  }
+  .submit-email {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 35px;
+    background: linear-gradient(to bottom, #b36f16, #2b1a06);
+    cursor: pointer;
+  }
+  border: {
+    width: 2px;
+    radius: 2px;
+    style: solid;
+    image-slice: 1;
+    image-source: linear-gradient(to bottom, #faea75, #c07205);
+  }
 }
 .footer-copyright {
-    font-size: 10pt;
-    background-color: #322204;
-    text-align: center;
-    padding: 15px;
-    color: #fff;
+  font-size: 10pt;
+  background-color: #322204;
+  text-align: center;
+  padding: 15px;
+  color: #fff;
 }
 .step-panel-cont {
-    height: 230px;
+  height: 230px;
 }

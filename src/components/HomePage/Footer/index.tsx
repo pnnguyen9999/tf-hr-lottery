@@ -2,6 +2,7 @@ import React, { ReactElement } from "react";
 import { SendOutlined, FacebookOutlined, TwitterOutlined, YoutubeOutlined, MediumOutlined } from "@ant-design/icons";
 import { Popover, Space } from "antd";
 import { MainMenu, SubMenu } from "../Nav/MenuItems";
+import { IMG_URL } from "src/config";
 
 interface Props {}
 
@@ -14,7 +15,7 @@ export default function Footer({}: Props): ReactElement {
             <div className="col-md-4">
               <div className="d-flex flex-column pr-2">
                 <div className="py-3">
-                  <img className="logo-footer" src="/img/logo.png" alt="HeroArena Logo" />
+                  <img className="logo-footer" src={`${IMG_URL}/img/logo.png`} alt="HeroArena Logo" />
                 </div>
               </div>
             </div>

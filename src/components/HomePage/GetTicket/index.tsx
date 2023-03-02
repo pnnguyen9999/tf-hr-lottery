@@ -9,7 +9,7 @@ import { setOnCalculatingTime, setOpenPersonalTicketInfo } from "@redux/globalSt
 import { FIXED_DECIMAL } from "src/constant";
 import moment from "moment";
 import { sliceAddressString } from "@utils/index";
-import { HERA_LOTTERY_CONTRACT } from "src/config";
+import { HERA_LOTTERY_CONTRACT, IMG_URL } from "src/config";
 import { message } from "antd";
 
 type Props = {};
@@ -20,7 +20,7 @@ export const PrizePotValue = ({ name, value }: HeraValue) => {
       <div>
         <div className="fnt-b fnt-s6 cl-yl d-flex align-items-center">
           {value}&nbsp;
-          <img src={`/img/coins/${name}.png`} className="coin-lg" />
+          <img src={`${IMG_URL}/img/coins/${name}.png`} className="coin-lg" />
         </div>
       </div>
     </div>
@@ -31,7 +31,7 @@ export const CoinValue = ({ name, value }: HeraValue) => {
   return (
     <div className="d-flex my-1">
       <div className="fnt-b fnt-s1 mr-2 cl-w">{value}</div>
-      <img src={`/img/coins/${name}.png`} className="coin-sm" />
+      <img src={`${IMG_URL}/img/coins/${name}.png`} className="coin-sm" />
     </div>
   );
 };

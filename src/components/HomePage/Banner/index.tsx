@@ -3,6 +3,7 @@ import { BuyTicketButton } from "@components/common/BuyTicketButton";
 import { HeroButton } from "@components/common/HeroButton";
 import React from "react";
 import { useSelector } from "react-redux";
+import { IMG_URL } from "src/config";
 import { FIXED_DECIMAL } from "src/constant";
 
 type Props = {};
@@ -50,7 +51,7 @@ export default function Banner({}: Props) {
                 BUY LOTTERY <br className="d-none d-md-block" /> TICKET
               </div>
               <div className="with-hera-token">
-                <img src="/img/banner/with-hera-bg-effect.png" alt="" />
+                <img src={`${IMG_URL}/img/banner/with-hera-bg-effect.png`} alt="" />
                 <div className="with-hera-token__text">WITH HERA TOKEN</div>
               </div>
             </div>

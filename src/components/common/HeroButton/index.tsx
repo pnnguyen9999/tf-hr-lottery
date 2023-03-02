@@ -1,4 +1,5 @@
 import React from "react";
+import { IMG_URL } from "src/config";
 /**
  * this is base button
  */
@@ -12,7 +13,7 @@ export function HeroButton({ text, action }: HeroButton) {
     <div className="herobutton" onClick={action}>
       <div className={`herobutton--text`}>{text}</div>
       <img
-        src="/img/buttons/button-ry.png"
+        src={`${IMG_URL}/img/buttons/button-ry.png`}
         className="herobutton-btn"
         // style={{ height: "46px", width: "120px" }}
       />

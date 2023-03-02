@@ -16,7 +16,6 @@ class LotteryContracts {
 
   constructor(web3 = new Web3(RPC_BSC)) {
     this.hegem = new web3.eth.Contract(lotteryHegemABI as AbiItem[], LOTTERY_HEGEM_CONTRACT);
-
     this.HERA = new web3.eth.Contract(lotteryHeraABI as AbiItem[], LOTTERY_HERA_CONTRACT);
   }
 }

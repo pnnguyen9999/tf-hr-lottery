@@ -1,5 +1,6 @@
 import { setTriggerConnectWalletUseEff } from "@redux/triggerState";
 import { useDispatch } from "react-redux";
+import { IMG_URL } from "src/config";
 
 export interface ConnectButton {
   /**
@@ -21,7 +22,7 @@ export function ConnectButton({ type, text }: ConnectButton) {
   const ReturnImgBg = () => {
     switch (type) {
       case "green": {
-        return "/img/buttons/button-green.png";
+        return `${IMG_URL}/img/buttons/button-green.png`;
       }
     }
   };
